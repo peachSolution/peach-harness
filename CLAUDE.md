@@ -1,6 +1,6 @@
 # peach-harness
 
-PeachSolution 하네스 시스템 마켓플레이스입니다.
+PeachSolution 하네스 시스템 플러그인입니다.
 
 ## 아키텍처 가이드
 
@@ -8,19 +8,18 @@ PeachSolution 하네스 시스템 마켓플레이스입니다.
 
 ## 배포 구조
 
-**마켓플레이스** 방식으로 배포한다. 루트가 마켓플레이스이고, `plugins/` 안에 플러그인을 포함한다.
+**단일 플러그인 + 자체 마켓플레이스** 방식으로 배포한다. `.claude-plugin/` 안에 marketplace.json과 plugin.json이 공존한다.
 
 → **@docs/DISTRIBUTION.md** 참조 (의사결정 근거, 설치/업데이트 방법)
 
 ```
 peach-harness/
 ├── .claude-plugin/
-│   └── marketplace.json                    # 마켓플레이스 정의
-└── plugins/
-    └── peach-harness-plugin/
-        ├── .claude-plugin/plugin.json      # 플러그인 정의
-        ├── skills/                         # 스킬 (오케스트레이터 + 생성)
-        └── agents/                         # 서브에이전트 (역할 실행자)
+│   ├── marketplace.json         # 마켓플레이스 정의 (source: "./")
+│   └── plugin.json              # 플러그인 정의 (컴포넌트)
+├── skills/                      # 스킬 (오케스트레이터 + 생성)
+├── agents/                      # 서브에이전트 (역할 실행자)
+└── README.md
 ```
 
 ## 설치

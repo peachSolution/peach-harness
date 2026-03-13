@@ -1,6 +1,6 @@
 # peach-harness
 
-PeachSolution 하네스 시스템 — 스킬, 서브에이전트, QA 파이프라인을 통합한 Claude Code 마켓플레이스입니다.
+PeachSolution 하네스 시스템 — 스킬, 서브에이전트, QA 파이프라인을 통합한 Claude Code 플러그인입니다.
 
 ## 문서
 
@@ -29,34 +29,32 @@ npx skills add peachSolution/peach-harness --skill peach-agent-team -a claude-co
 ## 구조
 
 ```
-peach-harness/                               # 마켓플레이스 (루트)
+peach-harness/
 ├── .claude-plugin/
-│   └── marketplace.json                     # 마켓플레이스 정의
-└── plugins/
-    └── peach-harness-plugin/                # 플러그인
-        ├── .claude-plugin/plugin.json       # 플러그인 정의
-        ├── skills/                          # 스킬 (실행 절차 정의)
-        │   ├── peach-agent-team/            # 신규 기능 팀 조율
-        │   ├── peach-agent-team-refactor/   # 리팩토링 팀 조율
-        │   ├── peach-planning-gate/         # 계획 수립 게이트
-        │   ├── peach-evidence-gate/         # 증거 수집 게이트
-        │   ├── peach-handoff/               # 세션 인수인계
-        │   ├── peach-gen-backend/           # Backend 생성
-        │   ├── peach-gen-store/             # Store 생성
-        │   ├── peach-gen-ui/                # UI 생성
-        │   └── ...                          # 기타 생성/추가 스킬
-        ├── agents/                          # 서브에이전트 (역할 실행자)
-        │   ├── backend-dev.md               # Backend 개발
-        │   ├── backend-qa.md                # Backend QA
-        │   ├── store-dev.md                 # Store 개발
-        │   ├── ui-dev.md                    # UI 개발
-        │   ├── frontend-qa.md               # Frontend QA
-        │   ├── refactor-backend.md          # Backend 리팩토링
-        │   └── refactor-frontend.md         # Frontend 리팩토링
-        ├── hooks/                           # Git hooks
-        │   └── pre-commit-gate.sh           # 품질 게이트 (테스트/린트/빌드)
-        └── templates/                       # 템플릿
-            └── handoff-template.md          # 인수인계 템플릿
+│   ├── marketplace.json             # 마켓플레이스 정의 (source: "./")
+│   └── plugin.json                  # 플러그인 정의
+├── skills/                          # 스킬 (실행 절차 정의)
+│   ├── peach-agent-team/            # 신규 기능 팀 조율
+│   ├── peach-agent-team-refactor/   # 리팩토링 팀 조율
+│   ├── peach-planning-gate/         # 계획 수립 게이트
+│   ├── peach-evidence-gate/         # 증거 수집 게이트
+│   ├── peach-handoff/               # 세션 인수인계
+│   ├── peach-gen-backend/           # Backend 생성
+│   ├── peach-gen-store/             # Store 생성
+│   ├── peach-gen-ui/                # UI 생성
+│   └── ...                          # 기타 생성/추가 스킬
+├── agents/                          # 서브에이전트 (역할 실행자)
+│   ├── backend-dev.md               # Backend 개발
+│   ├── backend-qa.md                # Backend QA
+│   ├── store-dev.md                 # Store 개발
+│   ├── ui-dev.md                    # UI 개발
+│   ├── frontend-qa.md               # Frontend QA
+│   ├── refactor-backend.md          # Backend 리팩토링
+│   └── refactor-frontend.md         # Frontend 리팩토링
+├── hooks/                           # Git hooks
+│   └── pre-commit-gate.sh           # 품질 게이트 (테스트/린트/빌드)
+└── templates/                       # 템플릿
+    └── handoff-template.md          # 인수인계 템플릿
 ```
 
 ## 스킬 목록
