@@ -326,6 +326,17 @@ export interface Example {
 | `peach-refactor-frontend` | Frontend 리팩토링 | refactor-frontend |
 | `peach-agent-team` | 신규 기능 팀 조율 (mode=backend/ui/fullstack) | 오케스트레이터 |
 | `peach-agent-team-refactor` | 리팩토링 팀 조율 (layer=backend/frontend/all) | 오케스트레이터 |
+| `peach-planning-gate` | 작업 시작 전 계획 수립 게이트 | - |
+| `peach-evidence-gate` | 작업 완료 전 증거 수집 게이트 | - |
+| `peach-handoff` | 세션 간 컨텍스트 인수인계 | - |
+
+### 스킬 유형 분류
+
+| 유형 | 스킬 | 테스트 전략 |
+|------|------|-----------|
+| 능력 향상형 (3) | gen-design, gen-prd, gen-feature-docs | 새 모델 시 A/B 테스트 |
+| 선호도 인코딩형 (11) | gen-backend, gen-db, gen-store, gen-ui, add-api, add-cron, add-print, refactor-backend, refactor-frontend, agent-team, agent-team-refactor | Eval 충실도 검증 |
+| 프로세스 게이트 (3) | planning-gate, evidence-gate, handoff | 워크플로우 품질 게이트 |
 
 ### 에이전트 팀원 역할
 

@@ -28,18 +28,25 @@ peach-harness-plugin/
 ├── skills/                        # 스킬 (실행 절차 정의)
 │   ├── peach-agent-team/          # 신규 기능 팀 조율
 │   ├── peach-agent-team-refactor/ # 리팩토링 팀 조율
+│   ├── peach-planning-gate/       # 계획 수립 게이트
+│   ├── peach-evidence-gate/       # 증거 수집 게이트
+│   ├── peach-handoff/             # 세션 인수인계
 │   ├── peach-gen-backend/         # Backend 생성
 │   ├── peach-gen-store/           # Store 생성
 │   ├── peach-gen-ui/              # UI 생성
 │   └── ...                        # 기타 생성/추가 스킬
-└── agents/                        # 서브에이전트 (역할 실행자)
-    ├── backend-dev.md             # Backend 개발
-    ├── backend-qa.md              # Backend QA
-    ├── store-dev.md               # Store 개발
-    ├── ui-dev.md                  # UI 개발
-    ├── frontend-qa.md             # Frontend QA
-    ├── refactor-backend.md        # Backend 리팩토링
-    └── refactor-frontend.md       # Frontend 리팩토링
+├── agents/                        # 서브에이전트 (역할 실행자)
+│   ├── backend-dev.md             # Backend 개발
+│   ├── backend-qa.md              # Backend QA
+│   ├── store-dev.md               # Store 개발
+│   ├── ui-dev.md                  # UI 개발
+│   ├── frontend-qa.md             # Frontend QA
+│   ├── refactor-backend.md        # Backend 리팩토링
+│   └── refactor-frontend.md       # Frontend 리팩토링
+├── hooks/                         # Git hooks
+│   └── pre-commit-gate.sh         # 품질 게이트 (테스트/린트/빌드)
+└── templates/                     # 템플릿
+    └── handoff-template.md        # 인수인계 템플릿
 ```
 
 ## 스킬 목록
@@ -71,6 +78,33 @@ peach-harness-plugin/
 
 - `peach-refactor-backend` — Backend 리팩토링
 - `peach-refactor-frontend` — Frontend 리팩토링
+
+### 프로세스 게이트
+
+- `peach-planning-gate` — 작업 시작 전 계획 수립 게이트
+- `peach-evidence-gate` — 작업 완료 전 증거 수집 게이트
+- `peach-handoff` — 세션 간 컨텍스트 인수인계
+
+## 스킬 유형 분류
+
+| 유형 | 스킬 | 설명 |
+|------|------|------|
+| 능력 향상형 (3) | gen-design, gen-prd, gen-feature-docs | 모델 능력에 의존, A/B 테스트로 검증 |
+| 선호도 인코딩형 (11) | gen-backend, gen-db, gen-store, gen-ui, add-api, add-cron, add-print, refactor-backend, refactor-frontend, agent-team, agent-team-refactor | 프로젝트 컨벤션 인코딩, Eval 충실도 검증 |
+| 프로세스 게이트 (3) | planning-gate, evidence-gate, handoff | 워크플로우 품질 게이트 |
+
+## Hooks
+
+품질 게이트를 자동화하는 Git hooks입니다.
+
+```bash
+# 설치
+cp hooks/pre-commit-gate.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+- **pre-commit-gate.sh**: Backend(bun test, lint, build) + Frontend(vue-tsc, lint, build) 검증
+- `api/` 또는 `front/` 디렉토리가 없으면 해당 단계 스킵
 
 ## 서브에이전트
 

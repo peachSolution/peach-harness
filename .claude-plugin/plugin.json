@@ -19,7 +19,10 @@
     "peach-refactor-backend",
     "peach-refactor-frontend",
     "peach-agent-team",
-    "peach-agent-team-refactor"
+    "peach-agent-team-refactor",
+    "peach-planning-gate",
+    "peach-evidence-gate",
+    "peach-handoff"
   ],
   "agents": [
     "backend-dev",
