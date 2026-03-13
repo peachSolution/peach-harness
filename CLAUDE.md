@@ -24,7 +24,7 @@ peach-harness-plugin/
 
 ```bash
 # Plugin 설치 (권장)
-/plugin install peach-harness-plugin
+/plugin install peachSolution/peach-harness-plugin
 
 # skills.sh 설치 (호환)
 npx skills add peachSolution/peach-harness-plugin --skill '*' -a claude-code

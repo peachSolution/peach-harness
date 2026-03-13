@@ -14,7 +14,7 @@ PeachSolution 하네스 시스템 — 스킬, 서브에이전트, QA 파이프�
 
 ```bash
 # Plugin 설치 (권장)
-/plugin install peach-harness-plugin
+/plugin install peachSolution/peach-harness-plugin
 
 # skills.sh 설치 (호환)
 npx skills add peachSolution/peach-harness-plugin --skill '*' -a claude-code
