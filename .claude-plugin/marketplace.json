@@ -1,0 +1,17 @@
+{
+  "name": "peach-harness",
+  "owner": {
+    "name": "PeachSolution"
+  },
+  "metadata": {
+    "description": "PeachSolution 하네스 시스템 플러그인",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "peach-harness-plugin",
+      "description": "스킬, 서브에이전트, QA 파이프라인을 통합한 Claude Code 플러그인",
+      "source": "./"
+    }
+  ]
+}

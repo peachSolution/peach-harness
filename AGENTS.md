@@ -243,7 +243,7 @@ description: |
 
 ### skills.sh 호환 설치
 ```bash
-npx skills add peachSolution/peach-harness-plugin --skill [스킬명] -a claude-code
+npx skills add peachSolution/peach-harness --skill [스킬명] -a claude-code
 ```
 
 ### references 정책

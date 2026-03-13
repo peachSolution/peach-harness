@@ -8,13 +8,15 @@ PeachSolution 하네스 시스템 플러그인입니다.
 
 ## 배포 구조
 
-**플러그인(앱) 방식**으로 배포한다. 마켓플레이스(앱스토어) 방식은 사용하지 않는다.
+**단일 플러그인 + 자체 마켓플레이스** 방식으로 배포한다.
 
 → **@docs/DISTRIBUTION.md** 참조 (의사결정 근거, 설치/업데이트 방법)
 
 ```
 peach-harness-plugin/
-├── .claude-plugin/plugin.json   # 플러그인 매니페스트 (유일)
+├── .claude-plugin/
+│   ├── plugin.json              # 플러그인 매니페스트 (컴포넌트 정의)
+│   └── marketplace.json         # 검색/설치 경로 (컴포넌트 정의 없음)
 ├── skills/                      # 스킬 (오케스트레이터 + 생성)
 ├── agents/                      # 서브에이전트 (역할 실행자)
 └── README.md
@@ -23,9 +25,12 @@ peach-harness-plugin/
 ## 설치
 
 ```bash
-# Plugin 설치 (권장)
-/plugin install peachSolution/peach-harness-plugin
+# 1. 마켓플레이스 등록
+/plugin marketplace add peachSolution/peach-harness
+
+# 2. 플러그인 설치
+/plugin install peach-harness-plugin
 
 # skills.sh 설치 (호환)
-npx skills add peachSolution/peach-harness-plugin --skill '*' -a claude-code
+npx skills add peachSolution/peach-harness --skill '*' -a claude-code
 ```
