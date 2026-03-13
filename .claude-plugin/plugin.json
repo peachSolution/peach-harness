@@ -1,0 +1,33 @@
+{
+  "name": "peach-harness-plugin",
+  "version": "1.0.0",
+  "description": "PeachSolution 하네스 시스템 — 스킬, 서브에이전트, QA 파이프라인을 통합한 Claude Code 플러그인",
+  "author": {
+    "name": "PeachSolution"
+  },
+  "skills": [
+    "peach-add-api",
+    "peach-add-cron",
+    "peach-add-print",
+    "peach-gen-backend",
+    "peach-gen-db",
+    "peach-gen-design",
+    "peach-gen-feature-docs",
+    "peach-gen-prd",
+    "peach-gen-store",
+    "peach-gen-ui",
+    "peach-refactor-backend",
+    "peach-refactor-frontend",
+    "peach-agent-team",
+    "peach-agent-team-refactor"
+  ],
+  "agents": [
+    "backend-dev",
+    "backend-qa",
+    "store-dev",
+    "ui-dev",
+    "frontend-qa",
+    "refactor-backend",
+    "refactor-frontend"
+  ]
+}

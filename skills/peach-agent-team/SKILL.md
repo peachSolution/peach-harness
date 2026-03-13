@@ -58,21 +58,21 @@ ls front/src/modules/test-data/
 
 **mode=backend**
 ```
-team-backend-dev ──→ team-backend-qa
+backend-dev ──→ backend-qa
        │
-       └──→ team-store-dev ──→ team-frontend-qa
+       └──→ store-dev ──→ frontend-qa
 ```
 
 **mode=ui**
 ```
-team-ui-dev ──→ team-frontend-qa
+ui-dev ──→ frontend-qa
 ```
 
 **mode=fullstack**
 ```
-team-backend-dev ──→ team-backend-qa
+backend-dev ──→ backend-qa
        │
-       └──→ team-store-dev ──→ team-ui-dev ──→ team-frontend-qa
+       └──→ store-dev ──→ ui-dev ──→ frontend-qa
 ```
 
 ### 3. 팀 생성 및 작업 등록
@@ -82,23 +82,23 @@ TeamCreate: team_name="[모듈명]-[mode]-team"
 
 # mode=backend 작업 등록
 TaskCreate:
-1. "Backend API 개발" (owner: team-backend-dev)
-2. "Backend QA 검증" (blockedBy: Task1, owner: team-backend-qa)
-3. "Frontend Store 개발" (blockedBy: Task1, owner: team-store-dev)
-4. "Frontend QA 검증" (blockedBy: Task3, owner: team-frontend-qa)
+1. "Backend API 개발" (owner: backend-dev)
+2. "Backend QA 검증" (blockedBy: Task1, owner: backend-qa)
+3. "Frontend Store 개발" (blockedBy: Task1, owner: store-dev)
+4. "Frontend QA 검증" (blockedBy: Task3, owner: frontend-qa)
 
 # mode=ui 작업 등록
 TaskCreate:
-1. "UI 컴포넌트 생성" (owner: team-ui-dev)
-2. "Frontend QA 검증" (blockedBy: Task1, owner: team-frontend-qa)
+1. "UI 컴포넌트 생성" (owner: ui-dev)
+2. "Frontend QA 검증" (blockedBy: Task1, owner: frontend-qa)
 
 # mode=fullstack 작업 등록
 TaskCreate:
-1. "Backend API 개발" (owner: team-backend-dev)
-2. "Backend QA 검증" (blockedBy: Task1, owner: team-backend-qa)
-3. "Frontend Store 개발" (blockedBy: Task1, owner: team-store-dev)
-4. "Frontend UI 개발" (blockedBy: Task3, owner: team-ui-dev)
-5. "Frontend QA 검증" (blockedBy: Task4, owner: team-frontend-qa)
+1. "Backend API 개발" (owner: backend-dev)
+2. "Backend QA 검증" (blockedBy: Task1, owner: backend-qa)
+3. "Frontend Store 개발" (blockedBy: Task1, owner: store-dev)
+4. "Frontend UI 개발" (blockedBy: Task3, owner: ui-dev)
+5. "Frontend QA 검증" (blockedBy: Task4, owner: frontend-qa)
 ```
 
 ### 4. 역할별 지시
@@ -143,11 +143,35 @@ TaskCreate:
 7. `bun run lint:fix` 통과
 8. `bun run build` 성공 + AI Slop 디자인 패턴 없음
 
-## Failure Handling
+## Ralph Loop (반복 검증 메커니즘)
 
-- Backend QA 실패 → backend-dev 수정 → backend-qa 재검증 (SendMessage 활용)
+QA 실패 시 단순 재시도가 아니라 **Ralph Loop**(Vercel Labs) 패턴으로 구조화된 피드백을 주입한다.
+
+### 에스컬레이션 단계
+
+| 반복 횟수 | 단계 | 행동 |
+|----------|------|------|
+| 1~3회 | 자율 수정 | QA 피드백만으로 코드 수정 |
+| 4~7회 | 가이드 재참조 | test-data 기준골격 전체 재읽기 후 수정 |
+| 8~10회 | 최소 수정 | Must Follow 항목만 집중, 나머지 보류 |
+| 11+ | 중단 | 사용자 에스컬레이션 |
+
+### 적용 방식
+
+- Backend QA 실패 → backend-dev 수정 → backend-qa 재검증 (SendMessage)
 - Store 문제 → store-dev 수정 → frontend-qa 재검증
 - UI 문제 → ui-dev 수정 → frontend-qa 재검증
+
+### 에스컬레이션 보고
+
+```
+## Ralph Loop 에스컬레이션
+- 모듈: [모듈명]
+- 반복: N/10회
+- 단계: [현재 단계]
+- 미해결: [위반 항목]
+- 권장: [수동 개입 사항]
+```
 
 ## Completion
 
@@ -168,10 +192,10 @@ TeamDelete → 팀 정리
 mode: backend
 
 결과:
-✅ team-backend-dev: API 생성 완료
-✅ team-backend-qa: TDD X개 통과
-✅ team-store-dev: Store 생성 완료
-✅ team-frontend-qa: vue-tsc + lint + build 통과
+✅ backend-dev: API 생성 완료
+✅ backend-qa: TDD X개 통과
+✅ store-dev: Store 생성 완료
+✅ frontend-qa: vue-tsc + lint + build 통과
 
 생성된 파일:
 Backend:
@@ -202,8 +226,8 @@ mode: ui
 피그마: [URL 또는 없음]
 
 결과:
-✅ team-ui-dev: UI 컴포넌트 생성 완료
-✅ team-frontend-qa: vue-tsc + lint + build 통과
+✅ ui-dev: UI 컴포넌트 생성 완료
+✅ frontend-qa: vue-tsc + lint + build 통과
 
 생성된 파일:
 ├── front/src/modules/[모듈명]/pages/list.vue
@@ -229,11 +253,11 @@ mode: ui
 mode: fullstack
 
 결과:
-✅ team-backend-dev: API 생성 완료
-✅ team-backend-qa: TDD X개 통과
-✅ team-store-dev: Store 생성 완료
-✅ team-ui-dev: UI 컴포넌트 생성 완료
-✅ team-frontend-qa: vue-tsc + lint + build 통과
+✅ backend-dev: API 생성 완료
+✅ backend-qa: TDD X개 통과
+✅ store-dev: Store 생성 완료
+✅ ui-dev: UI 컴포넌트 생성 완료
+✅ frontend-qa: vue-tsc + lint + build 통과
 
 생성된 파일:
 Backend:

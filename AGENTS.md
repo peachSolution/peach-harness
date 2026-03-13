@@ -243,7 +243,7 @@ description: |
 
 ### skills.sh 호환 설치
 ```bash
-npx skills add peachSolution/peach-skills --skill [스킬명] -a claude-code
+npx skills add peachSolution/peach-harness-plugin --skill [스킬명] -a claude-code
 ```
 
 ### references 정책
@@ -331,13 +331,13 @@ export interface Example {
 
 | 에이전트 | 역할 | 담당 스킬 |
 |---------|------|---------|
-| team-backend-dev | Backend API 개발 | peach-gen-backend |
-| team-backend-qa | Backend QA 검증 | 검증 전용 |
-| team-store-dev | Frontend Store 개발 | peach-gen-store |
-| team-ui-dev | Frontend UI + 디자인 (FigmaRemote MCP) | peach-gen-ui + peach-gen-design |
-| team-frontend-qa | Frontend QA 검증 | 검증 전용 |
-| team-refactor-backend | Backend 리팩토링 | peach-refactor-backend |
-| team-refactor-frontend | Frontend 리팩토링 | peach-refactor-frontend |
+| backend-dev | Backend API 개발 | peach-gen-backend |
+| backend-qa | Backend QA 검증 | 검증 전용 |
+| store-dev | Frontend Store 개발 | peach-gen-store |
+| ui-dev | Frontend UI + 디자인 (FigmaRemote MCP) | peach-gen-ui + peach-gen-design |
+| frontend-qa | Frontend QA 검증 | 검증 전용 |
+| refactor-backend | Backend 리팩토링 | peach-refactor-backend |
+| refactor-frontend | Frontend 리팩토링 | peach-refactor-frontend |
 
 ---
 
@@ -350,3 +350,53 @@ export interface Example {
 - 필요한 모든 쿼리가 자체 DAO에 구현됨
 - 다른 도메인의 서비스를 직접 호출하지 않음
 - 다른 도메인의 타입을 import하지 않음
+
+---
+
+## 9. 서브에이전트 활용
+
+### 스킬과 서브에이전트의 역할 분리
+
+- **스킬** (SKILL.md): 오케스트레이터. 실행 절차를 정의하고 팀을 조율한다.
+- **서브에이전트** (agents/*.md): 역할 실행자. 독립 컨텍스트에서 특정 작업을 수행한다.
+
+### 서브에이전트 목록
+
+| 에이전트 | 파일 | 역할 |
+|---------|------|------|
+| backend-dev | agents/backend-dev.md | Backend API 생성 |
+| backend-qa | agents/backend-qa.md | Backend QA 검증 (읽기전용) |
+| store-dev | agents/store-dev.md | Frontend Store 생성 |
+| ui-dev | agents/ui-dev.md | Frontend UI 생성 |
+| frontend-qa | agents/frontend-qa.md | Frontend QA 검증 (읽기전용) |
+| refactor-backend | agents/refactor-backend.md | Backend 리팩토링 |
+| refactor-frontend | agents/refactor-frontend.md | Frontend 리팩토링 |
+
+### QA 에이전트 격리 원칙
+
+- QA 에이전트(backend-qa, frontend-qa)는 **읽기전용**으로 실행한다.
+- `isolation: worktree` 옵션으로 독립 작업 트리에서 검증한다.
+- 구현 에이전트와 컨텍스트를 공유하지 않아 확증 편향을 방지한다.
+
+---
+
+## 10. Ralph Loop 규칙
+
+### 정의
+
+Ralph Loop(Vercel Labs)은 Agent → Verifier → Feedback Injection → Safety Limit 구조의 반복 검증 패턴이다.
+단순 retry와 달리 구조화된 피드백을 주입하여 같은 실수를 반복하지 않는다.
+
+### 에스컬레이션 단계
+
+| 반복 횟수 | 단계 | 행동 |
+|----------|------|------|
+| 1~3회 | 자율 수정 | QA 피드백만으로 수정 |
+| 4~7회 | 가이드 재참조 | test-data 기준골격 전체 재읽기 |
+| 8~10회 | 최소 수정 | Must Follow만 집중 |
+| 11+ | 중단 | 사용자 에스컬레이션 |
+
+### 적용 원칙
+
+- 모든 팀 스킬(peach-agent-team, peach-agent-team-refactor)에서 QA 실패 시 Ralph Loop를 적용한다.
+- 에스컬레이션 도달 시 handoff 파일에 Ralph Loop 이력을 기록한다.

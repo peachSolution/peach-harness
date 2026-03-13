@@ -54,19 +54,19 @@ ls api/db/schema/
 
 **layer=all**
 ```
-team-refactor-backend ──→ team-backend-qa        (병렬)
+refactor-backend ──→ backend-qa        (병렬)
          │
-         └──→ team-refactor-frontend ──→ team-frontend-qa
+         └──→ refactor-frontend ──→ frontend-qa
 ```
 
 **layer=backend**
 ```
-team-refactor-backend ──→ team-backend-qa
+refactor-backend ──→ backend-qa
 ```
 
 **layer=frontend**
 ```
-team-refactor-frontend ──→ team-frontend-qa
+refactor-frontend ──→ frontend-qa
 ```
 
 ### 3. 팀 생성
@@ -76,20 +76,20 @@ TeamCreate: team_name="[모듈명]-refactor-team"
 
 # layer=all
 TaskCreate:
-1. "Backend 리팩토링" (owner: team-refactor-backend)
-2. "Backend QA 검증" (blockedBy: Task1, owner: team-backend-qa)
-3. "Frontend 리팩토링" (blockedBy: Task1, owner: team-refactor-frontend)
-4. "Frontend QA 검증" (blockedBy: Task3, owner: team-frontend-qa)
+1. "Backend 리팩토링" (owner: refactor-backend)
+2. "Backend QA 검증" (blockedBy: Task1, owner: backend-qa)
+3. "Frontend 리팩토링" (blockedBy: Task1, owner: refactor-frontend)
+4. "Frontend QA 검증" (blockedBy: Task3, owner: frontend-qa)
 
 # layer=backend
 TaskCreate:
-1. "Backend 리팩토링" (owner: team-refactor-backend)
-2. "Backend QA 검증" (blockedBy: Task1, owner: team-backend-qa)
+1. "Backend 리팩토링" (owner: refactor-backend)
+2. "Backend QA 검증" (blockedBy: Task1, owner: backend-qa)
 
 # layer=frontend
 TaskCreate:
-1. "Frontend 리팩토링" (owner: team-refactor-frontend)
-2. "Frontend QA 검증" (blockedBy: Task1, owner: team-frontend-qa)
+1. "Frontend 리팩토링" (owner: refactor-frontend)
+2. "Frontend QA 검증" (blockedBy: Task1, owner: frontend-qa)
 ```
 
 ## 역할별 지시
@@ -134,10 +134,34 @@ TaskCreate:
   7. `bun run lint:fix` 통과
   8. `bun run build` 성공 + AI Slop 제거 확인
 
-## Failure Handling
+## Ralph Loop (반복 검증 메커니즘)
 
-- Backend QA 실패 → refactor-backend 수정 → backend-qa 재검증 (SendMessage 활용)
+QA 실패 시 **Ralph Loop**(Vercel Labs) 패턴으로 구조화된 피드백을 주입한다.
+
+### 에스컬레이션 단계
+
+| 반복 횟수 | 단계 | 행동 |
+|----------|------|------|
+| 1~3회 | 자율 수정 | QA 피드백만으로 코드 수정 |
+| 4~7회 | 가이드 재참조 | test-data 기준골격 전체 재읽기 후 수정 |
+| 8~10회 | 최소 수정 | Must Follow 항목만 집중, 나머지 보류 |
+| 11+ | 중단 | 사용자 에스컬레이션 |
+
+### 적용 방식
+
+- Backend QA 실패 → refactor-backend 수정 → backend-qa 재검증 (SendMessage)
 - Frontend QA 실패 → refactor-frontend 수정 → frontend-qa 재검증
+
+### 에스컬레이션 보고
+
+```
+## Ralph Loop 에스컬레이션
+- 모듈: [모듈명]
+- 반복: N/10회
+- 단계: [현재 단계]
+- 미해결: [위반 항목]
+- 권장: [수동 개입 사항]
+```
 
 ## Completion
 
@@ -157,10 +181,10 @@ TeamDelete → 팀 정리
 layer: [all|backend|frontend]
 
 결과:
-✅ team-refactor-backend: Backend 리팩토링 완료
-✅ team-backend-qa: TDD X개 통과
-✅ team-refactor-frontend: Frontend 리팩토링 완료
-✅ team-frontend-qa: vue-tsc + lint + build 통과
+✅ refactor-backend: Backend 리팩토링 완료
+✅ backend-qa: TDD X개 통과
+✅ refactor-frontend: Frontend 리팩토링 완료
+✅ frontend-qa: vue-tsc + lint + build 통과
 
 리팩토링된 파일:
 Backend:
