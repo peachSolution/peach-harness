@@ -5,32 +5,18 @@
   "author": {
     "name": "PeachSolution"
   },
-  "skills": [
-    "peach-add-api",
-    "peach-add-cron",
-    "peach-add-print",
-    "peach-gen-backend",
-    "peach-gen-db",
-    "peach-gen-design",
-    "peach-gen-feature-docs",
-    "peach-gen-prd",
-    "peach-gen-store",
-    "peach-gen-ui",
-    "peach-refactor-backend",
-    "peach-refactor-frontend",
-    "peach-agent-team",
-    "peach-agent-team-refactor",
-    "peach-planning-gate",
-    "peach-evidence-gate",
-    "peach-handoff"
-  ],
-  "agents": [
-    "backend-dev",
-    "backend-qa",
-    "store-dev",
-    "ui-dev",
-    "frontend-qa",
-    "refactor-backend",
-    "refactor-frontend"
+  "repository": "https://github.com/peachSolution/peach-harness-plugin",
+  "license": "MIT",
+  "keywords": [
+    "peach",
+    "harness",
+    "backend",
+    "frontend",
+    "code-generation",
+    "qa",
+    "tdd",
+    "vue3",
+    "koa",
+    "elysia"
   ]
 }

@@ -5,6 +5,7 @@ description: |
   팀 작업에서 Backend 품질 검증을 담당합니다.
 tools: Read, Grep, Glob, Bash
 model: sonnet
+isolation: worktree
 ---
 
 # 백엔드 QA 에이전트

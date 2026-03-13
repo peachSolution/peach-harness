@@ -253,7 +253,46 @@ npx skills add peachSolution/peach-harness-plugin --skill [스킬명] -a claude-
 
 ---
 
-## 5. 테스트 및 품질
+## 5. AI 자율성 허용 범위 (Bounded Autonomy)
+
+AI는 가이드 코드(test-data)를 기준으로 삼되, 아래 규칙에 따라 제한된 자율성을 가진다.
+
+### 5-1. Must Follow (절대 준수)
+
+아래 영역은 AI가 변경하면 안 된다.
+
+- 모듈 경계 규칙 (`_common`만 import, 타 모듈 import 금지)
+- 네이밍 규칙 (snake_case/kebab-case/PascalCase/camelCase)
+- 타입 원칙 (옵셔널 금지, null/undefined 금지)
+- 보안 규칙 (SQL injection, XSS, OWASP top 10 방지)
+- 공통 에러 처리 원칙 (기능오류 → 200+success:false, 시스템예외 → ErrorHandler)
+- 테스트 통과 기준 (bun test / vitest)
+- lint/build 통과 기준
+- QA 재검증 요구
+
+### 5-2. May Adapt (분석 후 보완 가능)
+
+아래 영역은 AI가 분석 후 보완할 수 있다.
+
+- service 메서드 분리 방식
+- DAO 내부 쿼리 구성의 세부 형태
+- validator 구조의 세부 배치
+- UI 상호작용 흐름
+- 문서 보완 방식
+- 코드 가독성 및 성능 개선
+
+### 5-3. Adapt 조건
+
+AI가 가이드 코드와 다르게 생성하려면 다음 4가지를 모두 만족해야 한다.
+
+1. 왜 다른 구조가 필요한지 설명할 수 있어야 한다
+2. Must Follow를 침범하면 안 된다
+3. 결과가 test/lint/build/QA를 통과해야 한다
+4. 차이점과 이유를 세션 기록에 남겨야 한다
+
+---
+
+## 6. 테스트 및 품질
 
 - 새로운 Service 로직에는 **bun test 기반 TDD** 테스트 포함
 - 테스트는 실제 데이터베이스 사용, 모킹 지양
@@ -275,7 +314,7 @@ describe('Domain Service', () => {
 
 ---
 
-## 6. Validator / 타입 규칙
+## 7. Validator / 타입 규칙
 
 ### Validator 작성 (class-validator)
 - DB 컬럼이 null 허용이면 `@IsOptional` 적용
@@ -308,7 +347,7 @@ export interface Example {
 
 ---
 
-## 7. 스킬 목록
+## 8. 스킬 목록
 
 | 스킬 | 용도 | 팀 역할 |
 |------|------|---------|
@@ -352,7 +391,7 @@ export interface Example {
 
 ---
 
-## 8. 완전 독립 도메인 구현
+## 9. 완전 독립 도메인 구현
 
 **"관리되는 독립성(Governed Independence)"** - 결합은 부채, 중복은 비용. 부채를 피하기 위해 통제 가능한 비용을 선택.
 
@@ -364,7 +403,7 @@ export interface Example {
 
 ---
 
-## 9. 서브에이전트 활용
+## 10. 서브에이전트 활용
 
 ### 스킬과 서브에이전트의 역할 분리
 
@@ -391,7 +430,7 @@ export interface Example {
 
 ---
 
-## 10. Ralph Loop 규칙
+## 11. Ralph Loop 규칙
 
 ### 정의
 
