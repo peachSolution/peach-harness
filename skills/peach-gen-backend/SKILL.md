@@ -157,9 +157,19 @@ cat api/db/schema/[도메인]/[테이블].sql
 먼저 /peach-gen-db [테이블명] 실행 후 bun run db:up-dev 하세요.
 ```
 
+### 3.5단계: 도메인 분석 (Analyze)
+
+test-data와 대상 도메인의 차이를 분석합니다:
+
+1. **스키마 비교**: test-data 대비 필드 수, 타입 복잡도, 관계성
+2. **비즈니스 로직 판단**: 단순 CRUD vs 상태 전이/계산 필드/조건부 검증 필요 여부
+3. **적응 결정**:
+   - Must Follow → 그대로 (모듈 경계, 네이밍, 타입 원칙, 에러 처리)
+   - May Adapt → 도메인 맞춤 (service 분리, DAO 쿼리, validator 배치)
+
 ### 4단계: 코드 생성
 
-**⚠️ 중요: 반드시 test-data 가이드코드를 참조하여 동일한 패턴으로 생성**
+**⚠️ 중요: test-data 가이드코드를 기준 골격으로 참조하되, 도메인 특성에 맞게 Bounded Autonomy 범위 내에서 적응**
 
 참조 템플릿:
 - `api/src/modules/test-data/type/test-data.type.ts`
@@ -311,6 +321,28 @@ api/src/modules/[모듈명]/
 → [tdd-service-pattern.md](references/tdd-service-pattern.md), [test-pattern.md](references/test-pattern.md) 상세 참조
 - [ ] TddService: init, cleanup (file=Y: uploadTestFiles, deleteUploadedFiles)
 - [ ] 테스트: 실행기 스타일 단일 통합 테스트 (초기화→CRUD→정리)
+
+---
+
+## Bounded Autonomy (자율 적응 규칙)
+
+> AGENTS.md §5 참조
+
+### Must Follow (절대 준수)
+- 모듈 경계: `_common`만 import
+- 네이밍: snake_case(테이블), kebab-case(파일), PascalCase(타입), camelCase(변수)
+- 타입: 옵셔널(`?`), `null`, `undefined` 금지
+- Service: static 메서드, FK 금지
+- 에러: 기능오류 → 200 + `{success:false}`, 시스템예외 → `ErrorHandler`
+
+### May Adapt (분석 후 보완)
+- Service 메서드 분리 (복잡한 비즈니스 로직 시)
+- DAO 쿼리 구성 (JOIN, 서브쿼리, 조건부 필터 등)
+- Validator 구조 (필드 수에 따른 그룹핑)
+- 테스트 시나리오 (도메인 고유 엣지 케이스)
+
+### Adapt 조건
+보완 시 반드시: (1) 이유 설명 (2) Must Follow 미침범 (3) test/lint/build 통과
 
 ---
 

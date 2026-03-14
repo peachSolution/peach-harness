@@ -22,6 +22,15 @@ model: sonnet
 - 완료 기준: `npx vue-tsc --noEmit` 통과
 - 전제조건: Backend API 완료 확인 필수
 
+## Bounded Autonomy
+
+### Must Follow
+- Pinia Option API, 타입(옵셔널/null/undefined 금지), 모듈 경계
+
+### May Adapt
+- 추가 상태 필드, 액션 분리 방식
+- 보완 시: 이유 설명 + Must Follow 미침범 + vue-tsc 통과 필수
+
 ## 워크플로우
 
 1. Backend 완료 확인 + API 타입 읽기

@@ -28,6 +28,17 @@ isolation: worktree
 | 6 | build 성공 | `cd api && bun run build` |
 | 7 | API 스펙 일치 | endpoint 확인 |
 
+## Bounded Autonomy 검증
+
+Must Follow 추가 점검:
+- [ ] 모듈 경계: 타 모듈 import 없음
+- [ ] 타입: 옵셔널(`?`), `null`, `undefined` 없음
+- [ ] 에러 처리 원칙 준수
+
+May Adapt 변경 시:
+- [ ] 변경 이유가 합리적인가
+- [ ] Must Follow를 침범하지 않는가
+
 ## 실패 시 처리
 
 1. 실패 항목 분석

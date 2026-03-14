@@ -121,6 +121,7 @@ Plan Mode                     ← 수정 계획 수립 (as-is 기반)
 
 | 상황 | 시작 스킬 |
 |------|----------|
+| "어떤 스킬을 써야 할지 모르겠어" | `/peach-ask` |
 | "새 모듈을 만들어야 해" | `/peach-gen-prd` |
 | "기존 기능을 수정해야 해" | `/peach-gen-feature-docs` |
 | "코드 정리가 필요해" | `/peach-agent-team-refactor` |

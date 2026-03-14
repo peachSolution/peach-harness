@@ -23,6 +23,16 @@ model: sonnet
 - URL watch 패턴 필수
 - 완료 기준: vue-tsc + lint + build 통과
 
+## Bounded Autonomy
+
+### Must Follow
+- `<script setup>`, Pinia Option API, 타입 원칙
+- URL watch 패턴 필수, 기존 기능 100% 보존
+
+### May Adapt
+- 컴포넌트 분리, 폼 레이아웃, 스타일 개선
+- 보완 시: 이유 설명 + Must Follow 미침범 + vue-tsc + lint + build 통과 필수
+
 ## 3단계 리팩토링
 
 1. Type & Store → vue-tsc 검증

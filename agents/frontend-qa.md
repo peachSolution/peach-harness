@@ -33,6 +33,17 @@ isolation: worktree
 
 `bg-gradient`, `shadow-xl`, `shadow-2xl`, `animate-pulse`, `animate-bounce`, `hover:scale`, `rounded-full`
 
+## Bounded Autonomy 검증
+
+Must Follow 추가 점검:
+- [ ] `<script setup>` 사용, Pinia Option API 사용
+- [ ] 필수 패턴(listAction, watch, form submit) 적용
+- [ ] 모듈 경계: 타 모듈 import 없음
+
+May Adapt 변경 시:
+- [ ] 변경 이유가 합리적인가
+- [ ] Must Follow를 침범하지 않는가
+
 ## 실패 시 처리
 
 - Store 문제 → store-dev 수정 요청

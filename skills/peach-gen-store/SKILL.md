@@ -70,6 +70,16 @@ Backend가 없으면:
 먼저 /peach-gen-backend [테이블명] 실행하세요.
 ```
 
+### 1.5단계: 도메인 분석 (Analyze)
+
+Backend API 타입과 test-data Store를 비교 분석합니다:
+
+1. **API 스펙 비교**: test-data 대비 엔드포인트 수, 응답 구조, 특수 액션
+2. **상태 복잡도 판단**: 단순 CRUD Store vs 다중 리스트/필터 상태/파생 상태 필요 여부
+3. **적응 결정**:
+   - Must Follow → 그대로 (Pinia Option API, 타입 원칙, 모듈 경계)
+   - May Adapt → 도메인 맞춤 (추가 상태 필드, 액션 분리)
+
 ### 2단계: 코드 생성
 
 참조 템플릿 (test-data):
@@ -204,6 +214,26 @@ export const use[모듈명]Store = defineStore('[모듈명]', () => {
 
 ---
 
+## Bounded Autonomy (자율 적응 규칙)
+
+> AGENTS.md §5 참조
+
+### Must Follow (절대 준수)
+- Pinia Option API (Setup 스타일 금지)
+- 타입: 옵셔널(`?`), `null`, `undefined` 금지
+- 모듈 경계: `_common`만 import
+- Store 표준 상태: `listData`, `listTotalRow`, `detailData`
+
+### May Adapt (분석 후 보완)
+- 추가 상태 필드 (도메인 고유 필터, 다중 리스트)
+- 액션 분리 방식 (복잡한 데이터 변환 로직)
+- 에러 핸들링 세부 구현
+
+### Adapt 조건
+보완 시 반드시: (1) 이유 설명 (2) Must Follow 미침범 (3) vue-tsc 통과
+
+---
+
 ## 완료 조건
 
 ```
@@ -308,4 +338,4 @@ export const use[모듈명]Store = defineStore('[모듈명]', () => {
 - **가이드 코드 (필수)**: `front/src/modules/test-data/`
 - **Backend Type**: `api/src/modules/[모듈명]/type/`
 
-⚠️ **중요**: test-data 가이드 코드를 반드시 참조하여 동일한 패턴으로 생성
+⚠️ **중요**: test-data 가이드 코드를 기준 골격으로 참조하되, 도메인 특성에 맞게 Bounded Autonomy 범위 내에서 적응

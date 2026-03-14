@@ -24,6 +24,17 @@ model: sonnet
 - UI 패턴은 반드시 사용자에게 확인 후 진행
 - 완료 기준: vue-tsc + lint + build 통과
 
+## Bounded Autonomy
+
+### Must Follow
+- `<script setup>`, NuxtUI 우선, AI Slop 금지
+- 필수 패턴: listAction, watch, form submit
+- 모듈 경계(`_common`만 import)
+
+### May Adapt
+- 테이블/폼/검색 레이아웃, UI 상호작용 흐름
+- 보완 시: 이유 설명 + Must Follow 미침범 + vue-tsc + lint + build 통과 필수
+
 ## 워크플로우
 
 1. Store 완료 확인

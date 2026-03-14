@@ -27,7 +27,7 @@
 - `undefined` 타입 금지
 
 ### 가이드 코드 위치
-코드 생성 = **가이드 코드 복사** + 모듈명 치환
+코드 생성 = **가이드 코드 참조** → 도메인 분석 → Bounded Autonomy 범위 내 적응
 - Backend: `api/src/modules/test-data/`
 - Frontend: `front/src/modules/test-data/`
 
@@ -378,6 +378,7 @@ export interface Example {
 
 | 스킬 | 용도 | 팀 역할 |
 |------|------|---------|
+| `peach-ask` | 하네스 시스템 안내 (스킬 추천, 워크플로우 안내) | - |
 | `peach-gen-prd` | PRD 문서 생성 (대화형 요구사항 수집) | - |
 | `peach-gen-db` | DB DDL/마이그레이션 생성 | - |
 | `peach-gen-backend` | Backend API 생성 (bun test 필수) | backend-dev |
@@ -400,7 +401,7 @@ export interface Example {
 
 | 유형 | 스킬 | 테스트 전략 |
 |------|------|-----------|
-| 능력 향상형 (3) | gen-design, gen-prd, gen-feature-docs | 새 모델 시 A/B 테스트 |
+| 능력 향상형 (4) | gen-design, gen-prd, gen-feature-docs, ask | 새 모델 시 A/B 테스트 |
 | 선호도 인코딩형 (11) | gen-backend, gen-db, gen-store, gen-ui, add-api, add-cron, add-print, refactor-backend, refactor-frontend, agent-team, agent-team-refactor | Eval 충실도 검증 |
 | 프로세스 게이트 (3) | planning-gate, evidence-gate, handoff | 워크플로우 품질 게이트 |
 

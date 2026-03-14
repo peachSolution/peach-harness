@@ -23,6 +23,16 @@ model: sonnet
 - 타입: 옵셔널(`?`), `null`, `undefined` 금지
 - 완료 기준: bun test + lint + build 통과
 
+## Bounded Autonomy
+
+### Must Follow
+- 모듈 경계(`_common`만 import), 네이밍, 타입(옵셔널/null/undefined 금지)
+- FK 금지, Service static 메서드, 에러 처리 원칙
+
+### May Adapt
+- Service 메서드 분리, DAO 쿼리 구성, Validator 세부 배치
+- 보완 시: 이유 설명 + Must Follow 미침범 + 검증 통과 필수
+
 ## 워크플로우
 
 1. 환경 감지 (DAO 라이브러리, Controller 프레임워크)

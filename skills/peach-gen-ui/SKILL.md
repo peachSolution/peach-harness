@@ -32,7 +32,7 @@ description: |
 ## 핵심 원칙
 
 - **전제조건**: Store 존재 (Mock 데이터 기반 또는 API 연결 완료)
-- **생성 방식**: Store 인터페이스 기반, test-data 가이드 코드 패턴 강력 준수
+- **생성 방식**: Store 인터페이스 기반, test-data 가이드 코드를 기준 골격으로 참조 후 Bounded Autonomy 범위 내 적응
 - **컴포넌트 사용**: 케밥케이스 사용 (예: `<u-button>`, `<u-modal>`, `<my-component>`)
 - **완료 기준**: vue-tsc + lint + build 모두 통과
 
@@ -188,9 +188,19 @@ ls front/src/modules/_common/components/ 2>/dev/null
 
 ---
 
+### 2.5단계: 도메인 분석 (Analyze)
+
+Store 인터페이스와 test-data UI를 비교 분석합니다:
+
+1. **Store 액션 비교**: test-data 대비 액션 수, 특수 동작, 파일/엑셀 기능
+2. **UI 복잡도 판단**: 필드 수, 검색 조건, 테이블 컬럼 구성
+3. **적응 결정**:
+   - Must Follow → 그대로 (script setup, 필수 패턴, AI Slop 금지)
+   - May Adapt → 도메인 맞춤 (테이블 컬럼, 검색 폼, 모달 폼 구성)
+
 ### 3단계: 코드 생성
 
-선택된 패턴의 가이드 코드를 복사 후 모듈명 치환:
+선택된 패턴의 가이드 코드를 기준 골격으로 참조 후 도메인에 맞게 적응:
 
 | 패턴 | 가이드 코드 경로 | 참조 문서 |
 |------|-----------------|----------|
@@ -236,6 +246,28 @@ front/src/modules/[모듈명]/
 ├── _[모듈명].routes.ts       # 라우트 정의
 └── _[모듈명].validator.ts    # Yup 검증 스키마
 ```
+
+---
+
+## Bounded Autonomy (자율 적응 규칙)
+
+> AGENTS.md §5 참조
+
+### Must Follow (절대 준수)
+- `<script setup>` 필수
+- NuxtUI 컴포넌트 우선, AI Slop 금지
+- 필수 패턴: `listAction`, `resetAction`, `listMovePage`, watch 패턴
+- `@submit.prevent="listAction"`, `@change="listAction"` 패턴
+- 모듈 경계: `_common`만 import
+
+### May Adapt (분석 후 보완)
+- 테이블 컬럼 구성 (도메인 필드에 맞춤)
+- 검색 폼 구성 (필드 수에 따른 레이아웃)
+- 모달/페이지 폼 구성 (입력 필드 그룹핑)
+- UI 상호작용 흐름 (도메인 특수 UX)
+
+### Adapt 조건
+보완 시 반드시: (1) 이유 설명 (2) Must Follow 미침범 (3) vue-tsc + lint + build 통과
 
 ---
 
@@ -345,4 +377,4 @@ cd front && bun run dev
 - **가이드 코드 (필수)**: `front/src/modules/test-data/`
 - **Store**: `front/src/modules/[모듈명]/store/`
 
-> test-data 가이드 코드를 반드시 참조하여 동일한 패턴으로 생성
+> test-data 가이드 코드를 기준 골격으로 참조하되, 도메인 특성에 맞게 Bounded Autonomy 범위 내에서 적응

@@ -23,6 +23,16 @@ model: sonnet
 - 기존 기능 변경 금지 (구조 개선만)
 - 완료 기준: bun test + lint + build 통과
 
+## Bounded Autonomy
+
+### Must Follow
+- 모듈 경계, 네이밍, 타입, FK 금지, Service static
+- 기존 기능 100% 보존
+
+### May Adapt
+- Service 분리, DAO 쿼리 최적화, Validator 재구성
+- 보완 시: 이유 설명 + Must Follow 미침범 + 검증 통과 필수
+
 ## 4단계 리팩토링
 
 1. Type 리팩토링 → build 검증
