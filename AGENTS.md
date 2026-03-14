@@ -269,14 +269,13 @@ npx skills add peachSolution/peach-harness --skill [스킬명] -a claude-code
 
 #### 버전 업데이트 시점
 - **커밋 단위가 아닌 릴리스 단위**로 버전을 올린다
-- main 브랜치에 머지할 때 버전을 업데이트한다
-- develop에서는 버전을 변경하지 않는다
+- **develop 브랜치에서** 버전을 업데이트한다 (main은 머지만)
 
 #### 버전 업데이트 절차
 1. develop에서 작업 완료
-2. main 머지 전, 두 파일의 version을 동시에 업데이트
+2. develop에서 두 파일의 version을 동시에 업데이트
 3. 커밋 메시지: `Release v{버전}` (예: `Release v1.1.0`)
-4. main에 머지 후 push
+4. main에 머지 (`git merge develop --no-ff`) 후 push
 
 ---
 
