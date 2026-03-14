@@ -21,7 +21,7 @@ flowchart TD
     Impl -->|UI만| UI[/peach-agent-team mode=ui/]
     Impl -->|전체| FS[/peach-agent-team mode=fullstack/]
 
-    BE --> Evidence[/peach-evidence-gate/]
+    BE --> Evidence["team skill 내부 자동 /peach-evidence-gate"]
     UI --> Evidence
     FS --> Evidence
     Refactor --> Evidence
@@ -50,29 +50,31 @@ Plan Mode                     ← 구현 계획 수립
   ├── store-dev → frontend-qa (Ralph Loop)
   └── ui-dev → frontend-qa (Ralph Loop)
     ↓
-/peach-evidence-gate          ← test/lint/build 증거 수집
+팀 스킬 내부 자동 `/peach-evidence-gate`
+  └── test/lint/build 증거 수집 + 잔여 리스크 판정
     ↓
 /peach-handoff                ← 세션 인수인계 기록
 ```
 
 ### 2. 기존 기능 수정 (유지보수)
 
-> 이미 있는 기능을 수정. 먼저 기능명세로 as-is를 파악.
+> 이미 있는 기능을 수정. 먼저 기능명세로 as-is를 파악하고, 이후 세션에서 해당 폴더를 컨텍스트로 주입해 수정 범위를 좁힌다.
 
 ```
 /peach-planning-gate          ← 작업 유형 분류 + 분석
     ↓
-/peach-gen-feature-docs       ← 기존 코드 분석 → 4개 문서 생성
+/peach-gen-feature-docs       ← 기존 코드 분석 → as-is context pack 생성
   ├── {기능명}-1-개요.md       (진입점, 관련 파일)
   ├── {기능명}-2-로직.md       (처리 단계, 결정 이유)
   ├── {기능명}-3-명세.md       (비즈니스 결정, 데이터 매핑)
   └── {기능명}-4-TDD-가이드.md  (테스트 파일, 실행 명령)
     ↓
-Plan Mode                     ← 수정 계획 수립 (as-is 기반)
+Plan Mode                     ← `docs/기능별설명/{카테고리}/{기능명}/` 전체를 컨텍스트로 주입해 수정 계획 수립
     ↓
 구현                           ← 직접 수정 또는 /peach-agent-team
     ↓
-/peach-evidence-gate          ← 증거 수집
+직접 수정이면 `/peach-evidence-gate` 수동 실행
+팀 스킬이면 내부 자동 `/peach-evidence-gate`
     ↓
 /peach-handoff                ← 인수인계
 ```
@@ -88,7 +90,8 @@ Plan Mode                     ← 수정 계획 수립 (as-is 기반)
   ├── refactor-backend → backend-qa (Ralph Loop)
   └── refactor-frontend → frontend-qa (Ralph Loop)
     ↓
-/peach-evidence-gate              ← 증거 수집
+팀 스킬 내부 자동 `/peach-evidence-gate`
+  └── 증거 수집 + 잔여 리스크 판정
     ↓
 /peach-handoff                    ← 인수인계
 ```
@@ -114,7 +117,7 @@ Plan Mode                     ← 수정 계획 수립 (as-is 기반)
 | 게이트 | 시점 | 역할 |
 |--------|------|------|
 | `/peach-planning-gate` | 작업 시작 전 | 유형 분류, 관련 코드 분석, 계획 문서 작성 |
-| `/peach-evidence-gate` | 작업 완료 전 | test/lint/build 결과 수집, 잔여 리스크 목록 |
+| `/peach-evidence-gate` | 작업 완료 전 | test/lint/build 결과 수집, 잔여 리스크 목록. 팀 스킬에서는 자동 후속 호출, 단독 작업에서는 수동 호출 |
 | `/peach-handoff` | 세션 종료 시 | 완료/미완료 사항, 결정 기록, 다음 작업 정리 |
 
 ## 스킬 선택 빠른 참조

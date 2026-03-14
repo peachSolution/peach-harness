@@ -385,7 +385,7 @@ export interface Example {
 | `peach-gen-ui` | Frontend UI 생성 (vue-tsc/lint/build 필수) | ui-dev |
 | `peach-gen-ui-proto` | UI 프로토타입 생성 (Mock 데이터 기반, 기획자용) | ui-dev |
 | `peach-gen-design` | 디자인 시스템 컨설팅 | ui-dev |
-| `peach-gen-feature-docs` | 기능 문서 생성 | - |
+| `peach-gen-feature-docs` | 기존 기능 개선 전 as-is 분석 문서 생성 | - |
 | `peach-add-api` | 외부 REST API 호출 코드 생성 | - |
 | `peach-add-cron` | Cron 작업 코드 생성 | - |
 | `peach-add-print` | 인쇄 전용 페이지 생성 | - |
@@ -394,7 +394,7 @@ export interface Example {
 | `peach-agent-team` | 신규 기능 팀 조율 (mode=backend/ui/fullstack) | 오케스트레이터 |
 | `peach-agent-team-refactor` | 리팩토링 팀 조율 (layer=backend/frontend/all) | 오케스트레이터 |
 | `peach-planning-gate` | 작업 시작 전 계획 수립 게이트 | - |
-| `peach-evidence-gate` | 작업 완료 전 증거 수집 게이트 | - |
+| `peach-evidence-gate` | 작업 완료 전 증거 수집 게이트 (팀 스킬 완료 시 자동 후속 호출) | - |
 | `peach-handoff` | 세션 간 컨텍스트 인수인계 | - |
 
 ### 스킬 유형 분류

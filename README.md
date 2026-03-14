@@ -58,7 +58,7 @@ peach-harness/
 │   ├── peach-agent-team-refactor/   # 리팩토링 팀 조율
 │   │   └── references/              # 에이전트 정의 복사본 (자기완결성)
 │   ├── peach-planning-gate/         # 계획 수립 게이트
-│   ├── peach-evidence-gate/         # 증거 수집 게이트
+│   ├── peach-evidence-gate/         # 증거 수집 게이트 (팀 스킬 완료 시 자동 후속 호출 가능)
 │   ├── peach-handoff/               # 세션 인수인계
 │   ├── peach-gen-backend/           # Backend 생성
 │   ├── peach-gen-store/             # Store 생성
@@ -92,7 +92,7 @@ peach-harness/
 - `peach-gen-backend` — Backend API 생성
 - `peach-gen-db` — DB DDL/마이그레이션
 - `peach-gen-design` — 디자인 시스템 컨설팅
-- `peach-gen-feature-docs` — 기능 문서
+- `peach-gen-feature-docs` — 기존 기능 개선 전 as-is 분석 문서
 - `peach-gen-prd` — PRD 문서
 - `peach-gen-store` — Frontend Store
 - `peach-gen-ui` — Frontend UI
@@ -112,7 +112,7 @@ peach-harness/
 ### 프로세스 게이트
 
 - `peach-planning-gate` — 작업 시작 전 계획 수립 게이트
-- `peach-evidence-gate` — 작업 완료 전 증거 수집 게이트
+- `peach-evidence-gate` — 작업 완료 전 증거 수집 게이트 (팀 스킬 완료 시 자동 후속 호출 가능)
 - `peach-handoff` — 세션 간 컨텍스트 인수인계
 
 ## 서브에이전트

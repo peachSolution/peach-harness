@@ -79,7 +79,7 @@ description: |
 | 신규 기능 풀스택 팀 작업 | `/peach-agent-team` |
 | 리팩토링 팀 작업 | `/peach-agent-team-refactor` |
 | 작업 시작 전 계획 수립 | `/peach-planning-gate` |
-| 작업 완료 전 증거 수집 | `/peach-evidence-gate` |
+| 작업 완료 전 증거 수집 | `/peach-evidence-gate` (팀 스킬에서는 자동 후속 호출) |
 | 세션 종료/인수인계 | `/peach-handoff` |
 
 ---
@@ -94,8 +94,8 @@ description: |
 
 ```
 "기존 코드를 수정하기 전에 기능 명세가 없네요.
-/peach-gen-feature-docs 로 먼저 as-is 문서를 만들면
-수정 범위 파악과 테스트 작성이 훨씬 쉬워집니다."
+/peach-gen-feature-docs 로 먼저 as-is context pack을 만들면
+수정 범위 파악, 결정 맥락 이해, 테스트 작성이 훨씬 쉬워집니다."
 ```
 
 ---

@@ -182,7 +182,7 @@ QA 실패 시 **Ralph Loop**(Vercel Labs) 패턴으로 구조화된 피드백을
 기능 100% 보존과 QA 통과가 모두 확인되어야 완료입니다.
 
 ### 1. 증거 수집
-`/peach-evidence-gate` 실행 → 증거 보고서 생성
+오케스트레이터가 `/peach-evidence-gate`를 자동 실행 → 증거 보고서 생성
 - 판정이 ❌이면 해당 항목 수정 후 재실행
 - 판정이 ✅이면 다음 단계 진행
 
@@ -205,6 +205,7 @@ layer: [all|backend|frontend]
 ✅ backend-qa: TDD X개 통과
 ✅ refactor-frontend: Frontend 리팩토링 완료
 ✅ frontend-qa: vue-tsc + lint + build 통과
+✅ evidence-gate: 증거 보고서 생성 + 완료 가능 판정
 
 리팩토링된 파일:
 Backend:

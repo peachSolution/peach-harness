@@ -1,9 +1,12 @@
 ---
 name: peach-evidence-gate
-description: 작업 완료 전 증거 수집 + 잔여 리스크 기록 게이트. "완료 확인", "evidence", "검증" 키워드로 트리거.
+description: Use when collecting completion evidence for a PeachSolution task, either because a team skill reached its final QA pass or because a standalone task needs manual verification before completion.
 ---
 
 # 증거 수집 게이트 스킬
+
+`peach-evidence-gate`는 작업 완료 직전 증거를 수집하는 품질 게이트다.
+`peach-agent-team`, `peach-agent-team-refactor`에서는 **최종 QA 통과 후 오케스트레이터가 자동 후속 단계로 호출**하며, 팀 스킬 없이 단독 작업을 마무리할 때는 수동으로 직접 호출할 수 있다.
 
 ## 페르소나
 
@@ -14,6 +17,11 @@ description: 작업 완료 전 증거 수집 + 잔여 리스크 기록 게이트
 - 잔여 리스크를 탐지하고 기록합니다
 - 증거 없는 완료 선언을 방지하는 품질 게이트 역할을 수행합니다
 ```
+
+## 호출 구조
+
+- **자동 모드**: `peach-agent-team`, `peach-agent-team-refactor` 완료 직전 자동 후속 호출
+- **수동 모드**: `/peach-evidence-gate`를 직접 실행하여 단독 작업의 완료 전 검증 수행
 
 ---
 

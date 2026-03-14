@@ -39,6 +39,7 @@ AI가 지켜야 할 규칙과 프로젝트 맥락을 주입합니다.
 - **백엔드 규칙**: 프레임워크 자동 감지, Service static 메서드, DB 규칙
 - **프론트엔드 규칙**: Composition API, Pinia Option API, NuxtUI 우선
 - **에러 처리**: 기능오류 → HTTP 200 + `{success:false}` | 시스템예외 → `ErrorHandler`
+- **유지보수 컨텍스트 자산**: `docs/기능별설명/` 아래 as-is 분석 문서를 만들어 후속 계획/구현/QA에 재주입
 
 ### Layer 2: 기준 골격 (test-data)
 
@@ -64,6 +65,7 @@ AI가 지켜야 할 규칙과 프로젝트 맥락을 주입합니다.
 skills/
 ├── peach-agent-team/          ← 팀 조율 (mode=backend/ui/fullstack)
 ├── peach-agent-team-refactor/ ← 리팩토링 조율 (layer=backend/frontend/all)
+├── peach-gen-feature-docs/    ← 기존 기능 as-is context pack 생성
 ├── peach-gen-backend/         ← Backend 생성 절차
 ├── peach-gen-store/           ← Store 생성 절차
 ├── peach-gen-ui/              ← UI 생성 절차
@@ -99,15 +101,14 @@ sequenceDiagram
         Skill->>QA: 검증 요청 (worktree 격리)
         QA-->>Skill: 검증 결과 + 피드백
         alt 통과
-            Skill-->>User: 완료
+            Skill->>Gate: /peach-evidence-gate
+            Gate-->>Skill: 증거 보고서 + 판정
+            Skill-->>User: 완료 보고
         else 실패
             Skill->>Dev: 피드백 주입 + 재수정
             Dev-->>Skill: 수정 완료
         end
     end
-
-    User->>Gate: /peach-evidence-gate
-    Gate-->>User: 증거 수집 완료
 
     User->>Gate: /peach-handoff
     Gate-->>User: 인수인계 기록 완료
@@ -175,16 +176,16 @@ flowchart LR
 ## 스킬 유형 분류
 
 ```mermaid
-pie title 스킬 포트폴리오 (16개)
-    "능력 향상형" : 3
-    "선호도 인코딩형" : 11
+pie title 스킬 포트폴리오 (19개)
+    "능력 향상형" : 4
+    "선호도 인코딩형" : 12
     "프로세스 게이트" : 3
 ```
 
 | 유형 | 스킬 | 검증 방법 |
 |------|------|----------|
-| **능력 향상형** (3) | gen-design, gen-prd, gen-feature-docs | 새 모델 시 A/B 테스트 |
-| **선호도 인코딩형** (11) | gen-backend, gen-db, gen-store, gen-ui, add-api, add-cron, add-print, refactor-backend, refactor-frontend, agent-team, agent-team-refactor | Eval 충실도 검증 |
+| **능력 향상형** (4) | gen-design, gen-prd, gen-feature-docs, ask | 새 모델 시 A/B 테스트 |
+| **선호도 인코딩형** (12) | gen-backend, gen-db, gen-store, gen-ui, gen-ui-proto, add-api, add-cron, add-print, refactor-backend, refactor-frontend, agent-team, agent-team-refactor | Eval 충실도 검증 |
 | **프로세스 게이트** (3) | planning-gate, evidence-gate, handoff | 워크플로우 품질 게이트 |
 
 ## 바이브코딩 vs 하네스 시스템
