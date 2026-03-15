@@ -298,8 +298,6 @@ front/src/modules/[모듈명]/
 
 ## Bounded Autonomy (자율 적응 규칙)
 
-> AGENTS.md §3 참조
-
 ### Must Follow (절대 준수)
 - `<script setup>` 필수
 - NuxtUI 컴포넌트 우선, AI Slop 금지

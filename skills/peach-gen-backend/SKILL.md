@@ -326,8 +326,6 @@ api/src/modules/[모듈명]/
 
 ## Bounded Autonomy (자율 적응 규칙)
 
-> AGENTS.md §3 참조
-
 ### Must Follow (절대 준수)
 - 모듈 경계: `_common`만 import
 - 네이밍: snake_case(테이블), kebab-case(파일), PascalCase(타입), camelCase(변수)
