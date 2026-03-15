@@ -120,6 +120,6 @@ docs/
 
 ### 중급 개발자
 
-- `/peach-harness-help`로 워크플로우 확인
+- `/peach-help`로 워크플로우 확인
 - `/peach-gen-spec`의 6단계 가이드를 따라 요구사항 정리
 - 팀 스킬(`/peach-agent-team`)로 QA까지 자동화

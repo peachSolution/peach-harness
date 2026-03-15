@@ -83,5 +83,5 @@ bun run build
 - 저장 위치: `docs/handoff/{년}/{월}/[YYMMDD]-[한글기능명].md`
 
 ### 스킬 카탈로그 참조
-전체 스킬 목록과 워크플로우는 `/peach-harness-help`를 실행하라.
+전체 스킬 목록과 워크플로우는 `/peach-help`를 실행하라.
 ```

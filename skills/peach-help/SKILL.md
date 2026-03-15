@@ -1,5 +1,5 @@
 ---
-name: peach-harness-help
+name: peach-help
 description: |
   하네스 시스템 안내 전문가. "어떤 스킬", "어떻게", "도움말", "help", "가이드", "어디서 시작" 키워드로 트리거. 스킬 추천, 워크플로우 안내, 시스템 개념 설명을 제공하는 읽기전용 온보딩 스킬. (skills.sh 글로벌 설치 안내 포함)
 model: sonnet
@@ -10,7 +10,7 @@ allowed-tools:
   - Bash
 ---
 
-# peach-harness-help — 하네스 시스템 안내
+# peach-help — 하네스 시스템 안내
 
 코드 생성 없이 질문에 답하는 **읽기전용 안내 스킬**이다.
 사용자가 무엇을 원하는지 파악하여 올바른 스킬이나 워크플로우로 안내한다.
@@ -69,7 +69,7 @@ allowed-tools:
 
 | 상황 | 스킬 |
 |------|------|
-| 어디서 시작할지 모르겠어 | `/peach-harness-help` (지금 여기) |
+| 어디서 시작할지 모르겠어 | `/peach-help` (지금 여기) |
 | 새 모듈/기능 요구사항 정리 | `/peach-gen-spec` |
 | DB 테이블 설계 | `/peach-gen-db` |
 | Backend API 생성 | `/peach-gen-backend` |

@@ -95,5 +95,5 @@ Frontend 테스트 설정: `VitestSetup.initializeTestEnvironment()` + `VitestSe
 - 세션 시작 시: `/peach-handoff` → load 모드
 - 저장 위치: `docs/handoff/{년}/{월}/[YYMMDD]-[한글기능명].md`
 
-전체 스킬 목록과 워크플로우: `/peach-harness-help`
+전체 스킬 목록과 워크플로우: `/peach-help`
 ```

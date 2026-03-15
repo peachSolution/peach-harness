@@ -137,7 +137,7 @@ AI가 가이드 코드와 다르게 생성하려면 다음 4가지를 모두 만
 
 | 스킬 | 용도 | 팀 역할 |
 |------|------|---------|
-| `peach-harness-help` | 하네스 시스템 안내 (스킬 추천, 워크플로우 안내) | - |
+| `peach-help` | 하네스 시스템 안내 (스킬 추천, 워크플로우 안내) | - |
 | `peach-gen-spec` | Spec 문서 생성 (대화형 요구사항 수집) | - |
 | `peach-gen-db` | DB DDL/마이그레이션 생성 | - |
 | `peach-gen-backend` | Backend API 생성 (bun test 필수) | backend-dev |
@@ -161,7 +161,7 @@ AI가 가이드 코드와 다르게 생성하려면 다음 4가지를 모두 만
 
 | 유형 | 스킬 | 테스트 전략 |
 |------|------|-----------|
-| 능력 향상형 (4) | gen-design, gen-spec, gen-feature-docs, harness-help | 새 모델 시 A/B 테스트 |
+| 능력 향상형 (4) | gen-design, gen-spec, gen-feature-docs, peach-help | 새 모델 시 A/B 테스트 |
 | 선호도 인코딩형 (12) | gen-backend, gen-db, gen-store, gen-ui, gen-ui-proto, add-api, add-cron, add-print, refactor-backend, refactor-frontend, agent-team, agent-team-refactor | Eval 충실도 검증 |
 | 프로세스 게이트 (3) | qa-gate, handoff, setup-harness | 워크플로우 품질 게이트 |
 
