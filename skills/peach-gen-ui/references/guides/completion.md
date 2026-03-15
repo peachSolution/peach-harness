@@ -38,7 +38,7 @@
 ## 완료 후 작업
 
 1. **라우터 등록**: `front/src/router.ts`에 추가
-2. **개발 서버 실행**: `cd front && bun dev`
+2. **개발 서버 실행**: `cd front && bun run dev`
 3. **브라우저 확인**: 화면 동작 테스트
 
 ---

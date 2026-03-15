@@ -40,9 +40,8 @@
 → `api/src/modules/test-data/docs/test-data.docs.ts` 참조
 - 모든 엔드포인트에 `detail: docs.엔드포인트명` 필수
 
-## 로깅/주석 규칙
+## 로깅 규칙
 - 비즈니스 로직에서 info 로깅 금지, ErrorHandler만 사용
-- 구분선/섹션/자명한 코드 설명 주석 금지
 
 ## DB 규칙 (Elysia)
 - PK: `int auto_increment`, 접미사 `seq`

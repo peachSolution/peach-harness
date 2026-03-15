@@ -85,8 +85,8 @@ allowed-tools:
 | 신규 기능 풀스택 팀 작업 | `/peach-agent-team` |
 | 리팩토링 팀 작업 | `/peach-agent-team-refactor` |
 | 작업 완료 전 QA 검증 | `/peach-qa-gate` (팀 스킬에서는 자동 후속 호출) |
-| 세션 종료/인수인계 | `/peach-handoff` |
 | 하네스 시스템 설정/갱신 | `/peach-setup-harness` |
+| UI Proto 하네스 설정 | `/peach-setup-ui-proto` |
 
 ---
 

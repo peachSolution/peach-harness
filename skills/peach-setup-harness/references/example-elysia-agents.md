@@ -19,6 +19,14 @@
 - 타입 규칙: 옵셔널(`?`)/`null`/`undefined` 금지
 - 가이드 코드: `api/src/modules/test-data/` · `front/src/modules/test-data/`
 
+### 네이밍 컨벤션
+| 대상 | 규칙 | 예시 |
+|------|------|------|
+| 테이블/칼럼 | snake_case | `user_info`, `test_data` |
+| 파일/폴더 | kebab-case | `test-data/`, `user-info.service.ts` |
+| 클래스/타입 | PascalCase | `TestData`, `UserInfoPagingDto` |
+| 변수/함수 | camelCase | `findOne`, `listParams` |
+
 ---
 
 ## 2. 백엔드 규칙 (api/)
@@ -36,9 +44,9 @@
 - DB PK: `int auto_increment`, 접미사 `seq`
 - 소프트 삭제: `is_delete` 컬럼
 - 로그: 비즈니스 로직에서 info 로깅 금지, `ErrorHandler`만 사용
-- 주석: 구분선/섹션/자명한 코드 설명 금지
 
 품질 검증: `bun test && bun run build && bun run lint:fixed`
+DB 명령: `bun run db:up-dev` · `bun run db:down-dev` · `bun run db:extract-schema`
 
 ---
 
@@ -54,9 +62,8 @@
 - Store 값은 반드시 `computed()`로 래핑
 - 모든 API는 Store 통해 호출
 - 5개 이상 TailwindCSS 클래스 → 배열 그룹화
-- 주석: 구분선/섹션/자명한 코드 설명 금지
 
-품질 검증: `bun run test && bun run build && bun run lint`
+품질 검증: `bun run test && bunx vue-tsc --noEmit && bun run build && bun run lint`
 
 ---
 
@@ -89,14 +96,8 @@ Frontend 테스트 설정: `VitestSetup.initializeTestEnvironment()` + `VitestSe
 ## 7. 하네스 시스템 연동
 
 ### 세션 시작
-1. `docs/handoff/` 디렉토리의 최신 파일 확인
-2. 미완료 작업이 있으면 요약 출력
-3. `git status && git branch` 확인
-
-### Handoff 사용법
-- 세션 종료 시: `/peach-handoff` → save 모드
-- 세션 시작 시: `/peach-handoff` → load 모드
-- 저장 위치: `docs/handoff/{년}/{월}/[YYMMDD]-[한글기능명].md`
+1. `git status && git branch` 확인
+2. 미완료 작업이 있으면 `docs/spec/` 또는 `git log`로 컨텍스트 파악
 
 전체 스킬 목록과 워크플로우: `/peach-help`
 ```

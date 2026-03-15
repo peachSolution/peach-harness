@@ -9,7 +9,7 @@
       "name": "peach-harness-plugin",
       "source": "./",
       "description": "스킬, 서브에이전트, QA 파이프라인을 통합한 Claude Code 플러그인",
-      "version": "1.5.0"
+      "version": "1.7.0"
     }
   ]
 }

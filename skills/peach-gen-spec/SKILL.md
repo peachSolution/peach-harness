@@ -411,10 +411,12 @@ flowchart LR
 
 ## 생성 파일 구조
 
+개발자 아이디: `whoami` (OS 사용자명) 사용. 실패 시 `git config user.name` fallback.
+
 ```
 docs/spec/{년}/{월}/
-└── [YYMMDD]-[한글기능명].md
-    예: 260315-공지사항-게시판.md
+└── [개발자아이디]-[YYMMDD]-[한글기능명].md
+    예: nettem-260315-공지사항-게시판.md
 ```
 
 ---
@@ -439,7 +441,7 @@ docs/spec/{년}/{월}/
 ```
 Spec 생성이 완료되었습니다.
 
-📄 파일: docs/spec/{년}/{월}/[파일명].md
+📄 파일: docs/spec/{년}/{월}/[개발자아이디]-[YYMMDD]-[한글기능명].md
 
 **다음 단계:**
 - `/peach-gen-db` - DB 스키마 → 마이그레이션 파일 생성

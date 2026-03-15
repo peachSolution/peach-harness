@@ -61,5 +61,5 @@ bun start && bun test && bun run lint:fixed
 
 ### Frontend
 ```bash
-bun run dev && bun run test && npx vue-tsc --noEmit && bun run lint:fix && bun run build
+bun run dev && bun run test && bunx vue-tsc --noEmit && bun run lint:fix && bun run build
 ```
