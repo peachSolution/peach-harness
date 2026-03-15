@@ -8,14 +8,14 @@
 - FK 없음: Foreign Key 제약조건 생성 금지
 
 ## 네이밍 컨벤션
-| 대상 | 규칙 |
-|------|------|
-| 테이블/컬럼 | snake_case |
-| 파일/폴더 | kebab-case |
-| 클래스/타입 | PascalCase |
-| 변수/함수 | camelCase |
-| 상수/환경변수 | SCREAMING_SNAKE_CASE |
-| URL 경로 | kebab-case |
+| 대상 | 규칙 | 예시 |
+|------|------|------|
+| 테이블/컬럼 | snake_case | `user_info`, `test_data` |
+| 파일/폴더 | kebab-case | `test-data/`, `user-info.service.ts` |
+| 클래스/타입 | PascalCase | `TestData`, `UserInfoPagingDto` |
+| 변수/함수 | camelCase | `findOne`, `listParams` |
+| 상수/환경변수 | SCREAMING_SNAKE_CASE | `MAX_RETRY_COUNT` |
+| URL 경로 | kebab-case | `/user-info`, `/test-data` |
 
 ## 타입 규칙
 - 옵셔널(`?`) 금지

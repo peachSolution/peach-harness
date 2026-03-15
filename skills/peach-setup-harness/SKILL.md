@@ -222,8 +222,10 @@ AGENTS.md를 새로 생성하거나 보완할 때 아래 원칙을 적용한다.
 - TDD/실DB/모킹 금지
 - 완전 독립 도메인
 - 하네스 연동 섹션
+- 네이밍 컨벤션 (4종: snake_case, kebab-case, PascalCase, camelCase)
+- DB 마이그레이션 명령어 (db:up-dev, db:down-dev, db:extract-schema)
 
-**목표 크기:** 60줄 이내 (하네스 연동 섹션 포함 ~80줄 허용)
+**목표 크기:** 80줄 이내 (하네스 연동 + 네이밍 컨벤션 포함 ~100줄 허용)
 
 ---
 

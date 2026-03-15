@@ -19,6 +19,14 @@
 - 타입 규칙: 옵셔널(`?`)/`null`/`undefined` 금지
 - 가이드 코드: `api/src/modules/test-data/` · `front/src/modules/test-data/`
 
+### 네이밍 컨벤션
+| 대상 | 규칙 | 예시 |
+|------|------|------|
+| 테이블/칼럼 | snake_case | `user_info`, `test_data` |
+| 파일/폴더 | kebab-case | `test-data/`, `user-info.service.ts` |
+| 클래스/타입 | PascalCase | `TestData`, `UserInfoPagingDto` |
+| 변수/함수 | camelCase | `findOne`, `listParams` |
+
 ---
 
 ## 2. 백엔드 규칙 (api/)
@@ -39,6 +47,7 @@
 - 주석: 구분선/섹션/자명한 코드 설명 금지
 
 품질 검증: `bun test && bun run build && bun run lint:fixed`
+DB 명령: `bun run db:up-dev` · `bun run db:down-dev` · `bun run db:extract-schema`
 
 ---
 
