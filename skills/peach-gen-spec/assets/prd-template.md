@@ -113,11 +113,23 @@ ER_RELATIONS
 
 ### 패턴: UI_PATTERN_FULL_NAME
 
+### 검색 조건
+SEARCH_CONDITIONS
+
+### 목록 컬럼
+LIST_COLUMNS
+
+### 화면별 필드 구분
+FIELD_MAPPING
+
 ### 화면 구성
 UI_SCREEN_COMPOSITION
 
 ### 검증
 UI_VALIDATION_RULES
+
+### 테스트 시나리오
+TEST_SCENARIOS
 
 ---
 
