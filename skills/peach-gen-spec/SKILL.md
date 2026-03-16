@@ -99,8 +99,8 @@ DATABASE_URL: 'mysql://...'       # → MySQL 모드
 AI가 주입된 컨텍스트를 분석하여 질의응답 + 제안 진행.
 
 ### 시나리오 B: 기존 개선
-peach-gen-feature-docs로 생성한 Context Pack(개요/로직/명세/TDD가이드) 중
-개발자가 필요한 문서를 선택적으로 주입. AI가 주입된 문서 기반으로 변경 Spec 제안.
+peach-gen-feature-docs로 생성한 Context Pack 폴더를 컨텍스트로 주입.
+AI가 개요.md의 인덱스를 읽고 필요한 문서를 자동 선택하여 변경 Spec 제안.
 
 ### 시나리오 C: UI Proto 선행
 기획팀이 만든 UI Proto 화면을 gen-ui로 실제 프로젝트에 먼저 이식.
