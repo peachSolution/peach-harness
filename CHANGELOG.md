@@ -5,6 +5,18 @@
 
 ---
 
+## [v1.9.1] - 2026-03-19
+
+### Changed
+- `AGENTS.md` 및 setup 스킬 references에 주석 원칙 추가 (비즈니스 로직·매직넘버·상태 전이·환경 제한 조건)
+- `peach-release` 스킬 개선: 단일 승인 일괄 실행 + 사용자 버전 선택 방식으로 변경
+- `peach-agent-team` Bounded Autonomy 분석 단계 강화
+
+### Removed
+- `agents/` 디렉토리 제거 — 에이전트 정의를 `skills/*/references/`로 통합
+
+---
+
 ## [v1.9.0] - 2026-03-19
 
 ### Changed
