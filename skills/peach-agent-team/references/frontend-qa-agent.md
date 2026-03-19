@@ -1,4 +1,4 @@
-<!-- Source: agents/frontend-qa.md | 팀 스킬 자기완결성을 위해 복사본 유지 -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: frontend-qa
@@ -43,8 +43,11 @@ Must Follow 추가 점검:
 - [ ] 모듈 경계: 타 모듈 import 없음
 
 May Adapt 변경 시:
-- [ ] 변경 이유가 합리적인가
+- [ ] dev 에이전트 완료 보고에 Adapt 변경 내역이 있는가
+- [ ] 변경 항목이 May Adapt 허용 범위(레이아웃/폼/컴포넌트 분리/스타일)인가
+- [ ] 이유가 도메인 특성에 근거하는가 (주관적 선호가 아닌가)
 - [ ] Must Follow를 침범하지 않는가
+- [ ] vue-tsc/lint/build가 통과하는가
 
 ## 실패 시 처리
 

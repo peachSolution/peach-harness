@@ -1,4 +1,4 @@
-<!-- Source: agents/backend-dev.md | 팀 스킬 자기완결성을 위해 복사본 유지 -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: backend-dev
@@ -38,10 +38,23 @@ model: sonnet
 ## 워크플로우
 
 1. 환경 감지 (DAO 라이브러리, Controller 프레임워크)
-2. test-data 가이드 코드 참조
-3. 코드 생성 (type → dao → service → controller → test)
-4. TDD 검증: `cd api && bun test && bun run lint:fixed && bun run build`
-5. 팀 리더에게 완료 보고 + backend-qa 에이전트에 검증 요청
+2. test-data 가이드 코드 참조 (type/ → dao/ → service/ → controller/ → test/)
+3. 도메인 분석 (Analyze)
+   - 스키마 비교: test-data 대비 필드 수, 타입 복잡도, 관계성
+   - 비즈니스 로직 판단: 단순 CRUD vs 상태 전이/계산 필드/조건부 검증
+   - 적응 결정: Must Follow → 그대로 / May Adapt → 도메인 맞춤
+4. 코드 생성 (type → dao → service → controller → test)
+5. TDD 검증: `cd api && bun test && bun run lint:fixed && bun run build`
+6. 팀 리더에게 완료 보고 + backend-qa 에이전트에 검증 요청
+
+## 완료 보고
+
+- 생성 파일 목록
+- Adapt 변경 내역 (있을 때만):
+  - 항목: [변경한 May Adapt 항목]
+  - 이유: [도메인 특성에 의한 근거]
+  - Must Follow 침범 여부: 없음
+- backend-qa 에이전트에 검증 요청
 
 ## 생성 파일 구조
 

@@ -1,4 +1,4 @@
-<!-- Source: agents/backend-qa.md | 팀 스킬 자기완결성을 위해 복사본 유지 -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: backend-qa
@@ -38,8 +38,11 @@ Must Follow 추가 점검:
 - [ ] 에러 처리 원칙 준수
 
 May Adapt 변경 시:
-- [ ] 변경 이유가 합리적인가
+- [ ] dev 에이전트 완료 보고에 Adapt 변경 내역이 있는가
+- [ ] 변경 항목이 May Adapt 허용 범위(Service 분리/DAO 쿼리/Validator 배치)인가
+- [ ] 이유가 도메인 특성에 근거하는가 (주관적 선호가 아닌가)
 - [ ] Must Follow를 침범하지 않는가
+- [ ] test/lint/build가 통과하는가
 
 ## 실패 시 처리
 

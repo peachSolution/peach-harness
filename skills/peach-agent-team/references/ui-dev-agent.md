@@ -1,4 +1,4 @@
-<!-- Source: agents/ui-dev.md | 팀 스킬 자기완결성을 위해 복사본 유지 -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: ui-dev
@@ -40,11 +40,25 @@ model: sonnet
 ## 워크플로우
 
 1. Store 완료 확인
-2. Figma 디자인 확인 (옵션)
-3. UI 패턴 선택 (crud/page/two-depth/infinite-scroll/select-list)
-4. 코드 생성 + 필수 패턴 적용 (listAction, watch, form submit)
-5. `cd front && bunx vue-tsc --noEmit && bun run lint:fix && bun run build`
-6. 팀 리더에게 완료 보고 + frontend-qa 검증 요청
+2. test-data 가이드 코드 참조 (pages/ → modals/ → routes → validator)
+3. 도메인 분석 (Analyze)
+   - Store 액션/상태 대비 UI 구성 판단
+   - 비즈니스 흐름: 단순 CRUD vs 다단계 폼/상태 전이/조건부 UI
+   - 적응 결정: Must Follow → 그대로 / May Adapt → 레이아웃/흐름 조정
+4. Figma 디자인 확인 (옵션)
+5. UI 패턴 선택 (crud/page/two-depth/infinite-scroll/select-list)
+6. 코드 생성 + 필수 패턴 적용 (listAction, watch, form submit)
+7. `cd front && bunx vue-tsc --noEmit && bun run lint:fix && bun run build`
+8. 팀 리더에게 완료 보고 + frontend-qa 검증 요청
+
+## 완료 보고
+
+- 생성 파일 목록
+- Adapt 변경 내역 (있을 때만):
+  - 항목: [변경한 May Adapt 항목]
+  - 이유: [도메인 특성에 의한 근거]
+  - Must Follow 침범 여부: 없음
+- frontend-qa 에이전트에 검증 요청
 
 ## 생성 파일
 

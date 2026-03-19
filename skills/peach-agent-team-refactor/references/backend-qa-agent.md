@@ -1,4 +1,4 @@
-<!-- Source: agents/backend-qa.md | 팀 스킬 자기완결성을 위해 복사본 유지 (의도된 중복) -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: backend-qa
@@ -28,7 +28,7 @@ isolation: worktree
 | 4 | bun test 통과 | `cd api && bun test` |
 | 5 | lint 통과 | `cd api && bun run lint:fixed` |
 | 6 | build 성공 | `cd api && bun run build` |
-| 7 | 기능 100% 보존 확인 | API 스펙 비교 |
+| 7 | 기능 100% 보존 확인 | dev 에이전트 분석 보고의 보존 로직 목록과 대조 |
 
 ## Bounded Autonomy 검증
 
@@ -39,8 +39,11 @@ Must Follow 추가 점검:
 - [ ] 기존 기능 100% 보존
 
 May Adapt 변경 시:
-- [ ] 변경 이유가 합리적인가
+- [ ] dev 에이전트 완료 보고에 Adapt 변경 내역이 있는가
+- [ ] 변경 항목이 May Adapt 허용 범위(Service 분리/DAO 쿼리/Validator 배치)인가
+- [ ] 이유가 도메인 특성에 근거하는가 (주관적 선호가 아닌가)
 - [ ] Must Follow를 침범하지 않는가
+- [ ] test/lint/build가 통과하는가
 
 ## 실패 시 처리
 

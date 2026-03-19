@@ -110,6 +110,23 @@ ls front/src/modules/test-data/
 # from 'sql-template-strings' → append 방식
 ```
 
+### 1.5. 도메인 분석 (Analyze)
+
+오케스트레이터가 대상 도메인의 스키마를 읽고, test-data 대비 차이점을 파악한 뒤 서브에이전트 프롬프트에 컨텍스트로 주입합니다.
+
+```bash
+# 대상 스키마 읽기
+cat api/db/schema/[도메인]/[테이블].sql
+```
+
+**분석 항목**:
+1. 스키마 비교: test-data 대비 필드 수, 타입 복잡도, 관계성
+2. 비즈니스 로직 판단: 단순 CRUD vs 상태 전이/계산 필드/조건부 검증
+3. 적응 결정: Must Follow → 그대로 / May Adapt → 도메인 맞춤 항목 식별
+
+**분석 결과를 서브에이전트에게 전달**:
+- 각 에이전트 생성 시 프롬프트에 "이 도메인의 특성: [분석 결과]"를 포함
+
 ### 2. 팀 구성 다이어그램
 
 **mode=backend**

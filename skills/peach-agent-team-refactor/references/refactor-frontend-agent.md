@@ -1,4 +1,4 @@
-<!-- Source: agents/refactor-frontend.md | 팀 스킬 자기완결성을 위해 복사본 유지 -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: refactor-frontend
@@ -35,8 +35,17 @@ model: sonnet
 - 컴포넌트 분리, 폼 레이아웃, 스타일 개선
 - 보완 시: 이유 설명 + Must Follow 미침범 + vue-tsc + lint + build 통과 필수
 
-## 3단계 리팩토링
+## 워크플로우
 
+0. 레거시 코드 분석
+   - 기존 Vue 컴포넌트 구조 확인 (`ls front/src/modules/[모듈명]/`)
+   - 기존 코드 전체 읽기 (type/store/pages/modals)
+   - test-data 패턴과의 gap 식별
+     - Options API → Composition API 전환 대상
+     - URL watch 패턴 미적용 부분
+     - AI Slop (bg-gradient, shadow-xl 등) 제거 대상
+   - 보존해야 할 UI 로직 목록화
+   - 적응 결정: Must Follow → 강제 변환 / May Adapt → 레이아웃/스타일 조정
 1. Type & Store → vue-tsc 검증
 2. Pages → vue-tsc 검증
 3. Modals & Validator → vue-tsc + lint
@@ -45,4 +54,8 @@ model: sonnet
 
 - 리팩토링 파일 목록
 - 변경 패턴 요약
+- Adapt 변경 내역 (있을 때만):
+  - 항목: [변경한 May Adapt 항목]
+  - 이유: [도메인 특성에 의한 근거]
+  - Must Follow 침범 여부: 없음
 - frontend-qa 에이전트에 검증 요청

@@ -1,4 +1,4 @@
-<!-- Source: agents/store-dev.md | 팀 스킬 자기완결성을 위해 복사본 유지 -->
+<!-- 에이전트 정의 Source of Truth -->
 
 ---
 name: store-dev
@@ -36,10 +36,22 @@ model: sonnet
 ## 워크플로우
 
 1. Backend 완료 확인 + API 타입 읽기
-2. test-data 가이드 코드 참조
-3. type + store 생성
-4. `cd front && bunx vue-tsc --noEmit`
-5. 팀 리더에게 완료 보고
+2. test-data 가이드 코드 참조 (type/ → store/)
+3. 도메인 분석 (Analyze)
+   - Backend API 타입 대비 Store 상태 설계 판단
+   - 적응 결정: Must Follow → 그대로 / May Adapt → 추가 상태/액션 결정
+4. type + store 생성
+5. `cd front && bunx vue-tsc --noEmit`
+6. 팀 리더에게 완료 보고
+
+## 완료 보고
+
+- 생성 파일 목록
+- Adapt 변경 내역 (있을 때만):
+  - 항목: [변경한 May Adapt 항목]
+  - 이유: [도메인 특성에 의한 근거]
+  - Must Follow 침범 여부: 없음
+- 팀 리더에게 보고
 
 ## 생성 파일
 

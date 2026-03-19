@@ -105,6 +105,29 @@ head -3 api/src/modules/test-data/controller/test-data.controller.ts
 ls api/db/schema/
 ```
 
+### 1.5. 레거시 코드 분석 (Analyze)
+
+오케스트레이터가 레거시 모듈의 현재 상태를 분석하고, 서브에이전트 프롬프트에 컨텍스트로 주입합니다.
+
+```bash
+# 레거시 코드 구조 파악
+ls -la api/src/modules/[모듈명]/
+ls -la front/src/modules/[모듈명]/
+
+# 주요 파일 읽기
+cat api/src/modules/[모듈명]/**/*.ts
+cat front/src/modules/[모듈명]/**/*.{vue,ts}
+```
+
+**분석 항목**:
+1. 구조 gap: test-data 대비 파일 분리 상태, 네이밍 불일치
+2. 로직 gap: test-data에 없는 비즈니스 로직 식별
+3. 보존 목록: 기능으로서 반드시 유지해야 할 로직 목록화
+4. 적응 결정: Must Follow → 강제 변환 / May Adapt → 보존할 로직과 변환 방식
+
+**분석 결과를 서브에이전트에게 전달**:
+- 각 에이전트 생성 시 프롬프트에 "레거시 분석 결과: [gap 목록], 보존 로직: [목록]"을 포함
+
 ### 2. 팀 구성 다이어그램
 
 **layer=all**
