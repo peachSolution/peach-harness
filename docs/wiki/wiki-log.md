@@ -20,7 +20,7 @@
 - WIKI-AGENTS.md, wiki-index.md, wiki-log.md 초기화
 - entities/project-overview.md 생성
 - entities/skill-wiki-code.md 생성 (wiki-code 스킬)
-- entities/skill-peach-release.md 생성 (peach-release 스킬)
+- entities/skill-release.md 생성 (release 스킬)
 - concepts/skill-architecture.md 생성
 - AGENTS.md에 wiki 참조 섹션 추가
 - qmd update && qmd embed 실행

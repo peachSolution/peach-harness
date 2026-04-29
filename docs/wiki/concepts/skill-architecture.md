@@ -47,5 +47,5 @@ skills/           ← 배포 스킬 (마켓플레이스 배포, 타 프로젝트
 ## 연결된 위키 페이지
 
 - [[entities/project-overview]]
-- [[entities/skill-peach-release]]
+- [[entities/skill-release]]
 - [[entities/skill-wiki-code]]

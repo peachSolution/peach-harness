@@ -35,7 +35,7 @@ related_files: [docs/08-wiki-feature-docs-경계규칙.md]
 ## 연결된 위키 페이지
 
 - [[entities/skill-peach-wiki]]
-- [[entities/skill-peach-release]]
+- [[entities/skill-release]]
 - [[concepts/skill-architecture]]
 
 ## 원본 소스

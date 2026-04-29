@@ -39,13 +39,14 @@ report() {
 # 1) 내부 도메인 — 화이트리스트 외 모든 .co.kr/.com/.net/.io/.org
 DOMAIN_HITS=$(echo "$ADDED" \
   | grep -iE '[a-z0-9-]+\.(co\.kr|com|net|io|org)' \
-  | grep -vE 'example\.com|example\.co\.kr|github\.com|githubusercontent|google\.com|figma\.com|npmjs|playwright\.dev|anthropic|claude\.ai|nuxt|tailwindcss|kakao|naver|daum|w3\.org|semver\.org|keepachangelog\.com|spec\.openapis|jsonschema|mozilla|wikipedia' \
+  | grep -vE 'example\.com|example\.co\.kr|github\.com|githubusercontent|google\.com|figma\.com|npmjs|playwright\.dev|anthropic|claude\.ai|nuxt|tailwindcss|kakao|naver|daum|w3\.org|semver\.org|keepachangelog\.com|spec\.openapis|jsonschema|mozilla|wikipedia|claude\.com' \
   || true)
 report "내부 도메인 의심" "$DOMAIN_HITS"
 
 # 2) 비밀번호 / API 키 / 토큰
 SECRET_HITS=$(echo "$ADDED" \
   | grep -iE 'password[[:space:]]*[=:]|passwd[[:space:]]*[=:]|pwd[[:space:]]*[=:]|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}|Bearer[[:space:]]+[A-Za-z0-9]{20,}' \
+  | grep -vE '`password=`|`passwd=`|`pwd=`|\{DB_PASSWORD\}' \
   || true)
 report "비밀번호·토큰" "$SECRET_HITS"
 

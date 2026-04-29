@@ -21,7 +21,7 @@ related_files: [readme.md, agents.md, .claude-plugin/plugin.json, .claude-plugin
 ```
 peach-harness/
 ├── skills/             ← 배포 스킬 (33개, `peach-wiki` 포함)
-├── .claude/skills/     ← 로컬 전용 스킬 (`peach-release`)
+├── .claude/skills/     ← 로컬 전용 스킬 (`release`)
 ├── .claude-plugin/     ← 버전·마켓플레이스 메타
 ├── docs/               ← 아키텍처·워크플로우 문서
 ├── docs/wiki/          ← LLM 전용 누적형 위키 레이어
@@ -46,7 +46,7 @@ peach-harness/
 
 | 스킬 | 역할 |
 |------|------|
-| peach-release | 릴리스 자동화 (버전 업 → PR → GitHub Release) |
+| release | 릴리스 자동화 (버전 업 → PR → GitHub Release) |
 
 `wiki-code`는 삭제된 과거 로컬 스킬이며, 현재는 `skills/peach-wiki/`가 배포 스킬로 통합됐다.
 
@@ -59,7 +59,7 @@ peach-harness/
 ## 연결된 위키 페이지
 
 - [[entities/skill-peach-wiki]]
-- [[entities/skill-peach-release]]
+- [[entities/skill-release]]
 - [[entities/skill-wiki-code]]
 - [[entities/skill-wiki-integration-decision]]
 - [[concepts/skill-architecture]]

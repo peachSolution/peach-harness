@@ -119,7 +119,7 @@ peach-harness/
 │   └── plugin.json                  # 플러그인 정의
 ├── .claude/
 │   └── skills/                      # 로컬 전용 스킬 (배포 제외 — Claude Code 전용)
-│       └── peach-release/           # 릴리스 자동화 (peach-harness 저장소 전용)
+│       └── release/                 # 릴리스 자동화 (peach-harness 저장소 전용)
 ├── skills/                          # 스킬 (실행 절차 정의, 모든 AI 도구 공통)
 │   ├── peach-team-dev/              # 신규 기능 풀스택 팀 (Spec/proto/prompt 모드)
 │   │   └── references/              # 에이전트 정의 복사본 (자기완결성)
@@ -209,10 +209,10 @@ peach-harness/
 
 | 스킬 | 용도 | 위치 |
 |------|------|------|
-| `peach-release` | 릴리스 자동화 (버전 업 → PR → GitHub Release) | `.claude/skills/peach-release/` |
+| `release` | 릴리스 자동화 (버전 업 → PR → GitHub Release) | `.claude/skills/release/` |
 
 > **배포 제외 메커니즘**: SKILL.md frontmatter에 `metadata.internal: true`를 설정하면 `npx skills add`에서 자동 제외됩니다.
-> `--skill '*'`이나 `--skill peach-release`로 명시적 지정하면 internal 스킬도 포함됩니다.
+> `--skill '*'`이나 `--skill release`로 명시적 지정하면 internal 스킬도 포함됩니다.
 
 ### 스킬 유형 분류
 
