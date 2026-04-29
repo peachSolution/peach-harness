@@ -32,6 +32,14 @@ docs/e2e-suite/
         회원가입-로그인-검증.md
 ```
 
+## Chrome Beta 실행 불변 규칙
+
+Chrome Beta를 CDP 모드로 실행할 때는 고정 프로필 옵션이 필수다. 프로필 옵션이 빠진 실행은 세션 유지 실패로 간주한다.
+
+- 허용: `cd e2e && ./e2e.sh chrome`
+- 직접 실행 시 필수 옵션: `--remote-debugging-port=9222`, `--remote-allow-origins=*`, `--user-data-dir=$HOME/.chrome-beta-e2e-profile`, `--disable-extensions`
+- 금지: `open -a "Google Chrome Beta"` 단독 실행, `--user-data-dir` 없는 Chrome Beta 실행, 다른 프로필 경로 임의 사용, 기본 Chrome 또는 다른 브라우저 우회
+
 ## 워크플로우
 
 ### 공통: 환경 확인
@@ -47,6 +55,8 @@ cd e2e && ./e2e.sh status
 2. `sleep 4` 대기
 3. `cd e2e && ./e2e.sh status` 재확인
 4. 여전히 미연결이면 사용자에게 `cd e2e && ./e2e.sh chrome` 수동 실행을 안내한다
+
+> `./e2e.sh chrome`은 고정 프로필(`$HOME/.chrome-beta-e2e-profile`)로 Chrome Beta를 실행하는 표준 경로다. 이 명령 대신 직접 Chrome을 실행할 때도 `--user-data-dir` 옵션을 생략하지 않는다.
 
 탭 목록을 사용자에게 보여주고 탭 번호 확인.
 

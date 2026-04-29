@@ -32,11 +32,20 @@ description: |
 
 ## 강제 게이트
 
+- Chrome Beta 실행은 `cd e2e && ./e2e.sh chrome`을 우선 사용한다. 직접 실행이 필요하면 반드시 `--user-data-dir=$HOME/.chrome-beta-e2e-profile`을 포함한다.
 - `./e2e.sh status`로 탭 목록을 확인하고 사용자가 실행 탭을 지정하기 전에는 `./e2e.sh run`, `agent-browser eval`, 탭 전환을 시작하지 않는다.
 - Google 로그인, OAuth, 관리자 콘솔, 결제, 기존 Chrome Beta 프로필 세션 유지가 핵심인 작업은
   시나리오 생성/분석까지만 진행하고, 실제 실행은 사용자 확인 후 시작한다.
 - `agent-browser` 디버깅이 비정상이면 OS 레벨 브라우저 우회(`open -a`, 다른 브라우저 실행, 다른 프로필 경로 사용)를 하지 않는다.
 - 로그인/2차 인증이 필요하면 AI가 직접 처리하지 않고, 사용자가 Chrome Beta 고정 프로필에서 먼저 인증을 완료하도록 안내한다.
+
+## Chrome Beta 실행 불변 규칙
+
+Chrome Beta를 CDP 모드로 실행할 때는 고정 프로필 옵션이 필수다. 프로필 옵션이 빠진 실행은 세션 유지 실패로 간주한다.
+
+- 허용: `cd e2e && ./e2e.sh chrome`
+- 직접 실행 시 필수 옵션: `--remote-debugging-port=9222`, `--remote-allow-origins=*`, `--user-data-dir=$HOME/.chrome-beta-e2e-profile`, `--disable-extensions`
+- 금지: `open -a "Google Chrome Beta"` 단독 실행, `--user-data-dir` 없는 Chrome Beta 실행, 다른 프로필 경로 임의 사용, 기본 Chrome 또는 다른 브라우저 우회
 
 ## 워크플로우
 
@@ -53,6 +62,8 @@ CDP 미연결이면 아래 순서로 자동 복구를 먼저 시도한다.
 2. `sleep 4` 대기
 3. `cd e2e && ./e2e.sh status` 재확인
 4. 여전히 미연결이면 사용자에게 `cd e2e && ./e2e.sh chrome` 수동 실행을 안내한다
+
+> `./e2e.sh chrome`은 고정 프로필(`$HOME/.chrome-beta-e2e-profile`)로 Chrome Beta를 실행하는 표준 경로다. 이 명령 대신 직접 Chrome을 실행할 때도 `--user-data-dir` 옵션을 생략하지 않는다.
 
 ```bash
 cd e2e && ./e2e.sh status
