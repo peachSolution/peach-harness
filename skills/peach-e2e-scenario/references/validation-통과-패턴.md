@@ -138,3 +138,37 @@ agent-browser eval "JSON.stringify(Array.from(document.querySelectorAll('input:i
 ```
 
 이 결과를 기반으로 어떤 필드가 validation에 걸리는지 파악하고, 위 패턴을 적용한다.
+
+---
+
+## 7. 서버 사이드 이력 조건 — 테스트 전 상태 초기화
+
+서버가 **값이 변경될 때만** 이력/로그를 기록하는 로직인 경우,
+이전 실행에서 같은 값이 남아 있으면 재저장해도 이력이 생기지 않아 테스트 오탐 발생.
+
+**증상**: "이력 없음" / "검색결과가 없습니다"가 연속 실행 시 반복적으로 나타남
+
+**해결**: 검증 전 대상 필드를 중립값(NULL/미선택)으로 초기화.
+
+```javascript
+// [0] 이전 실행 상태 초기화 (NULL로 리셋)
+let iframe = await openModalIframe(page, pk);
+await iframe.locator('select[name="status"]').selectOption('');  // NULL/미선택
+await iframe.locator('button[type=submit]').click();
+await page.waitForTimeout(300);
+
+// [1] 이제 Y로 저장 → NULL→Y 변경 → 이력 생성 보장
+iframe = await openModalIframe(page, pk);
+await iframe.locator('select[name="status"]').selectOption('Y');
+await iframe.locator('button[type=submit]').click();
+```
+
+> 위 셀렉터(`select[name="status"]`, submit 버튼)는 예시. 실제 폼 구조에 맞게 교체.
+
+---
+
+## 8. captcha가 포함된 화면
+
+captcha가 있는 등록/제출 화면은 시나리오 작성 시 백엔드와 우회 방안을 먼저 협의한다.
+스킬 차원의 표준 우회 코드는 제공하지 않는다 — 서버 측 분기가 영구적 백도어가 될 위험이 있어,
+프로젝트별 보안 정책에 맞춰 별도로 결정한다.

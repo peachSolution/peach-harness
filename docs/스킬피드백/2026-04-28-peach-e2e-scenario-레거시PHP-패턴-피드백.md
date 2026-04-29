@@ -1,16 +1,16 @@
 ---
-status: pending
+status: completed
 target_skill: peach-e2e-scenario
-severity: 높음 2 / 중간 5 / 낮음 3
-completed_at:
-applied_by:
+severity: 높음 2 / 중간 4 / 낮음 3
+completed_at: 2026-04-29
+applied_by: Spike
 ---
 
 # peach-e2e-scenario 피드백 — 2026-04-28
 
 > **대상 스킬**: peach-e2e-scenario
 > **작성 근거**: {PROJECT} {기능명} 항목추가 E2E 작업 — PHP 레거시 MVC + jQuery UI + hash 라우터 환경에서 8개 시나리오 작성·실행하며 발견
-> **심각도 요약**: 높음 2건 / 중간 5건 / 낮음 3건
+> **심각도 요약**: 높음 2건 / 중간 4건 / 낮음 3건
 
 ---
 
@@ -24,10 +24,9 @@ applied_by:
 | 4 | AJAX 결과 폴링 — `waitForTimeout()` 고정 대기로는 느린 응답 시 오탐 | 중간 | X (없음, 자동수정-판단트리.md:117에 navigation timeout만 있음) | 자동수정-판단트리.md:117 |
 | 5 | 다단계 시나리오 간 PK 공유 패턴 (독립 프로세스 간 상태 전달) | 중간 | X (없음, peach-e2e-suite SKILL.md에 env var 방식만 있음) | — |
 | 6 | CDP UA 변경 후 다음 시나리오에서 "Target page, context or browser has been closed" 에러 | 중간 | X (없음, 자동수정-판단트리.md:107에 에러 패턴만 있고 UA 원인 명시 없음) | 자동수정-판단트리.md:107 |
-| 7 | E2E_BYPASS captcha 우회 패턴 (서버 측 isAdmin() || random_code 조건 활용) | 중간 | X (없음) | — |
-| 8 | localStorage 기반 searchParam 복원 — `eval(setItem)` 먼저 후 `goto` 순서 필수 | 낮음 | X (없음) | — |
-| 9 | 테스트 데이터 식별자 — 한글 2자+숫자4자 랜덤 이름으로 실 데이터와 구분 | 낮음 | X (없음) | — |
-| 10 | 테스트 데이터 이력 유지(DELETE 금지) — finally DELETE 시 관리자 목록에서 데이터 사라져 교차 검증 실패 | 낮음 | X (없음) | — |
+| 7 | localStorage 기반 searchParam 복원 — `eval(setItem)` 먼저 후 `goto` 순서 필수 | 낮음 | X (없음) | — |
+| 8 | 테스트 데이터 식별자 — 한글 2자+숫자4자 랜덤 이름으로 실 데이터와 구분 | 낮음 | X (없음) | — |
+| 9 | 테스트 데이터 이력 유지(DELETE 금지) — finally DELETE 시 관리자 목록에서 데이터 사라져 교차 검증 실패 | 낮음 | X (없음) | — |
 
 ---
 
@@ -182,28 +181,7 @@ if (!SINGO) throw new Error('state.json 없음. 02-등록 시나리오를 먼저
 
 ---
 
-### 문제 #7: E2E_BYPASS captcha 우회
-
-**원인**: 사용자 측 insertSubmit에 captcha가 있어 E2E 등록이 불가. 서버에 `isAdmin() || $_POST['random_code'] === 'E2E_BYPASS'` 조건으로 우회 로직이 있음.
-
-**해결**: page.evaluate에서 fetch로 직접 POST 시 `random_code: 'E2E_BYPASS'` 포함.
-
-```javascript
-const insertResp = await page.evaluate(({ fields, bypass }) => {
-    const fd = new FormData();
-    // ... 필수 필드 채우기 ...
-    fd.append('random_code', bypass);  // captcha 우회
-    fd.append('agree', 'Y');
-    return fetch('/taxi/agent/income/insertSubmit', { method: 'POST', body: fd })
-        .then(r => r.text().then(t => ({ status: r.status, body: t })));
-}, { fields: formData, bypass: 'E2E_BYPASS' });
-```
-
-**전제**: 서버 코드에 E2E_BYPASS 허용 조건이 구현되어 있어야 함. 없으면 서버 개발자에게 추가 요청.
-
----
-
-### 문제 #8: localStorage 기반 searchParam 복원
+### 문제 #7: localStorage 기반 searchParam 복원
 
 **원인**: PHP 기본값(`date('Y')-1`)이 페이지 초기화 시 먼저 실행되고, 이후 JS의 `searchParam.get(key)`가 localStorage 값으로 덮어씀 → localStorage가 우선. 잘못된 값이 localStorage에 남아 있으면 복원 후에도 엉뚱한 값 표시.
 
@@ -224,7 +202,7 @@ await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 
 ---
 
-### 문제 #9: 테스트 데이터 식별자
+### 문제 #8: 테스트 데이터 식별자
 
 **목적**: 실 운영 데이터와 E2E 테스트 데이터를 목록에서 즉시 구분.
 
@@ -244,7 +222,7 @@ const TEST_NAME = e2eRandName(); // 예: '홍길1234', '정서5154'
 
 ---
 
-### 문제 #10: 테스트 데이터 이력 유지 (DELETE 금지)
+### 문제 #9: 테스트 데이터 이력 유지 (DELETE 금지)
 
 **원인**: `finally` 블록에서 `DELETE` 또는 `dbQuery(DELETE ...)` 로 테스트 데이터를 정리하면, 관리자 목록 교차 검증에서 데이터가 사라져 "목록 미노출" 오탐 발생.
 
@@ -421,31 +399,6 @@ await page.waitForTimeout(300);
 iframe = await openAdminIframe(page, pk);
 const result = await saveIframeForm(page, iframe, 'Y');
 \`\`\`
-```
-
-**추가 섹션 2**: "E2E_BYPASS captcha 우회 패턴" (문제 #7)
-
-```markdown
-## 8. E2E_BYPASS captcha 우회 패턴
-
-서버에 `isAdmin() || $_POST['random_code'] === 'E2E_BYPASS'` 조건이 구현된 경우,
-E2E 시나리오에서 captcha 없이 등록 가능.
-
-\`\`\`javascript
-const insertResp = await page.evaluate(({ formData, bypass }) => {
-    const fd = new FormData();
-    Object.entries(formData).forEach(([k, v]) => fd.append(k, v));
-    fd.append('random_code', bypass);  // E2E_BYPASS
-    fd.append('agree', 'Y');
-    return fetch('/module/insertSubmit', { method: 'POST', body: fd })
-        .then(r => r.text().then(t => ({ status: r.status, body: t })));
-}, { formData: fields, bypass: 'E2E_BYPASS' });
-
-let j = {}; try { j = JSON.parse(insertResp.body); } catch (_) {}
-ok('등록 성공', j.type === 'ok', j);
-\`\`\`
-
-**전제**: 서버 코드에 `E2E_BYPASS` 허용 조건 구현 필요. 없으면 백엔드 개발자에게 추가 요청.
 ```
 
 ---
@@ -649,7 +602,7 @@ cd ~/source/{PROJECT}/solution/e2e
 3. **이 문서의 "3. 스킬 업데이트 제안" 섹션을 순서대로 반영**
    - 3-1: `프레임워크-대응.md` — jQuery UI Dialog iframe 폴링 패턴 추가 (높음)
    - 3-2: `시나리오-생성-패턴.md` — 번호 설계 규칙, state.json, DELETE 금지 섹션 추가 (높음/중간)
-   - 3-3: `validation-통과-패턴.md` — 이력 초기화, E2E_BYPASS 섹션 추가 (중간)
+   - 3-3: `validation-통과-패턴.md` — 이력 초기화 섹션 추가 (중간)
    - 3-4: `자동수정-판단트리.md` — AJAX 폴링, UA 컨텍스트 닫힘 섹션 추가 (중간)
    - 3-5: `코드패턴.md` — 테스트 식별자, localStorage 패턴 추가 (낮음)
 
@@ -671,4 +624,10 @@ cd ~/source/{PROJECT}/solution/e2e
 
 ## 반영 기록
 
-(미반영)
+### 2026-04-29 — Spike
+
+- `프레임워크-대응.md`: jQuery UI Dialog iframe page.frames() 폴링 패턴 추가 (#1)
+- `시나리오-생성-패턴.md`: §8 다단계 번호 설계 규칙 (#2), §9 state.json PK 공유 패턴 (#5), §10 finally DELETE 금지 (#10) 추가
+- `validation-통과-패턴.md`: §7 서버 사이드 이력 조건 초기화 (#3) 추가
+- `자동수정-판단트리.md`: §4에 UA 원인 크로스레퍼런스 보완 (#6), §7 AJAX 결과 폴링 (#4), §8 CDP UA 컨텍스트 닫힘 (#6) 추가
+- `코드패턴.md`: 테스트 데이터 식별자 패턴 (#9), localStorage setItem 순서 패턴 (#8) 추가
