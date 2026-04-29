@@ -69,7 +69,7 @@ ls -d "/Applications/Google Chrome Beta.app" 2>/dev/null && echo "✅ Chrome Bet
 - 기본 Chrome과 동시 실행 가능, E2E 전용으로 분리 사용
 
 > **참고**: `e2e.sh`는 `uname -s`로 OS를 자동 감지하여 Chrome 경로를 분기 처리한다. 직접 경로를 하드코딩하지 않아도 된다.
-> **운영 권장**: Chrome Beta는 `$HOME/.chrome-beta-e2e-profile` 같은 고정 프로필로 열어 Google 계정, OAuth, 사내 SSO 인증을 유지한다.
+> **강제 규칙**: Chrome Beta는 반드시 `$HOME/.chrome-beta-e2e-profile` 고정 프로필로 실행한다. 프로필 옵션이 빠진 실행은 세션 유지 실패로 간주한다.
 > 이후 AI는 같은 프로필 세션을 이어받아 작업하고, 인증이 다시 필요하면 사용자가 그 프로필에서 직접 로그인/인증을 완료한다.
 
 ### Step 3: 프로젝트 루트에 e2e/ 폴더 생성
@@ -149,7 +149,7 @@ chmod +x e2e/e2e.sh e2e/pwc.sh
 
 다음 단계:
   1. cd e2e && ./e2e.sh setup    — 환경 자동 체크 + 설정
-  2. cd e2e && ./e2e.sh chrome   — Chrome Beta CDP 모드 실행
+  2. cd e2e && ./e2e.sh chrome   — Chrome Beta CDP 모드 실행 (고정 프로필 필수)
   3. Chrome Beta 고정 프로필에서 Google 로그인/필요한 인증 완료
   4. cd e2e && ./e2e.sh run 시나리오/gmail-메일목록.js  — 테스트 시나리오 실행
 ```
@@ -161,6 +161,7 @@ chmod +x e2e/e2e.sh e2e/pwc.sh
 - **시나리오 폴더 보호**: `e2e/시나리오/` 폴더가 이미 존재하면 절대 덮어쓰거나 삭제하지 않는다
 - **인프라 파일은 항상 덮어씀**: `e2e.sh`, `pwc.sh`, `connect.js`, `selector.js`는 references의 최신 버전으로 항상 교체
 - **글로벌 도구 자동 설치 금지**: 사용자에게 명령어를 안내하고 확인을 받은 후 진행
+- **Chrome Beta 고정 프로필 필수**: `./e2e.sh chrome`을 표준 실행 경로로 사용하고, 직접 실행 시 `--user-data-dir=$HOME/.chrome-beta-e2e-profile`을 생략하지 않는다
 - **시나리오 실행은 반드시 `./e2e.sh run`**: `node 시나리오.js` 직접 실행 시 `playwright-core`를 못 찾음. `e2e.sh`가 `NODE_PATH`에 전역 npm 모듈 경로를 설정해야 정상 동작
 - **수동 dialog 검증 전 상주 daemon 점검**: `agent-browser connect 9222` 실행 시 생성되는 상주 daemon이 native `alert/confirm`을 자동으로 닫을 수 있다. 수동 검증이 필요하면 `lsof -iTCP:9222 -sTCP:ESTABLISHED -n -P`로 확인 후 종료. 상세: `peach-e2e-browse/references/native-dialog-주의사항.md`
 - **`targetId` 기반 탭 고정 실행**: 특정 탭을 정확히 지정해야 할 때 `--tab N` 대신 `E2E_TAB_ID` 환경변수를 사용한다. 상세: `peach-e2e-browse/references/탭-선택-패턴.md`

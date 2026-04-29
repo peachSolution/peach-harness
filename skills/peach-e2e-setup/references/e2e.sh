@@ -154,6 +154,7 @@ cmd_chrome() {
   echo "🚀 Chrome Beta CDP 모드 실행..."
   echo "   포트: ${CDP_PORT}"
   echo "   프로파일: ${PROFILE_DIR}"
+  echo "   규칙: 고정 프로필(--user-data-dir) 필수"
 
   # --disable-extensions: 확장 프로그램이 웹 콘텐츠에 다크모드를 강제 적용하는 문제 방지
   "$CHROME_BETA" \
@@ -169,6 +170,7 @@ cmd_chrome() {
       echo ""
       echo "💡 Chrome Beta 고정 프로필에서 로그인/필요한 인증을 완료한 뒤 시나리오를 실행하세요:"
       echo "   인증은 사용자가 직접 처리하고, AI는 완료된 세션을 이어받습니다."
+      echo "   직접 Chrome을 실행할 때도 --user-data-dir=${PROFILE_DIR} 옵션을 생략하지 마세요."
       echo "   ./e2e.sh run"
       return 0
     fi

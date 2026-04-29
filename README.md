@@ -119,7 +119,7 @@ peach-harness/
 │   └── plugin.json                  # 플러그인 정의
 ├── .claude/
 │   └── skills/                      # 로컬 전용 스킬 (배포 제외 — Claude Code 전용)
-│       └── peach-release/           # 릴리스 자동화 (peach-harness 저장소 전용)
+│       └── release/                 # 릴리스 자동화 (peach-harness 저장소 전용)
 ├── skills/                          # 스킬 (실행 절차 정의, 모든 AI 도구 공통)
 │   ├── peach-team-dev/              # 신규 기능 풀스택 팀 (Spec/proto/prompt 모드)
 │   │   └── references/              # 에이전트 정의 복사본 (자기완결성)
@@ -138,8 +138,9 @@ peach-harness/
 │   ├── store-dev.md                 # Store 개발
 │   ├── ui-dev.md                    # UI 개발
 │   └── frontend-qa.md               # Frontend QA
-├── hooks/                           # Git hooks
-│   └── pre-commit-gate.sh           # 품질 게이트 (테스트/린트/빌드)
+├── hooks/                           # Git hooks (PUBLIC 저장소 시크릿 차단)
+│   ├── pre-commit-secrets.sh        # 사내 도메인/시크릿/사업자번호/개인경로 차단
+│   └── install.sh                   # .git/hooks/pre-commit 심볼릭 링크 설치
 └── templates/                       # 템플릿
 ```
 
@@ -208,10 +209,10 @@ peach-harness/
 
 | 스킬 | 용도 | 위치 |
 |------|------|------|
-| `peach-release` | 릴리스 자동화 (버전 업 → PR → GitHub Release) | `.claude/skills/peach-release/` |
+| `release` | 릴리스 자동화 (버전 업 → PR → GitHub Release) | `.claude/skills/release/` |
 
 > **배포 제외 메커니즘**: SKILL.md frontmatter에 `metadata.internal: true`를 설정하면 `npx skills add`에서 자동 제외됩니다.
-> `--skill '*'`이나 `--skill peach-release`로 명시적 지정하면 internal 스킬도 포함됩니다.
+> `--skill '*'`이나 `--skill release`로 명시적 지정하면 internal 스킬도 포함됩니다.
 
 ### 스킬 유형 분류
 
@@ -300,15 +301,18 @@ npx skills remove peach-wiki
 npx skills add peachSolution/peach-harness -a codex -a cursor -g -y
 ```
 
-## Hooks
+## Hooks (시크릿 차단 게이트)
 
-품질 게이트를 자동화하는 Git hooks입니다.
+peach-harness는 PUBLIC 저장소이므로 커밋 시점에 사내 정보 노출을 1차 방어한다.
+**clone 후 한 번만 실행**하면 이후 `git commit`마다 자동 작동한다.
 
 ```bash
-# 설치
-cp hooks/pre-commit-gate.sh .git/hooks/pre-commit
-chmod +x .git/hooks/pre-commit
+# 설치 (clone 직후 1회 실행)
+./hooks/install.sh
 ```
 
-- **pre-commit-gate.sh**: Backend(bun test, lint, build) + Frontend(vue-tsc, lint, build) 검증
-- `api/` 또는 `front/` 디렉토리가 없으면 해당 단계 스킵
+- **pre-commit-secrets.sh**: 사내 도메인 / 비밀번호·토큰 / 사업자번호 / 개인 절대경로를 staged diff에서 탐지·차단
+- **install.sh**: `.git/hooks/pre-commit`에 심볼릭 링크 (Node 종속성 0)
+- **자동 탐지 한계**: 한글 사내 어휘·짧은 영문 코드네임은 정규식으로 잡히지 않으므로 직접 diff 검토 필요
+- **우회**: `git commit --no-verify` (지양). 오탐이면 스크립트의 화이트리스트 grep 패턴에 추가
+- **Claude Code 사용 시**: `.claude/settings.json`의 PreToolUse hook이 별도로 가로채므로 install.sh 미실행 환경에서도 차단된다 (Claude Code 한정)

@@ -10,7 +10,7 @@
 |------|------|
 | [project-overview](entities/project-overview.md) | peach-harness 전체 구조·스킬 목록·버전 관리 |
 | [skill-peach-wiki](entities/skill-peach-wiki.md) | LLM Wiki 관리 배포 스킬 (`docs/wiki/`, qmd 연동) |
-| [skill-peach-release](entities/skill-peach-release.md) | 릴리스 자동화 로컬 스킬 (버전 업 → PR → Release) |
+| [skill-release](entities/skill-release.md) | 릴리스 자동화 로컬 스킬 (버전 업 → PR → Release) |
 | [skill-wiki-code](entities/skill-wiki-code.md) | 위키 관리 과거 로컬 스킬 이력 |
 | [skill-wiki-integration-decision](entities/skill-wiki-integration-decision.md) | peach-wiki harness 통합 결정 및 완료 근거 |
 

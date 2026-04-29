@@ -16,19 +16,28 @@ description: |
 
 ## 강제 게이트
 
-아래 4가지는 권장이 아니라 **강제 규칙**이다.
+아래 5가지는 권장이 아니라 **강제 규칙**이다.
 
-1. `agent-browser connect 9222` 후 반드시 `agent-browser tab list`를 먼저 실행한다.
-2. **사용자가 탭 번호를 명시하기 전에는 어떤 조작도 하지 않는다.**
+1. Chrome Beta 실행은 `cd e2e && ./e2e.sh chrome`을 우선 사용한다. 직접 실행이 필요하면 반드시 `--user-data-dir=$HOME/.chrome-beta-e2e-profile`을 포함한다.
+2. `agent-browser connect 9222` 후 반드시 `agent-browser tab list`를 먼저 실행한다.
+3. **사용자가 탭 번호를 명시하기 전에는 어떤 조작도 하지 않는다.**
    - 금지: `open`, `tab`, `click`, `fill`, `press`, `eval`
-3. Google 로그인, OAuth, 관리자 콘솔, 결제, 기존 프로필 세션 유지가 중요한 작업은
+4. Google 로그인, OAuth, 관리자 콘솔, 결제, 기존 프로필 세션 유지가 중요한 작업은
    **분석만 수행하고 실행은 사용자 확인 후 진행한다.**
-4. `agent-browser`가 비정상 동작하면 OS 레벨 우회(`open -a`, 다른 브라우저 실행, 다른 프로필 경로 사용) 금지.
+5. `agent-browser`가 비정상 동작하면 OS 레벨 우회(`open -a`, 다른 브라우저 실행, 다른 프로필 경로 사용) 금지.
    즉시 상태를 보고하고 사용자 확인을 받는다.
 
 > 인증이 필요한 페이지에 도달하면 AI가 직접 로그인/2차 인증을 시도하지 않는다.
 > Chrome Beta의 `$HOME/.chrome-beta-e2e-profile`에서 사용자가 직접 로그인이나 인증을 완료하도록 안내한 뒤,
 > 같은 프로필 세션을 AI가 이어받는다.
+
+## Chrome Beta 실행 불변 규칙
+
+Chrome Beta를 CDP 모드로 실행할 때는 고정 프로필 옵션이 필수다. 프로필 옵션이 빠진 실행은 세션 유지 실패로 간주한다.
+
+- 허용: `cd e2e && ./e2e.sh chrome`
+- 직접 실행 시 필수 옵션: `--remote-debugging-port=9222`, `--remote-allow-origins=*`, `--user-data-dir=$HOME/.chrome-beta-e2e-profile`, `--disable-extensions`
+- 금지: `open -a "Google Chrome Beta"` 단독 실행, `--user-data-dir` 없는 Chrome Beta 실행, 다른 프로필 경로 임의 사용, 기본 Chrome 또는 다른 브라우저 우회
 
 ## 도구 역할 분담
 

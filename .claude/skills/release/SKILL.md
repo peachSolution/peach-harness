@@ -1,5 +1,5 @@
 ---
-name: peach-release
+name: release
 description: |
   peach-harness 버전 업데이트 → CHANGELOG.md 자동 생성 → develop 커밋/푸시 → main PR 생성 → PR 머지 → GitHub Release 생성까지 일괄 처리하는 릴리스 스킬.
   변경 내용 분석 → CHANGELOG 초안 + 실행 계획을 한 번에 제시 → 대화로 보완 → 승인 1회 후 일괄 실행.
@@ -14,7 +14,7 @@ allowed-tools:
   - Write
 ---
 
-# peach-release — 릴리스 일괄 처리
+# release — 릴리스 일괄 처리
 
 peach-harness 저장소의 릴리스를 한 번에 처리한다.
 두 버전 파일 동기화 → CHANGELOG.md 업데이트 → develop 커밋/푸시 → main PR 생성 → 머지 → GitHub Release 생성까지 자동화한다.

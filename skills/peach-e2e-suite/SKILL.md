@@ -32,6 +32,14 @@ docs/e2e-suite/
         회원가입-로그인-검증.md
 ```
 
+## Chrome Beta 실행 불변 규칙
+
+Chrome Beta를 CDP 모드로 실행할 때는 고정 프로필 옵션이 필수다. 프로필 옵션이 빠진 실행은 세션 유지 실패로 간주한다.
+
+- 허용: `cd e2e && ./e2e.sh chrome`
+- 직접 실행 시 필수 옵션: `--remote-debugging-port=9222`, `--remote-allow-origins=*`, `--user-data-dir=$HOME/.chrome-beta-e2e-profile`, `--disable-extensions`
+- 금지: `open -a "Google Chrome Beta"` 단독 실행, `--user-data-dir` 없는 Chrome Beta 실행, 다른 프로필 경로 임의 사용, 기본 Chrome 또는 다른 브라우저 우회
+
 ## 워크플로우
 
 ### 공통: 환경 확인
@@ -47,6 +55,8 @@ cd e2e && ./e2e.sh status
 2. `sleep 4` 대기
 3. `cd e2e && ./e2e.sh status` 재확인
 4. 여전히 미연결이면 사용자에게 `cd e2e && ./e2e.sh chrome` 수동 실행을 안내한다
+
+> `./e2e.sh chrome`은 고정 프로필(`$HOME/.chrome-beta-e2e-profile`)로 Chrome Beta를 실행하는 표준 경로다. 이 명령 대신 직접 Chrome을 실행할 때도 `--user-data-dir` 옵션을 생략하지 않는다.
 
 탭 목록을 사용자에게 보여주고 탭 번호 확인.
 
@@ -174,8 +184,21 @@ AI가 스스로 판단·처리하는 것과 사용자 확인이 필요한 것을
 |------|------|
 | 단위 시나리오 실행 실패 | 자동수정 루프 3회 시도 (peach-e2e-scenario 패턴) |
 | 자동수정 3회 실패 | 해당 Step에서 중단, 실패 보고 |
-| 검증 포인트 불일치 | 기대값과 실제값을 보고, 사용자 판단 요청 |
+| 검증 포인트 불일치 (suite md 오류) | 실행 결과 기반으로 suite md 자율 보정 → 재실행 |
+| 전달 데이터 경로 오류 (suite md 오류) | 실제 DOM/URL 확인 후 suite md 자율 보정 → 재실행 |
 | 코드/DB 검증 실패 | 불일치 내용 보고, 사용자 판단 요청 |
+
+### suite md 자율 보정 범위
+
+AI가 자율로 보정 가능:
+- 검증 포인트 (DOM 선택자, URL 패턴, 기대값)
+- 전달 데이터 추출 방법
+- 사전 주입 환경변수명
+
+사용자 확인 필요:
+- Step 순서 변경
+- 시나리오 파일 추가·삭제
+- 사전조건 변경
 
 > Step 실패 시 후속 Step은 실행하지 않는다 (데이터 의존성 때문).
 > suite 실패는 전체 suite를 바로 반복하지 않는다.
