@@ -5,6 +5,24 @@
 
 ---
 
+## [v1.18.2] - 2026-04-29
+
+### Added
+- pre-commit 시크릿 차단 게이트 도입 (`hooks/pre-commit-secrets.sh`, `hooks/install.sh`)
+- peach-e2e-scenario: jQuery UI Dialog iframe `page.frames()` 폴링 패턴 추가
+- peach-e2e-scenario: 다단계 번호 설계 규칙, `state.json` PK 공유 패턴, `finally` DELETE 금지 패턴 추가
+- peach-e2e-scenario: 서버 사이드 이력 조건 초기화 패턴, captcha 우회 정책 추가
+- peach-e2e-scenario: AJAX 결과 폴링, CDP UA 컨텍스트 닫힘 패턴 추가
+- peach-e2e-scenario: 테스트 데이터 식별자, localStorage setItem 순서 패턴 추가
+
+### Changed
+- `release` 스킬 이름 변경 (`peach-release` → `release`) — internal 스킬 전용이므로 네임스페이스 접두어 불필요
+- peach-e2e-browse: Chrome Beta 고정 프로필 규칙 강화
+- peach-e2e-scenario: 자율 보완 루프 강화
+- peach-e2e-setup, peach-e2e-suite, peach-team-e2e: 워크플로우 보완
+
+---
+
 ## [v1.18.1] - 2026-04-29
 
 ### Security
