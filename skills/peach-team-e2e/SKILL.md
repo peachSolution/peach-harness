@@ -435,10 +435,10 @@ Ralph Loop 이력:
 # === 표준 모드 (proto 사용) ===
 
 # proto 경로로 검증 기준 자동 로드
-/peach-team-e2e proto=/Users/nettem/source/peachSolution2/peach-ui-proto-backoffice/src/modules-task/2604/260427-nettem-goods
+/peach-team-e2e proto=<PROTO_REPO>/src/modules-task/2604/260427-<initial>-goods
 
 # opus 모델로 서브에이전트 실행
-/peach-team-e2e proto=/Users/.../260427-nettem-goods model=opus
+/peach-team-e2e proto=<PROTO_REPO>/.../260427-<initial>-goods model=opus
 
 # === Spec-only 모드 ===
 

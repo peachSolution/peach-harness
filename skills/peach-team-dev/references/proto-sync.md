@@ -14,7 +14,8 @@
 /peach-team-dev mode=... proto=<ui-proto 태스크 폴더 절대 경로>
 ```
 
-예: `proto=/Users/nettem/source/peachSolution2/peach-ui-proto-backoffice/src/modules-task/2604/260427-nettem-goods`
+예: `proto=<PROTO_REPO>/src/modules-task/2604/260427-<initial>-goods`
+(`<PROTO_REPO>`: ui-proto 저장소 절대경로, `<initial>`: 작업자 이니셜)
 
 ## 절차 (5단계)
 

@@ -561,13 +561,13 @@ Spec 사본: docs/spec/{년}/{월}/{planner}-{YYMMDD}-{title}.md
 # === 표준 모드 (proto 사용) ===
 
 # 풀스택 일괄
-/peach-team-dev product-manage mode=fullstack proto=/Users/nettem/source/peachSolution2/peach-ui-proto-backoffice/src/modules-task/2604/260427-nettem-goods
+/peach-team-dev product-manage mode=fullstack proto=<PROTO_REPO>/src/modules-task/2604/260427-<initial>-goods
 
 # 백엔드 먼저
 /peach-team-dev product-manage mode=backend
 
 # UI 이어서 (proto 화면 기반)
-/peach-team-dev product-manage mode=ui proto=/Users/.../260427-nettem-goods
+/peach-team-dev product-manage mode=ui proto=<PROTO_REPO>/.../260427-<initial>-goods
 
 # === Spec만 모드 (기존 패턴) ===
 
