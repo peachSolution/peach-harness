@@ -140,7 +140,10 @@ peach-harness/
 │   └── frontend-qa.md               # Frontend QA
 ├── hooks/                           # Git hooks (PUBLIC 저장소 시크릿 차단)
 │   ├── pre-commit-secrets.sh        # 사내 도메인/시크릿/사업자번호/개인경로 차단
-│   └── install.sh                   # .git/hooks/pre-commit 심볼릭 링크 설치
+│   ├── install.sh                   # .git/hooks/pre-commit 설치 (macOS/Linux)
+│   ├── install.ps1                  # .git/hooks/pre-commit 설치 (Windows)
+│   ├── claude-precommit-gate.sh     # Claude Code PreToolUse 훅 헬퍼 (3 OS 공용)
+│   └── claude-precommit-gate.ps1    # Claude Code 훅 헬퍼 — 수동 호출용 (Windows)
 └── templates/                       # 템플릿
 ```
 
@@ -308,11 +311,16 @@ peach-harness는 PUBLIC 저장소이므로 커밋 시점에 사내 정보 노출
 
 ```bash
 # 설치 (clone 직후 1회 실행)
+
+# macOS / Linux
 ./hooks/install.sh
+
+# Windows (PowerShell)
+.\hooks\install.ps1
 ```
 
 - **pre-commit-secrets.sh**: 사내 도메인 / 비밀번호·토큰 / 사업자번호 / 개인 절대경로를 staged diff에서 탐지·차단
-- **install.sh**: `.git/hooks/pre-commit`에 심볼릭 링크 (Node 종속성 0)
+- **install.sh / install.ps1**: `.git/hooks/pre-commit`에 심볼릭 링크 설치, 권한 부족 시 복사로 폴백 (Node 종속성 0)
 - **자동 탐지 한계**: 한글 사내 어휘·짧은 영문 코드네임은 정규식으로 잡히지 않으므로 직접 diff 검토 필요
 - **우회**: `git commit --no-verify` (지양). 오탐이면 스크립트의 화이트리스트 grep 패턴에 추가
-- **Claude Code 사용 시**: `.claude/settings.json`의 PreToolUse hook이 별도로 가로채므로 install.sh 미실행 환경에서도 차단된다 (Claude Code 한정)
+- **Claude Code 사용 시**: `.claude/settings.json`의 PreToolUse hook이 `bash hooks/claude-precommit-gate.sh`를 호출한다. 헬퍼가 stdin JSON 페이로드(`tool_input.command`)를 jq로 파싱해 `git commit` 명령일 때만 게이트를 발동시키므로, install 미실행 환경에서도 Claude의 commit 시도를 차단한다. Windows에서도 Git for Windows의 bash·jq를 사용하므로 3 OS 공용 (Claude Code 한정)

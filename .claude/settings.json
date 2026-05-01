@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git[[:space:]]+commit'; then bash hooks/pre-commit-secrets.sh || exit 2; fi"
+            "command": "bash hooks/claude-precommit-gate.sh"
           }
         ]
       }

@@ -39,7 +39,7 @@ report() {
 # 1) 내부 도메인 — 화이트리스트 외 모든 .co.kr/.com/.net/.io/.org
 DOMAIN_HITS=$(echo "$ADDED" \
   | grep -iE '[a-z0-9-]+\.(co\.kr|com|net|io|org)' \
-  | grep -vE 'example\.com|example\.co\.kr|github\.com|githubusercontent|google\.com|figma\.com|npmjs|playwright\.dev|anthropic|claude\.ai|nuxt|tailwindcss|kakao|naver|daum|w3\.org|semver\.org|keepachangelog\.com|spec\.openapis|jsonschema|mozilla|wikipedia|claude\.com' \
+  | grep -vE 'example\.com|example\.co\.kr|github\.com|githubusercontent|google\.com|figma\.com|npmjs|playwright\.dev|anthropic|claude\.ai|nuxt|tailwindcss|kakao|naver|daum|w3\.org|semver\.org|keepachangelog\.com|spec\.openapis|jsonschema|mozilla|wikipedia|claude\.com|input\.command|input\.com[a-z]+' \
   || true)
 report "내부 도메인 의심" "$DOMAIN_HITS"
 
