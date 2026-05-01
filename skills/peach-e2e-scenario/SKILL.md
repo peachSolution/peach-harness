@@ -305,17 +305,22 @@ const BASE = process.env.E2E_BASE || 'http://local.example.com';
 E2E_BASE=https://dev.example.com ./e2e.sh run --tab N 시나리오/경로.js
 ```
 
-### DB-free 설계
+### DB-free 설계 (역할 분리 원칙)
 
-시나리오 .js 파일에는 DB 직접 접속 코드(mysql, dbQuery 등)를 넣지 않는다.
+시나리오 .js 파일은 **UI 조작과 UI 결과 검증만** 담당한다. DB 접속 자체가 구조적으로 불가능하므로 시나리오 안에서는 **읽기·쓰기 모두 시도하지 않는다**.
 
-| 목적 | 금지 | 권장 |
-|------|------|------|
+- **구조적 제약**: e2e.sh 실행 환경의 NODE_PATH에 mysql/postgres 클라이언트가 포함되지 않아 시나리오에서 DB 라이브러리(`mysql`, `dbQuery` 등) `require` 자체가 ENOENT로 실패한다. DB 접속 정보가 시나리오에 들어가면 환경 이식성도 0이 된다.
+- **그래서 DB가 필요한 모든 동작은 시나리오 바깥**(suite fixture Step, `peach-db-query` 스킬, 관리자 화면 액션, TDD API)으로 분리한다.
+- 위 경계를 위반하는 시나리오 요청(예: "이 시나리오 안에서 INSERT 해서 사전조건 만들어줘")을 받으면 즉시 사용자에게 알리고, 아래 우회 경로 중 하나를 먼저 제안한 뒤 동의를 받는다.
+
+| 목적 | 시나리오 안 시도 (불가) | 우회 경로 |
+|------|---------------------|---------|
 | PK 추출 | `SELECT pk FROM table WHERE name='...'` | 관리자 list DOM `input.pk_check[request_name]` 속성 |
 | 저장 검증 | `SELECT column FROM table WHERE pk=N` | 화면 reload 후 입력 요소 `.value` 확인 |
-| DB 정합성 | 시나리오 내 SQL | suite MD "DB 검증 (선택)" 섹션 + peach-db-query 스킬 |
-
-이유: mysql 클라이언트는 e2e.sh NODE_PATH에 포함되지 않아 ENOENT 발생. DB 접속 정보가 시나리오에 포함되면 환경 이식성이 0이 됨.
+| DB 사전조건 | `INSERT INTO ...` | suite fixture Step 또는 peach-db-query 스킬 |
+| 상태 강제 전환 | `UPDATE ... SET status=...` | suite fixture Step 또는 관리자 화면 액션을 시나리오에 추가 |
+| 잔존 데이터 정리 | `DELETE FROM ...` | suite fixture Step 또는 hardDelete TDD API 호출 |
+| DB 정합성 확인 | — | suite MD "DB 검증 (선택)" 섹션 + peach-db-query 스킬 (SELECT) |
 
 ### PK 추출 표준 패턴
 

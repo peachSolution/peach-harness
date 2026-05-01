@@ -113,6 +113,7 @@ cd e2e && ./e2e.sh status
    e. 데이터 주입: 다음 Step 실행 시 환경변수로 전달 (`E2E_ORDER_ID=xxx`)
 6. **코드 검증** (md에 섹션이 있으면) — 해당 파일을 Read/Grep으로 확인
 7. **DB 검증** (md에 섹션이 있으면) — peach-db-query 스킬 또는 직접 SQL 실행
+   - **읽기(SELECT) 전용**. INSERT/UPDATE/DELETE는 검증이 아니라 fixture이므로 별도 fixture Step으로 분리한다.
 8. **실행 후 등록 요약** — state 파일(`e2e/.tmp/*.json`)의 `registrations[]`를 읽어 표로 출력한다.
    등록이 발생한 단계·이름·PK·시각을 한 표로 정리하여 사용자에게 보고한다.
    state 파일이 없거나 `registrations`가 비어 있으면 "신규 등록 없음"으로 표시한다.
@@ -309,6 +310,17 @@ E2E_BASE=https://dev.example.com ./e2e.sh run --tab N 시나리오/경로.js
 ```
 
 suite MD에 "도메인 설정" 섹션을 두 환경 실행법을 표로 정리한다 (`references/suite-템플릿.md` 참조).
+
+## TDD와 E2E의 책임 경계
+
+suite는 비즈니스 플로우 단위 검증을 조립하는 레이어다. 다음 분리 원칙을 강제한다.
+
+- **단위 시나리오(.js)**: UI 조작과 UI 결과 검증만 담당. **DB 읽기·쓰기 모두 금지**(시나리오 실행 환경에 DB 클라이언트가 없어 require 자체가 ENOENT). DB 정합성 확인이 필요하면 suite md의 DB 검증 단계 또는 `peach-db-query` 스킬에서만 수행한다.
+- **DB 사전조건/시드 데이터**: suite md의 **fixture Step**으로 분리한다. 단위 시나리오 안에 절대 두지 않는다.
+- **재시작/세션 리셋**: suite md의 별도 Step으로 분리한다. 단위 시나리오 안에서 처리하지 않는다.
+- **로직 단위 검증**: suite가 아니라 backend/store TDD에서 처리한다(`peach-gen-backend`/`peach-gen-store` 참조). suite로 로직 분기 케이스를 모두 커버하려 하지 않는다.
+
+위반 사례(시나리오 내부 DB 읽기/쓰기, 시나리오 안 재시작)를 발견하면 사용자에게 알리고 fixture/Step 분리를 먼저 제안한다.
 
 ## 핵심 원칙
 
