@@ -112,6 +112,7 @@ Spec 문서가 입력으로 주어짐?
 4. AI Slop 패턴(그라데이션, 보라색 등) 회피 여부
 5. modules-task 폴더 구조 규칙 준수 (`_task-meta.ts`, `_routes.ts`, layout 분리 등)
 6. 라우트 통합 규칙 준수 (`_task.routes.ts`의 taskDetailRoutes에 추가)
+7. DESIGN.md가 있을 경우 디자인 시스템 규칙(색상, 컴포넌트 네이밍, 타이포그래피) 준수 여부
 
 #### 랄프루프 5/10 판단 기준
 
@@ -237,6 +238,22 @@ Spec이 입력되었을 때:
 ---
 
 ## 워크플로우
+
+### Step 0. 디자인 시스템 확인
+
+```bash
+cat DESIGN.md 2>/dev/null | head -200
+```
+
+- **있으면**: 컴포넌트 규칙·색상·타이포그래피를 컨텍스트에 주입하여 이후 단계에 반영
+- **없으면**: 아래 경고 출력 후 계속 진행
+
+```
+⚠️ DESIGN.md 없음 — 디자인 시스템 문서가 없습니다. 작성을 권장합니다.
+   참고: peach-harness/templates/DESIGN-template.md (또는 /peach-gen-design)
+```
+
+---
 
 ### 1단계: UI 패턴 필수 선택
 

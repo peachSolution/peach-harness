@@ -387,7 +387,13 @@ prompt 모드 소규모는 팀 생성 생략하고 단일 에이전트에 직접
 - 상세: `references/store-dev-agent.md` 참조
 
 #### ui-dev
-- test-data 가이드 코드 + (필요 시) 디자인 시스템을 사용한다.
+- test-data 가이드 코드 + 디자인 시스템을 사용한다.
+- **UI 에이전트 호출 전에 DESIGN.md를 읽어 인라인으로 주입한다**:
+  ```bash
+  cat DESIGN.md 2>/dev/null | head -200
+  ```
+  - 있으면: `## 디자인 시스템` 섹션으로 에이전트 프롬프트에 포함
+  - 없으면: `⚠️ DESIGN.md 없음 — 디자인 시스템 문서 작성 권장` 출력 후 진행
 - `figma=[URL]`가 있으면 FigmaRemote MCP를 로드하여 디자인을 분석한다.
 - **표준 모드에서 proto 인자가 있으면 ui-proto 화면 폴더를 우선 참조**한다.
 - UI 패턴(`ui=`)이 없으면 사용자에게 확인한다.
@@ -396,7 +402,7 @@ prompt 모드 소규모는 팀 생성 생략하고 단일 에이전트에 직접
 - 상세: `references/ui-dev-agent.md` 참조
 
 #### frontend-qa
-**QA 체크리스트 (8항목 + 검증 우선순위 규칙)**:
+**QA 체크리스트 (8항목 + 조건부 2항목)**:
 1. 파일 구조 (pages/, modals/, store/, type/) 존재
 2. Composition API (`<script setup>`) 패턴 준수
 3. Pinia Option API Store 패턴 준수
@@ -406,6 +412,7 @@ prompt 모드 소규모는 팀 생성 생략하고 단일 에이전트에 직접
 7. `bun run lint:fix` 통과
 8. `bun run build` 성공 + AI Slop 디자인 패턴 없음
 9. **(proto 인자 있을 때)** ui-proto 화면 흐름과 일치, Spec 비즈니스 규칙 부합
+10. **(DESIGN.md 있을 때)** 디자인 시스템 규칙(색상, 컴포넌트 네이밍, 타이포그래피) 준수
 - 상세: `references/frontend-qa-agent.md` 참조
 
 ## QA 판정 처리 (3단계)

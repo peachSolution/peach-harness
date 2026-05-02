@@ -142,6 +142,17 @@ mcp__sequential-thinking__sequentialthinking:
 
 ## 워크플로우
 
+### Step 0. 디자인 시스템 확인
+
+```bash
+cat DESIGN.md 2>/dev/null | head -100
+```
+
+- **있으면**: 색상·타이포그래피 규칙을 이후 인쇄 스타일 결정에 반영
+- **없으면**: `⚠️ DESIGN.md 없음` 출력 후 계속 진행
+
+---
+
 ### 1단계: 원본 컴포넌트 분석 (Sequential Thinking)
 
 ```
