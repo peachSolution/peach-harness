@@ -4,7 +4,7 @@ description: |
   Store 기반 프로덕션 UI를 생성하는 스킬. Vue 3 + TypeScript + NuxtUI v4.
   "UI 만들어줘", "화면 생성", "CRUD 화면", "목록 화면" 키워드로 트리거.
   Store가 존재해야 하며 실제 API와 연동된 프로덕션 코드를 생성한다.
-  Mock 데이터 기반 프로토타입이 필요하면 peach-gen-ui-proto를 사용한다.
+  Mock 데이터 기반 프로토타입이 필요하면 peach-team-ui-proto를 사용한다.
 ---
 
 # Frontend UI 생성 스킬

@@ -437,7 +437,7 @@ QA 에이전트는 **APPROVED / CONDITIONAL / REJECTED** 3단계로 판정한다
 ## 관련 스킬
 
 - `peach-gen-spec` — Spec 단독 생성 (Tier 2)
-- `peach-gen-ui-proto` — ui-proto 화면 단독 생성 (Tier 2)
+- `peach-team-ui-proto` — 기획 검토용 ui-proto 팀 생성/검증 (선행 단계)
 - `peach-gen-db` — DB 스키마/마이그레이션 생성 (team-dev 선행 단계)
 - `peach-gen-backend`, `peach-gen-store`, `peach-gen-ui` — 단계별 단독 호출 (Tier 2)
 - `peach-team-e2e` — E2E 검증 (다음 단계)

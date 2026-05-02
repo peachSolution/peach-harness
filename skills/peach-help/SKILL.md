@@ -73,7 +73,7 @@ allowed-tools:
 |------|------|
 | 어디서 시작할지 모르겠어 | `/peach-help` (지금 여기) |
 | 새 기능 요구사항 정리 | `/peach-gen-spec` |
-| ui-proto 화면 작성 | `/peach-gen-ui-proto` |
+| ui-proto 화면 작성 | `/peach-team-ui-proto` |
 | **본 개발 (풀스택/백엔드/UI)** | **`/peach-team-dev`** |
 | **즉흥적 작업 (Spec/proto 없이)** | **`/peach-team-dev "자연어 설명"`** |
 | **E2E 검증 (Spec + ui-proto 부합)** | **`/peach-team-e2e`** |

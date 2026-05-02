@@ -30,7 +30,7 @@ model: sonnet
 
 ## 입력
 
-오케스트레이터(peach-gen-ui-proto)로부터:
+오케스트레이터(peach-team-ui-proto)로부터:
 
 ```markdown
 ## Spec

@@ -211,7 +211,7 @@ Context Pack 폴더를 컨텍스트로 주입 → AI가 개요 기반 자동 탐
 
 ### 시나리오 C: UI Proto 선행
 
-기획팀이 `peach-gen-ui-proto`로 만든 UI Proto 화면이 이미 존재하는 경우.
+기획팀이 `peach-team-ui-proto`로 만든 UI Proto 화면이 이미 존재하는 경우.
 
 ```
 UI Proto 화면 (이미 존재)

@@ -11,7 +11,7 @@ description: |
 
 피치 UI/프로토타입/웹페이지를 UX 법칙 기준으로 검토하는 **읽기전용 리뷰 스킬**이다.
 
-이 스킬은 코드를 수정하지 않는다. 문제와 개선안을 정리하고, 실제 반영은 `peach-gen-ui`, `peach-gen-ui-proto`, `peach-team-dev` 또는 직접 수정 작업으로 넘긴다.
+이 스킬은 코드를 수정하지 않는다. 문제와 개선안을 정리하고, 실제 반영은 `peach-gen-ui`, `peach-team-ui-proto`, `peach-team-dev` 또는 직접 수정 작업으로 넘긴다.
 
 ---
 
@@ -126,7 +126,7 @@ description: |
 
 | 판정 | 조건 | 후속 처리 |
 |------|------|----------|
-| REJECTED 후보 | 근거 있는 높음 1건 이상 | 사용자 확인 후 `peach-gen-ui-proto` 또는 `peach-team-dev` 수정 범위로 넘김 |
+| REJECTED 후보 | 근거 있는 높음 1건 이상 | 사용자 확인 후 `peach-team-ui-proto` 또는 `peach-team-dev` 수정 범위로 넘김 |
 | CONDITIONAL 후보 | 중간 1건 이상 또는 낮음 여러 건 | 기계 검증과 별개로 UX 리스크 보고 |
 | 권고 | 낮음만 존재 | 다음 UI 정리 작업 후보로 기록 |
 | 특이 문제 없음 | 확인 범위 내 주요 UX 리스크 없음 | 통합 작업 없이 종료 |
@@ -152,7 +152,7 @@ description: |
 
 | 대상 | 연결 조건 |
 |------|----------|
-| `peach-gen-ui-proto` | ui-proto 화면 자체의 레이아웃, 액션 배치, 피드백 문제가 주요 원인 |
+| `peach-team-ui-proto` | ui-proto 화면 자체의 레이아웃, 액션 배치, 피드백 문제가 주요 원인 |
 | `peach-team-dev` | 본 프로젝트 UI 구현에서 저장/검색/상태 피드백이나 실제 API 흐름 문제가 주요 원인 |
 | `peach-team-e2e` | 사용자 흐름에서 결과 확인, 다음 행동, 실패 복구 검증이 필요한 경우 |
 | 수동 보류 | UX 취향 문제이거나 업무 빈도/사용자 역할 확인이 필요한 경우 |

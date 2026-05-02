@@ -39,7 +39,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 대상 스킬 | `peach-gen-ui-proto` / `peach-team-dev` / `peach-team-e2e` / 수동 보류 |
+| 대상 스킬 | `peach-team-ui-proto` / `peach-team-dev` / `peach-team-e2e` / 수동 보류 |
 | 권장 owner | proto-ui-dev / ui-dev / frontend-qa / e2e-suite-qa / 사용자 판단 |
 | 수정 범위 | 파일/화면/흐름 단위로 기재 |
 | E2E 검증 포인트 | 클릭 후 피드백, 완료 결과, 실패 복구 등 |

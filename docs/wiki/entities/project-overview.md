@@ -32,9 +32,9 @@ peach-harness/
 
 | 카테고리 | 스킬 |
 |---------|------|
-| 생성 | peach-gen-backend, peach-gen-ui, peach-gen-ui-proto, peach-gen-db, peach-gen-store, peach-gen-design, peach-gen-spec, peach-gen-diagram |
+| 생성 | peach-gen-backend, peach-gen-ui, peach-gen-db, peach-gen-store, peach-gen-design, peach-gen-spec, peach-gen-diagram |
 | 문서화 | peach-doc-feature |
-| 팀 | peach-team-dev, peach-team-e2e, peach-team-3a, peach-team-analyze |
+| 팀 | peach-team-ui-proto, peach-team-dev, peach-team-e2e, peach-team-3a, peach-team-analyze |
 | DB | peach-db-migrate, peach-db-query, peach-db-extract-schema |
 | E2E | peach-e2e-setup, peach-e2e-scenario, peach-e2e-browse, peach-e2e-suite |
 | 추가 | peach-add-api, peach-add-cron, peach-add-print |
