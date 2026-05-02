@@ -98,7 +98,7 @@ description: |
 ## 2. 워크플로우 참조
 
 스킬 수정 시 전체 흐름에서의 위치를 먼저 파악하라.
-→ **docs/03-워크플로우.md** 참조 (표준 4단계 직선형)
+→ **docs/03-워크플로우.md** 참조 (표준 5단계 직선형)
 → **docs/05-스킬재구성-2026-04-27.md** 참조 (검증 기준 외부화, 통합 스킬 도입 의사결정)
 
 ## 2-1. 문서 다이어그램 작성 규칙
@@ -189,14 +189,15 @@ AI가 기존과 다르게 변경하려면 다음 4가지를 모두 만족해야 
 skills/peach-team-dev/
 ├── SKILL.md              # 진입점 (개요, 인자, 호출 절차)
 └── references/
-    ├── backend-mode.md
-    ├── ui-mode.md
-    ├── fullstack-mode.md
+    ├── connect-workflow.md
+    ├── fullstack-workflow.md
+    ├── prompt-mode.md
     ├── proto-sync.md     # Spec 자동 복사 절차
+    ├── qa-policy.md      # QA 판정/완료 정책
     └── *-agent.md
 ```
 
-이유: SKILL.md 비대화 방지, 조건부 참조로 토큰 절약, 기존 peach-team 패턴 일관성.
+이유: SKILL.md 비대화 방지, 조건부 참조로 토큰 절약, 기존 팀 스킬 패턴 일관성.
 
 ---
 

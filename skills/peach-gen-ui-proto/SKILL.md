@@ -131,8 +131,9 @@ Spec 문서가 입력으로 주어짐?
 ### 모듈명/태스크 폴더명 자동 생성
 
 Spec이 입력되었을 때:
-- `_task-meta.ts`의 `planner`, `date`, `title`을 추출
-- 태스크 폴더명: `{YYMMDD}-{planner}-{영문이니셜}` 형식 (한글 금지)
+- Spec 본문과 사용자 입력에서 `planner`, `date`, `title` 후보를 추출
+- 태스크 폴더명: `{YYMMDD}-{planner}-{영문슬러그}` 형식 (한글 금지)
+- 확정된 메타로 `_task-meta.ts`를 생성한다. 이후 `peach-team-dev proto=<경로>`는 이 `_task-meta.ts`를 읽어 Spec 사본 파일명을 산출한다
 - 사용자에게 자동 추출 결과 보여주고 확정 받기
 
 자연어 입력으로 들어온 경우:
@@ -140,46 +141,11 @@ Spec이 입력되었을 때:
 
 ---
 
-## peach-gen-ui와의 핵심 차이
+## 프로토타입 특성
 
-| 항목 | peach-gen-ui (프로덕션) | peach-gen-ui-proto (프로토타입) |
-|------|----------------------|------------------------------|
-| **Backend** | 실제 API 서버 필수 | 없음 (Mock Only) |
-| **Store API 호출** | `useApi().get('/endpoint')` → 실서버 | `useApi().get('/endpoint')` → Mock interceptor |
-| **Mock 데이터** | 없음 | `mock/[모듈명].mock.ts` 파일에 정의 |
-| **파일 업로드** | 실서버 업로드 | Mock (FormData 로깅 + 가짜 UUID 반환) |
-| **Excel** | 실서버 다운로드 | ExcelTemplateUtil 로컬 생성 |
-| **검증 도구** | bun (vue-tsc/lint/build) | bun 기본 (`bunx` + `bun run`) |
-| **사용자** | 개발자 | 기획자 (바이브코딩) |
-
----
-
-## 시각적 품질 가이드 (AI Slop 방지)
-
-> **"AI Slop"**: 과도한 그라데이션, 보라색 계열, 예측 가능한 레이아웃 등 AI가 생성하는 전형적이고 진부한 시각적 패턴
-
-### 핵심 원칙
-1. **프로젝트 테마 준수**: Primary `#287dff`, Pretendard 폰트
-2. **NuxtUI 컴포넌트 우선**: 커스텀 스타일링 최소화
-3. **단순함 유지**: 불필요한 장식 요소 배제
-
-### 금지 패턴
-| 유형 | 금지 예시 | 이유 |
-|------|----------|------|
-| 그라데이션 | `bg-gradient-to-*`, `from-*`, `to-*` | AI 전형적 패턴 |
-| 과도한 그림자 | `shadow-xl`, `shadow-2xl` | 백오피스와 부적합 |
-| 애니메이션 | `animate-pulse`, `animate-bounce` | 업무용 UI 불필요 |
-| 확대 효과 | `hover:scale-*`, `transform` | 과잉 인터랙션 |
-| 과도한 둥근 모서리 | `rounded-full` (버튼), `rounded-3xl` | 전문적이지 않음 |
-
-### 권장 패턴
-- NuxtUI 컴포넌트: `UButton`, `UCard`, `UModal`, `UTable`
-- 테마 변수: `primary`, `neutral`, `error`, `success`
-- 간격: 4px 배수 (`p-2`, `p-4`, `gap-4`)
-- 그림자: `shadow-sm`, `shadow` (최대)
-- 둥근 모서리: `rounded-md`, `rounded-lg` (최대)
-
-**상세 가이드**: [visual-guide.md](references/core/visual-guide.md) 참조
+- Backend 없이 Mock interceptor로 `useApi()` 호출을 처리한다.
+- Mock 데이터는 `mock/`에 분리하고, 실제 API 전환 시 시그니처를 유지한다.
+- 시각 품질과 AI Slop 방지 상세는 [visual-guide.md](references/core/visual-guide.md)를 따른다.
 
 ---
 
@@ -414,26 +380,7 @@ cd front && bun run build         # 빌드
 
 ## 생성 파일 구조
 
-```
-front/src/modules/[모듈명]/
-├── mock/
-│   └── [모듈명].mock.ts          # Mock 데이터 + 동적 생성 함수
-├── type/
-│   └── [모듈명].type.ts          # 타입 정의 (백엔드 동일 구조)
-├── store/
-│   └── [모듈명].store.ts         # Pinia Option API (Mock useApi() 경유)
-├── pages/
-│   ├── list.vue                  # 목록 페이지 (껍데기)
-│   ├── list-search.vue           # 검색 영역
-│   ├── list-table.vue            # 테이블 영역
-│   └── detail-page.vue           # 상세 페이지 (page 패턴)
-├── modals/
-│   ├── insert.modal.vue          # 등록 모달
-│   ├── update.modal.vue          # 수정 모달
-│   └── detail.modal.vue          # 상세 모달
-├── _[모듈명].routes.ts           # 라우트 정의
-└── _[모듈명].validator.ts        # Yup 검증 스키마
-```
+`front/src/modules/[모듈명]/` 아래에 `mock/`, `type/`, `store/`, `pages/`, `modals/`, 라우트/validator 파일을 생성한다. 패턴별 상세 구조는 선택된 reference를 따른다.
 
 ---
 
@@ -488,30 +435,7 @@ Suggest 시: 이유를 사용자에게 제시하고 확인 후 적용. Must Foll
 
 ## 완료 후 안내
 
-```
-UI 프로토타입 생성이 완료되었습니다.
-
-**생성된 파일**:
-- front/src/modules/[모듈명]/mock/     ← Mock 데이터
-- front/src/modules/[모듈명]/store/    ← Mock Store
-- front/src/modules/[모듈명]/pages/    ← UI 페이지
-- front/src/modules/[모듈명]/modals/   ← 모달 컴포넌트
-
-**검증 결과**:
-- vue-tsc: 통과
-- lint: 통과
-- build: 통과
-
-**확인 방법**:
-cd front && bun run dev
-# 브라우저에서 http://localhost:3000/[모듈명]/list 접속
-
-**프로덕션 전환 시**:
-1. mock/ 디렉토리 삭제
-2. Store에서 Mock interceptor 제거
-3. 실제 API 엔드포인트 연결
-→ useApi() 호출 코드는 그대로 유지됩니다.
-```
+생성/수정 파일, `vue-tsc/lint/build` 결과, 브라우저 확인 경로, 프로덕션 전환 시 Mock 제거 범위를 보고한다.
 
 ---
 
@@ -559,19 +483,6 @@ cd front && bun run dev
 |------|---------------|
 | 로딩 상태 필요 | core/loading-state-pattern.md |
 | 에러 처리 필요 | core/error-handling-pattern.md |
-
----
-
-## references 전체 목록 (참고용)
-
-| 카테고리 | 파일 | 용도 |
-|----------|------|------|
-| **core/** | mock-service, mock-store, store, type, common, loading-state, error-handling, ui-patterns, visual-guide, common-component-guide | 핵심 가이드 |
-| **basic/** | page, modal, two-depth, infinite-scroll, select-list, batch-process | 기본 UI 패턴 |
-| **advanced/** | adv-search, calendar, kanban, mega-form, tab-list | 고급 패턴 |
-| **options/** | excel, file-upload, validator | 추가 옵션 |
-| **guides/** | validation, completion | 프로세스 가이드 |
-| **team/** | proto-ui-dev-agent, proto-ui-qa-agent | 팀 모드 (Spec 입력 시) 서브에이전트 정의 |
 
 ---
 

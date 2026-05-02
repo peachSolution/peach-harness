@@ -1,5 +1,14 @@
 # FigmaRemote MCP 워크플로우
 
+## 목차
+
+- [FigmaRemote 도구 로드](#figmaremote-도구-로드)
+- [Figma URL 형식](#figma-url-형식)
+- [디자인 → 코드 매핑](#디자인--코드-매핑)
+- [닥터팔레트 색상 기준](#닥터팔레트-색상-기준)
+- [AI Slop 방지](#ai-slop-방지-금지-패턴)
+- [적용 예시](#적용-예시)
+
 ## FigmaRemote 도구 로드
 
 team-ui-dev 에이전트는 figma=[URL] 파라미터가 있을 때 FigmaRemote MCP를 활용합니다.

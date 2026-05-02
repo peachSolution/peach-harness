@@ -476,12 +476,7 @@ Spec 생성이 완료되었습니다.
 
 ## 예제 (선택적 참조)
 
-3가지 완전한 Spec 예제:
-1. 공지사항 게시판 (기본 CRUD + 파일)
-2. 회원 관리 (파일 없음, Page 패턴)
-3. 제품 관리 (Excel 업로드)
-
-→ [examples.md](references/examples.md) 참조
+완전한 Spec 예제는 [examples.md](references/examples.md)를 필요한 경우에만 읽는다.
 
 ---
 

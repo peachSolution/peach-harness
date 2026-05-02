@@ -18,7 +18,7 @@ allowed-tools:
 # QA 검증 게이트 스킬
 
 `peach-qa-gate`는 작업 완료 직전 증거를 수집하는 품질 게이트다.
-`peach-agent-team`, `peach-agent-team-refactor`에서는 **최종 QA 통과 후 오케스트레이터가 자동 후속 단계로 호출**하며, 팀 스킬 없이 단독 작업을 마무리할 때는 수동으로 직접 호출할 수 있다.
+`peach-team-dev`, `peach-team-3a`에서는 **최종 QA 통과 후 오케스트레이터가 자동 후속 단계로 호출**하며, 팀 스킬 없이 단독 작업을 마무리할 때는 수동으로 직접 호출할 수 있다.
 
 ## 페르소나
 
@@ -32,7 +32,7 @@ allowed-tools:
 
 ## 호출 구조
 
-- **자동 모드**: `peach-agent-team`, `peach-agent-team-refactor` 완료 직전 자동 후속 호출
+- **자동 모드**: `peach-team-dev`, `peach-team-3a` 완료 직전 자동 후속 호출
 - **수동 모드**: `/peach-qa-gate`를 직접 실행하여 단독 작업의 완료 전 검증 수행
 
 ---

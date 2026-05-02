@@ -1,5 +1,12 @@
 # Backend + Store 연결 워크플로우
 
+## 목차
+
+- [Mock Store → 실제 Store 교체 전략](#mock-store--실제-store-교체-전략)
+- [의존성 흐름](#의존성-흐름)
+- [Store 인터페이스 유지 원칙](#store-인터페이스-유지-원칙)
+- [주의사항](#주의사항)
+
 ## Mock Store → 실제 Store 교체 전략
 
 기존 UI가 Mock Store(정적 데이터)로 구현된 경우, 실제 API Store로 교체합니다.

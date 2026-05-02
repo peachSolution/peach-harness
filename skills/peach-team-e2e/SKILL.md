@@ -5,7 +5,7 @@ description: |
   Spec과 ui-proto 기반으로 E2E 환경 세팅 + 단위 시나리오 자동 분할 + 통합 suite 생성 + 실행 + 부합 검증을 한 번에 처리하는 통합 팀 스킬.
   "e2e 검증해줘", "통합 검증", "전체 흐름 테스트", "팀 e2e", "스펙대로 동작하는지 확인",
   "ui-proto와 다른지 확인", "최종 검증", "릴리스 전 검증" 키워드로 트리거.
-  peach-e2e-setup + peach-e2e-scenario + peach-e2e-suite 3개 스킬의 패턴을 흡수하고,
+  peach-e2e-setup + peach-e2e-scenario + peach-e2e-suite 3개 스킬의 패턴을 공유하고,
   검증 기준을 ui-proto 화면 + Spec 비즈니스 규칙으로 외부화한다.
   단순 코드 동작 검증을 넘어, 기획 의도와 부합하는지 자동 검증하는 게 핵심 차별점.
 ---
@@ -94,6 +94,17 @@ team-e2e는 **사용자 경험 검증**만 담당한다. 로직 분기 검증은
 
 ## 워크플로우
 
+### Reference 선택
+
+| 상황 | 읽을 reference |
+|------|----------------|
+| E2E 환경 미세팅 | `references/e2e-setup-흡수.md` |
+| Spec/proto 검증 기준 로드 | `references/검증기준-로드.md` |
+| 단위 시나리오 작성/검증 | `references/scenario-dev-agent.md`, `references/scenario-qa-agent.md` |
+| 통합 suite 생성/실행 | `references/suite-dev-agent.md`, `references/suite-qa-agent.md` |
+| 실패 원인 분류 | `references/미스매치-분류.md` |
+| QA 판정/완료 보고 | `references/qa-policy.md` |
+
 ### 0. 입력 검증
 
 #### 에이전트 팀 기능 활성화 확인
@@ -119,58 +130,11 @@ proto 인자 없음 + docs/spec/... 없음 → 사용자에게 검증 기준 입
 
 ### 1. E2E 환경 세팅 (필요시)
 
-`peach-e2e-setup`의 패턴을 흡수한다.
-
-```bash
-# e2e/ 폴더 존재 확인
-[ -d "e2e" ] && echo "✅ e2e/ 존재" || echo "❌ e2e/ 없음 — 세팅 필요"
-
-# 기본 도구 확인
-command -v agent-browser && command -v node && echo "✅ 도구 설치됨"
-
-# Chrome Beta 확인
-ls "/Applications/Google Chrome Beta.app" 2>/dev/null || echo "❌ Chrome Beta 미설치"
-
-# CDP 연결 확인
-curl -s http://127.0.0.1:9222/json/version > /dev/null && echo "✅ CDP 연결" || echo "❌ CDP 미연결"
-```
-
-미세팅이면 다음 자동 진행:
-
-1. `e2e/` 폴더 없음 → `peach-e2e-setup` 인프라 코드 배포
-2. 도구 미설치 → 사용자에게 설치 안내 (자동 설치 금지)
-3. Chrome Beta 미설치 → 사용자 안내 후 중단
-4. CDP 미연결 → `cd e2e && ./e2e.sh chrome &` 자동 실행 후 재확인
-
-상세는 `references/e2e-setup-흡수.md` 참조.
+`e2e/`, `agent-browser`, Chrome Beta, CDP 연결을 확인한다. 도구는 자동 설치하지 않고 사용자에게 안내한다. 프로젝트 내부 E2E 인프라 배포와 CDP 연결 절차는 `references/e2e-setup-흡수.md`를 따른다.
 
 ### 2. 검증 기준 로드
 
-#### 표준 검증 모드 (proto + Spec)
-
-```bash
-# proto 경로의 Spec과 화면 폴더 분석
-cat <PROTO_PATH>/_spec.md
-ls <PROTO_PATH>/                              # 서브모듈 폴더 목록
-find <PROTO_PATH> -name "*.vue" -type f       # 화면 파일 목록
-
-# 본 프로젝트 Spec 사본 확인
-ls docs/spec/{년}/{월}/
-
-# 두 Spec이 일치하는지 확인 (불일치 시 사용자 확인)
-diff <PROTO_PATH>/_spec.md docs/spec/{년}/{월}/{기능명}.md 2>/dev/null
-```
-
-검증 기준 컨텍스트로 다음을 추출:
-- **시각/흐름 기준 (ui-proto)**: 페이지 진입 → 사용자 액션 시퀀스 → 화면 전환 → 결과 확인
-- **비즈니스 규칙 기준 (Spec)**: 입력 검증 규칙, 권한 분기, 상태 전이, 에러 케이스
-- **데이터 정확성 기준 (Spec)**: API 응답 형태, DB 상태 변화
-
-#### Spec-only 검증 모드
-
-ui-proto가 없으면 Spec에서 화면 흐름까지 추출한다 (ui-proto만큼 정확하지는 않음).
-
-상세는 `references/검증기준-로드.md` 참조.
+표준 검증 모드는 proto의 `_spec.md`와 화면 폴더, 본 프로젝트의 Spec 사본을 함께 읽고 불일치를 확인한다. Spec-only 모드는 본 프로젝트 Spec만 사용하되 시각 검증 한계를 보고한다. 상세 절차는 `references/검증기준-로드.md`를 따른다.
 
 ### 3. 팀 구성 다이어그램
 
@@ -207,67 +171,15 @@ TaskCreate:
 
 ### 5. 단위 시나리오 자동 분할
 
-`peach-e2e-scenario`의 패턴을 흡수한다.
-
-검증 기준에서 **사용자 액션 단위**로 시나리오를 분할한다.
-
-예: 게시판 관리 기능
-```
-검증 기준 (ui-proto + Spec):
-  로그인 → 게시판 목록 진입 → 검색 → 상세 보기 → 수정 → 저장 → 목록 복귀
-
-단위 시나리오 분할:
-  1-로그인.js
-  2-게시판-목록.js
-  3-게시판-검색.js
-  4-게시판-상세.js
-  5-게시판-수정.js
-  6-게시판-저장-확인.js
-```
-
-분할 기준:
-- **단일 사용자 액션**: 1개 시나리오 = 1개 명확한 결과
-- **데이터 의존성 표시**: 다음 시나리오에 전달할 데이터 명시 (예: orderId)
-- **재사용 가능성**: 다른 통합 흐름에서도 재사용 가능한 단위로 분할
-- **실패 격리**: 한 시나리오 실패가 다른 시나리오에 전파되지 않도록 독립 실행 가능
-
-기존 시나리오 코드 패턴은 `peach-e2e-scenario/references/` 참조.
+검증 기준에서 사용자 액션 단위로 시나리오를 분할한다. 단일 책임, 데이터 의존성 표시, 재사용성, 실패 격리를 기준으로 한다. 상세는 `references/scenario-dev-agent.md`와 `references/scenario-qa-agent.md`를 따른다.
 
 ### 6. 통합 suite 자동 생성
 
-`peach-e2e-suite`의 패턴을 흡수한다.
-
-단위 시나리오를 비즈니스 흐름 단위로 조합한 통합 suite md를 생성한다.
-
-```
-docs/e2e-suite/{기능명}-{핵심동작}.md
-```
-
-생성 내용:
-- frontmatter (name, module, created)
-- 사전조건 (CDP 연결, 로그인, 시작 페이지)
-- Step별 시나리오 흐름
-- 단계별 검증 포인트
-- 데이터 전달 방식
-- 코드/DB 검증 (필요시)
-- **검증 우선순위 규칙 적용 결과** (ui-proto/Spec 기준 매핑)
-- 최종 통합 기준
-
-템플릿은 `peach-e2e-suite/references/suite-템플릿.md` 참조.
+단위 시나리오를 비즈니스 흐름 단위로 조합해 `docs/e2e-suite/{기능명}-{핵심동작}.md`를 생성한다. suite 구조와 검증 포인트 작성은 `references/suite-dev-agent.md`와 `references/suite-qa-agent.md`를 따른다.
 
 ### 7. 실행 + 미스매치 분류
 
 suite md를 순차 실행하면서 각 Step의 결과를 검증 기준과 대조한다.
-
-#### 실행 절차
-
-각 Step마다:
-1. 단위 시나리오 실행: `cd e2e && ./e2e.sh run --tab N 시나리오/경로`
-2. 검증 포인트 확인: `agent-browser eval`로 DOM/URL 상태 검증
-3. 검증 기준과 대조 (ui-proto 화면 / Spec 비즈니스 규칙)
-4. 전달 데이터 추출/주입
-
-#### 미스매치 분류
 
 실패 시 **3가지로 분류**한다.
 
@@ -286,72 +198,15 @@ suite md를 순차 실행하면서 각 Step의 결과를 검증 기준과 대조
 
 ### 8. 보완 루프 (랄프루프 5/10회)
 
-분류 결과에 따라 다음으로 분기한다.
-
-#### (a)/(b) 본 프로젝트 코드 수정
-
-```
-미스매치 분류 → Spec/proto 근거 확인
-  → 미스매치 보고 → 사용자 확인
-  → /peach-team-dev로 수정 위임
-  → 수정 완료 후 team-e2e 재진입 또는 관련 suite 재실행
-```
-
-team-e2e는 본 프로젝트 코드를 직접 수정하지 않는다. 코드 변경은 영향 범위가 작아 보여도 team-dev의 TDD/lint/build 게이트를 거쳐야 한다.
-
-#### (c) 시나리오 수정
-
-```
-peach-e2e-scenario 자동수정 패턴 적용 → 재실행 (최대 3회)
-```
-
-상세는 `peach-e2e-scenario/references/자동수정-판단트리.md` 참조.
-
-#### 랄프루프 상한
-
-| 변경 규모 | 상한 |
-|----------|------|
-| 단순 시나리오 수정 (자동수정 가능 범위) | 3회 (e2e-scenario 기준) |
-| Spec/proto 부합 검증 + team-dev 위임 수정 (소규모) | 5회 |
-| Spec/proto 부합 검증 + team-dev 위임 수정 (중대규모) | 10회 |
-
-상한 도달 시:
-```
-⚠️ Ralph Loop 상한 도달
-
-미스매치 이력:
-[분류별 실패 내역]
-
-권고:
-- (a)/(b) 미해결: peach-team-dev로 코드 수정 후 재진입
-- (c) 미해결: peach-e2e-scenario로 단위 시나리오 직접 디버깅
-- 검증 기준 자체에 모호함이 있으면 Spec/ui-proto 보강 필요
-```
+분류 결과에 따라 코드 수정은 사용자 확인 후 `peach-team-dev`로 위임하고, 시나리오 오류만 자동수정한다. 반복 상한과 완료 보고 기준은 `references/qa-policy.md`를 따른다.
 
 ## QA 판정 처리
 
-`peach-team-dev`와 동일한 3단계(APPROVED / CONDITIONAL / REJECTED).
-
-- **APPROVED**: 모든 단위 시나리오 + 통합 suite 통과 + 검증 기준 부합
-- **CONDITIONAL**: 일부 단계는 통과했으나 부분적으로 기준 미부합 (오케스트레이터 판단)
-- **REJECTED**: 검증 기준 위반 + 자동수정 불가 → 랄프루프 진입
-
-상세는 `peach-team-dev/SKILL.md`의 "QA 판정 처리" 섹션과 동일한 패턴 적용.
+QA는 `APPROVED / CONDITIONAL / REJECTED` 3단계로 판정한다. 판정 의미, 보완 루프, 완료 보고 필드는 `references/qa-policy.md`를 따른다.
 
 ## Completion
 
-모든 검증 통과 후:
-
-### 1. 증거 수집
-
-```
-- 단위 시나리오 파일 목록 + 실행 결과
-- 통합 suite md 경로
-- 미스매치 분류 이력 (있었다면)
-- 검증 기준 부합 결과 (ui-proto/Spec 매핑)
-```
-
-### 2. 팀 정리
+모든 검증 통과 후 단위 시나리오 실행 결과, 통합 suite 경로, 미스매치 이력, 검증 기준 부합 결과를 수집한다.
 
 ```
 SendMessage(shutdown_request) → 모든 팀원에게
@@ -360,67 +215,7 @@ TeamDelete → 팀 정리
 
 ## 완료 보고 형식
 
-### 표준 검증 모드 (proto + Spec)
-
-```
-🎉 E2E 통합 검증 완료 (표준 모드)
-
-기능: [기능명]
-proto: [proto 경로]
-검증 기준: ui-proto + Spec
-
-생성된 산출물:
-- 단위 시나리오: e2e/시나리오/[카테고리]/*.js (X개)
-- 통합 suite: docs/e2e-suite/[기능명]-[핵심동작].md
-- 실행 보고: docs/qa/{년}/{월}/[기능명]-e2e-{날짜}.md
-
-검증 결과:
-✅ 화면 레이아웃: ui-proto 일치
-✅ 인터랙션 흐름: ui-proto 일치
-✅ 비즈니스 규칙: Spec 부합
-✅ 데이터 정확성: Spec 부합
-✅ 에러/예외 처리: Spec 부합
-
-(검증 불가 항목이 있으면 보고)
-
-Ralph Loop 이력:
-- 분류 (a) Spec 위반: X건 → 수정 완료
-- 분류 (b) proto 불일치: X건 → 수정 완료
-- 분류 (c) 시나리오 오류: X건 → 자동수정 완료
-
-다음 단계:
-→ 릴리스 가능
-```
-
-### Spec-only 검증 모드
-
-```
-✅ E2E 통합 검증 완료 (Spec-only 모드)
-
-기능: [기능명]
-검증 기준: Spec (ui-proto 없음)
-
-검증 결과:
-✅ Spec 부합 결과
-⚠️ 화면 레이아웃: ui-proto 없음 → 시각 검증 생략
-
-다음 단계:
-→ ui-proto가 추후 생성되면 시각 검증 추가 가능
-→ 릴리스 가능
-```
-
-### 검증 기준 부재 모드 (자연어 입력)
-
-```
-⚠️ E2E 검증 완료 (검증 기준 약함)
-
-검증 기준: 사용자 자연어 입력
-주의: ui-proto/Spec 없이 진행되어 검증 신뢰도가 낮습니다.
-
-다음 단계:
-→ /peach-gen-spec으로 사후 Spec 작성 권장
-→ 사용자가 결과를 직접 확인 필수
-```
+완료 보고는 `references/qa-policy.md`의 필드를 따른다. Spec-only 모드와 검증 기준 부재 모드는 검증 한계와 사후 보강 권고를 반드시 포함한다.
 
 ## Examples
 
@@ -463,7 +258,7 @@ Ralph Loop 이력:
 - `peach-e2e-suite` — 통합 suite md 단독 생성/실행 (Tier 2)
 - `peach-e2e-browse` — 브라우저 탐색/디버깅 (검증 중 보조)
 
-> 이 스킬은 위 4개 e2e-* 스킬과 **같은 가이드 패턴을 흡수한다**.
+> 이 스킬은 위 4개 e2e-* 스킬과 **같은 가이드 패턴을 공유한다**.
 > 진짜 SoT는 시나리오 코드 패턴(`peach-e2e-scenario/references/`)과 e2e 인프라 코드(`peach-e2e-setup/references/`).
 > Tier 2 스킬과 본 스킬은 같은 패턴을 두 가지 호출 방식으로 사용한다.
 > `browse/scenario/suite`는 병합 대상이 아니라 연결 대상이다. 수명주기가 다르므로 Tier 2 단독 호출성을 유지한다.

@@ -31,7 +31,7 @@ description: |
 │  입력: 설계된 테이블 목록 + 시스템 성격                         │
 │  출력: modules 구조 + _common 기본 구성 + 가이드코드 연결       │
 │                                                                 │
-│  ⚠️ "세팅"만 담당. 이후 모듈 생성은 peach-gen-*/peach-team이    │
+│  ⚠️ "세팅"만 담당. 이후 모듈 생성은 peach-gen-*/peach-team-dev가 │
 │     자동 감지하여 적응합니다.                                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -241,7 +241,7 @@ _common 구성:
 [✅/❌] email/ (선택)
 
 다음 단계:
-→ /peach-team [모듈명] mode=fullstack 실행하여 첫 모듈 생성
+→ /peach-team-dev [모듈명] mode=fullstack 실행하여 첫 모듈 생성
 ```
 
 ---
