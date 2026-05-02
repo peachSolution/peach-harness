@@ -3,7 +3,7 @@
 > 작성일: 2026-05-02
 > 대상: `skills/peach-review-ux/`
 > 분석 방식: `peach-team-analyze` 방식의 3관점 병렬 검토 + PM 종합
-> 참고: Laws of UX 원문, GeekNews 요약 topic 29034
+> 참고: Laws of UX(https://lawsofux.com), GeekNews 요약(https://news.hada.io/topic?id=29034)
 
 ---
 

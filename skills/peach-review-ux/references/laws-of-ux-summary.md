@@ -1,6 +1,6 @@
 # Laws of UX 피치 적용 요약
 
-> 출처: Laws of UX 원문, GeekNews 요약 topic 29034
+> 출처: Laws of UX(https://lawsofux.com), GeekNews 요약(https://news.hada.io/topic?id=29034)
 > 본 문서는 원문을 피치 백오피스/프로토타입 UX 검증 관점으로 재구성한 요약이다.
 
 ---
