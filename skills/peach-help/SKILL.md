@@ -101,6 +101,7 @@ allowed-tools:
 | Cron 스케줄러 추가 | `/peach-add-cron` |
 | 인쇄 전용 페이지 | `/peach-add-print` |
 | 디자인 시스템 상담 | `/peach-gen-design` (참고용 / 본체는 ui-proto 프로젝트 내부) |
+| 화면 UX 리뷰 | `/peach-review-ux` (읽기전용, 선택적 검토) |
 | 다이어그램 생성 | `/peach-gen-diagram` |
 | ERD 시각화 | `/peach-erd` |
 | DB 데이터 조회 | `/peach-db-query` |

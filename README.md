@@ -128,6 +128,7 @@ peach-harness/
 │   ├── peach-team-3a/               # 3-에이전트 단일 기능 루프
 │   ├── peach-team-analyze/          # 범용 분석 팀
 │   ├── peach-qa-gate/                # QA 검증 게이트 (팀 스킬 완료 시 자동 후속 호출 가능)
+│   ├── peach-review-ux/             # 선택적 UX 리뷰 (읽기전용)
 │   ├── peach-gen-backend/           # Backend 생성 (Tier 2)
 │   ├── peach-gen-store/             # Store 생성 (Tier 2)
 │   ├── peach-gen-ui/                # UI 생성 (Tier 2)
@@ -171,6 +172,7 @@ peach-harness/
 - `peach-gen-store` — Frontend Store
 - `peach-gen-ui` — Frontend UI
 - `peach-gen-ui-proto` — UI 프로토타입 (Mock 기반)
+- `peach-review-ux` — 화면/프로토타입 UX 법칙 기반 읽기전용 리뷰
 
 ### 추가 계열
 
@@ -221,7 +223,7 @@ peach-harness/
 
 | 유형 | 스킬 |
 |------|------|
-| 능력 향상형 | gen-design, gen-diagram, gen-spec, doc-feature, peach-help, team-analyze, markitdown, peach-wiki |
+| 능력 향상형 | gen-design, gen-diagram, gen-spec, doc-feature, peach-help, team-analyze, markitdown, peach-wiki, peach-review-ux |
 | 선호도 인코딩형 | gen-backend, gen-db, gen-store, gen-ui, gen-ui-proto, add-api, add-cron, add-print, team-dev, team-3a |
 | 프로세스 게이트 | qa-gate, skill-feedback, setup-harness, setup-project, setup-ui-proto |
 | DB 도구 | db-migrate, db-extract-schema, db-query, erd |

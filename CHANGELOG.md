@@ -5,6 +5,17 @@
 
 ---
 
+## [Unreleased]
+
+### Added
+- peach-review-ux 스킬 추가 — Laws of UX와 GeekNews 요약을 피치 백오피스 관점으로 재구성한 읽기전용 UX 리뷰 스킬
+- docs/분석/2026-05-02-peach-review-ux-보강분석.md 추가 — UX 스킬 보강 근거와 향후 통합 기준 정리
+
+### Changed
+- 워크플로우/도움말/README에 `peach-review-ux`를 선택적 UX 리뷰 스킬로 안내
+
+---
+
 ## [v1.18.2] - 2026-04-29
 
 ### Added
