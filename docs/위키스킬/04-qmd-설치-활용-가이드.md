@@ -68,6 +68,24 @@ qmd --index "$QMD_INDEX" get "qmd://$QMD_INDEX/경로/파일.md"
 qmd --index "$QMD_INDEX" update && qmd --index "$QMD_INDEX" embed
 ```
 
+### Apple Metal 오류 우회
+
+Apple Silicon에서 `qmd query`, `qmd embed`, `qmd status` 실행 중 아래 메시지가 나오고 멈추면 Metal 백엔드 초기화 실패로 본다.
+
+```text
+[node-llama-cpp] ggml_metal_library_init_from_source: error compiling source
+```
+
+이때는 GPU를 끄고 CPU 경로로 재실행한다.
+
+```bash
+QMD_LLAMA_GPU=off qmd --index "$QMD_INDEX" status
+QMD_LLAMA_GPU=off qmd --index "$QMD_INDEX" query "키워드" -c "$QMD_INDEX" --no-rerank
+QMD_LLAMA_GPU=off qmd --index "$QMD_INDEX" embed
+```
+
+검색만 급하면 `qmd search`를 먼저 사용한다. `search`는 BM25 키워드 검색이라 로컬 LLM/임베딩 모델 초기화 없이 동작한다.
+
 ## 언제 `embed`까지 돌릴까
 
 | 상황 | 명령 |
@@ -95,6 +113,7 @@ qmd --index "$QMD_INDEX" update && qmd --index "$QMD_INDEX" embed
 | `qmd: command not found` | 미설치 또는 PATH 문제 | `npm install -g @tobilu/qmd` |
 | 새 파일 검색 안 됨 | 인덱스 미갱신 | `qmd --index "$QMD_INDEX" update` |
 | 벡터 검색 품질이 낮음 | 임베딩 미생성 | `qmd --index "$QMD_INDEX" embed` |
+| `ggml_metal_library_init_from_source` 후 멈춤 | Apple Metal 백엔드 컴파일 실패 | `QMD_LLAMA_GPU=off`를 붙여 CPU 경로로 재실행 |
 | 검색이 느림 | CPU only 환경 | `--no-rerank`로 임시 완화 후 환경 개선 |
 
 ## 참고
