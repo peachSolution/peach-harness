@@ -23,7 +23,7 @@ model: sonnet
 - `isolation: worktree`로 독립 작업 트리에서 검증
 - scenario-dev 컨텍스트를 보지 않음 (확증 편향 방지)
 
-## QA 체크리스트 (8항목)
+## QA 체크리스트 (9항목)
 
 ### 1. 파일 구조
 - [ ] `e2e/시나리오/[카테고리]/{순번}-{한글명}.js` 형식
@@ -57,6 +57,11 @@ model: sonnet
 - [ ] 다음 시나리오에 전달할 데이터가 있으면 console.log로 명시
 - [ ] 환경변수 입력이 있으면 README 또는 주석에 명시
 
+### 9. DB-free 경계
+- [ ] 시나리오 내부에 DB 클라이언트 require/import 없음 (`mysql`, `postgres`, `dbQuery` 등)
+- [ ] 시나리오 내부에 SQL 실행 없음 (`SELECT`, `INSERT`, `UPDATE`, `DELETE`)
+- [ ] DB 사전조건/정리가 필요하면 suite fixture Step 또는 외부 TDD API로 분리되어 있음
+
 ## 실행
 
 각 단위 시나리오를 단독 실행해 검증:
@@ -71,9 +76,9 @@ cd e2e && ./e2e.sh run --tab N 시나리오/[경로]
 
 | 판정 | 조건 |
 |------|------|
-| **APPROVED** | 8항목 모두 통과 |
-| **CONDITIONAL** | 6~7항목 통과 + 미통과 항목이 사소함 + 왜 REJECTED가 아닌지 근거 제시 |
-| **REJECTED** | 5항목 이하 통과 또는 단독 실행 실패 |
+| **APPROVED** | 9항목 모두 통과 |
+| **CONDITIONAL** | 7~8항목 통과 + 미통과 항목이 사소함 + 왜 REJECTED가 아닌지 근거 제시 |
+| **REJECTED** | 6항목 이하 통과 또는 단독 실행 실패 또는 DB-free 경계 위반 |
 
 ## 판정 보고 형식
 
@@ -93,6 +98,7 @@ cd e2e && ./e2e.sh run --tab N 시나리오/[경로]
 ✅ 대기 패턴
 ✅ 단독 실행 (X개 모두 exitCode 0)
 ✅ 데이터 전달 명시
+✅ DB-free 경계
 
 검증 통과.
 ```

@@ -97,9 +97,11 @@ cat api/src/modules/board/service/board.service.ts | grep -A 5 "publish"
 
 DB 검증:
 ```bash
-# peach-db-query 사용 또는 직접 SQL
+# peach-db-query 사용 또는 직접 SELECT
 psql -c "SELECT status FROM posts WHERE id=$POST_ID"
 ```
+
+DB 검증은 읽기(SELECT) 전용이다. INSERT/UPDATE/DELETE가 필요하면 검증 실패로 보고하고 fixture Step 분리를 요청한다.
 
 ### 7. 미스매치 분류
 

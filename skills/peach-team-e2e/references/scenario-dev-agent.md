@@ -26,6 +26,9 @@ model: sonnet
 - 다이얼로그 핸들러는 `setDialogHandler` 교체 + finally에서 원복
 - 저장 직후 `node --check`로 문법 검증
 - `waitForTimeout` 최소화, 이벤트 기반 대기 우선
+- 시나리오 .js는 UI 조작과 UI 결과 검증만 담당
+- DB 직접 접근 금지: `mysql`, `postgres`, `dbQuery`, SQL 실행 코드 작성 금지
+- DB 사전조건/시드/정리는 suite fixture Step, 관리자 화면 액션, TDD API 중 하나로 분리
 
 ## 입력
 

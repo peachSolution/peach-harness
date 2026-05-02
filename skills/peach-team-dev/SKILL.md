@@ -517,12 +517,12 @@ Spec 사본: docs/spec/{년}/{월}/{planner}-{YYMMDD}-{title}.md
 ✅ backend-dev: API 생성 완료
 ✅ backend-qa: TDD X개 통과
 ✅ store-dev: Store 생성 완료
-✅ ui-dev: UI 컴포넌트 생성 완료 (ui-proto 흐름 일치)
-✅ frontend-qa: vue-tsc + lint + build 통과 + 검증 우선순위 규칙 부합
+✅ ui-dev: UI 컴포넌트 생성 완료 (ui-proto/Spec 기준으로 정적 구현 반영)
+✅ frontend-qa: vue-tsc + lint + build 통과
 
-검증 우선순위 부합 결과:
-- 화면 흐름: ui-proto 일치
-- 비즈니스 규칙: Spec 부합
+구현 기준 반영 결과:
+- 화면 구조/흐름: ui-proto 기준 반영 (브라우저 E2E 검증은 team-e2e 단계)
+- 비즈니스 규칙: Spec 기준 반영 (로직 검증은 TDD 기준)
 - (검증 불가 항목 있으면 보고)
 
 생성된 파일:

@@ -75,7 +75,7 @@ model: sonnet
 |----------|---------|
 | 화면 레이아웃, 인터랙션 흐름 | ui-proto의 화면 폴더에서 추출 |
 | 비즈니스 규칙 (검증 메시지, 권한 분기) | Spec에서 추출 |
-| 데이터 정확성 (DB 상태, API 응답) | Spec에서 추출, DB 검증 SQL 또는 API 호출로 검증 |
+| 데이터 정확성 (DB 상태, API 응답) | Spec에서 추출, SELECT 검증 SQL 또는 API 조회로 검증 |
 
 예시:
 ```markdown
@@ -87,7 +87,7 @@ model: sonnet
 
 ### 4. 코드/DB 검증 추가 (필요시)
 
-비즈니스 규칙 검증이 필요하면 코드 파일 직접 확인 또는 SQL 실행:
+비즈니스 규칙 검증이 필요하면 코드 파일 직접 확인 또는 SELECT SQL을 작성한다. INSERT/UPDATE/DELETE는 검증이 아니라 fixture이므로 별도 Step으로 분리한다.
 
 ```markdown
 ### Step N: 결과 검증
