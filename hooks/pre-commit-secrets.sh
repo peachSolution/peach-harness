@@ -36,10 +36,14 @@ report() {
   fi
 }
 
-# 1) 내부 도메인 — 화이트리스트 외 모든 .co.kr/.com/.net/.io/.org
-DOMAIN_HITS=$(echo "$ADDED" \
-  | grep -iE '[a-z0-9-]+\.(co\.kr|com|net|io|org)' \
-  | grep -vE 'example\.com|example\.co\.kr|github\.com|githubusercontent|google\.com|figma\.com|npmjs|playwright\.dev|anthropic|claude\.ai|nuxt|tailwindcss|kakao|naver|daum|w3\.org|semver\.org|keepachangelog\.com|lawsofux\.com|news\.hada\.io|spec\.openapis|jsonschema|mozilla|wikipedia|claude\.com|input\.command|input\.com[a-z]+|networkInterfaces|full-loding\.component' \
+# 1) 내부 도메인 — 도메인 후보만 추출한 뒤 allowlist 외 모든 .co.kr/.com/.net/.io/.org 차단
+DOMAIN_ALLOWLIST='(^|\.)(example\.com|example\.co\.kr|github\.com|githubusercontent\.com|google\.com|figma\.com|npmjs\.com|anthropic\.com|claude\.ai|claude\.com|nuxt\.com|nuxtjs\.org|tailwindcss\.com|kakao\.com|naver\.com|daum\.net|w3\.org|semver\.org|keepachangelog\.com|lawsofux\.com|hada\.io|openapis\.org|json-schema\.org|mozilla\.org|wikipedia\.org)$'
+DOMAIN_HITS=$(printf '%s\n' "$ADDED" \
+  | grep -ioE '(^|[^a-z0-9-])([a-z0-9-]+\.)+(co\.kr|com|net|io|org)([^a-z0-9-]|$)' \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed -E 's/^[^a-z0-9-]+//; s/[^a-z0-9-]+$//' \
+  | grep -vE "$DOMAIN_ALLOWLIST" \
+  | sort -u \
   || true)
 report "내부 도메인 의심" "$DOMAIN_HITS"
 
@@ -62,7 +66,7 @@ if [ $FAILED -ne 0 ]; then
   echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
   echo -e "${RED}커밋 차단 — peach-harness는 PUBLIC 저장소입니다.${NC}"
   echo -e "${YEL}대체값 예시: {DB_HOST} / {API_KEY} / {BIZ_NUMBER} / ~/source/{project} / *.example.com${NC}"
-  echo -e "${YEL}오탐이 확실하면 화이트리스트(스크립트 1번 grep -vE)에 패턴 추가 후 재커밋하세요.${NC}"
+  echo -e "${YEL}오탐이 확실하면 DOMAIN_ALLOWLIST에 도메인 패턴을 추가 후 재커밋하세요.${NC}"
   echo -e "${YEL}자동 탐지 한계: 한글 사내 어휘·짧은 영문 코드네임은 잡히지 않으니 직접 diff를 훑어 주세요.${NC}"
   exit 1
 fi

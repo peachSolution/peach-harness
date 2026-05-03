@@ -2,7 +2,7 @@
 name: peach-team-ui-proto
 description: |
   Backend 없이 Mock 데이터 기반 프로토타입 UI를 생성·검증하는 팀 오케스트레이터 스킬. Vue 3 + TypeScript + NuxtUI v4.
-  별도 ui-proto 저장소(예: peach-ui-proto-backoffice)의 modules-task 폴더에 태스크별 화면을 누적한다.
+  별도 ui-proto 저장소(예: peach-ui-proto-backoffice)의 src/modules-task 폴더에 태스크별 화면을 누적한다.
   "프로토타입 만들어줘", "Mock 화면", "proto UI", "기획 화면 빠르게",
   "ui-proto 작업", "기획자 검토용 화면", "태스크 폴더 추가", "팀 ui-proto" 키워드로 트리거.
   Spec 문서가 입력으로 주어지면 자동으로 팀 모드(랄프루프 5/10회)로 전환되며,
@@ -21,7 +21,7 @@ ui-proto 화면을 만들고 검증하는 팀 오케스트레이터.
 - **컴포넌트 사용**: 케밥케이스 사용 (예: `<u-button>`, `<u-modal>`, `<my-component>`)
 - **완료 기준**: vue-tsc + lint + build 모두 통과
 - **프로덕션 전환 대비**: API 시그니처 유지, Mock 교체만으로 실서버 연동 가능
-- **저장소 분리 (2026-04-27 결정)**: 본 프로젝트가 아닌 **별도 ui-proto 저장소**의 `modules-task/{년월}/{태스크폴더}/`에 누적
+- **저장소 분리 (2026-04-27 결정)**: 본 프로젝트가 아닌 **별도 ui-proto 저장소**의 `src/modules-task/{년월}/{태스크폴더}/`에 누적
 - **검증 기준 산출물**: `_spec.md` + 화면 파일이 본 개발(`peach-team-dev`)의 검증 기준이 됨
 - **1차 완성도 지원**: 화면 목록, 주요 액션, 완료/오류 상태, Spec `TEST_ID` 매핑을 남겨 `team-dev`와 `team-e2e`의 누락을 줄임
 
@@ -298,23 +298,23 @@ cat DESIGN.md 2>/dev/null | head -200
 ```
 
 **가이드 코드 경로**:
-- crud: `front/src/modules/test-data/pages/crud/`
-- 기타 패턴: `front/src/modules/test-data/pages/[패턴명]/`
+- crud: `src/modules/test-data/pages/crud/`가 있으면 우선 참조
+- 기타 패턴: `src/modules/test-data/pages/[패턴명]/` 또는 가장 가까운 기존 `src/modules-task/{년월}/{태스크폴더}/`
 
 ---
 
-### 2단계: test-data 가이드 코드 확인 + 대상 프로젝트 감지
+### 2단계: test-data 가이드 코드 확인 + ui-proto 저장소 감지
 
 ```bash
 # test-data 모듈 존재 여부 확인
-ls front/src/modules/test-data/ 2>/dev/null
+ls src/modules/test-data/ 2>/dev/null
 
 # _common 래퍼 컴포넌트 존재 여부 확인
-ls front/src/modules/_common/components/ 2>/dev/null
+ls src/modules/_common/components/ 2>/dev/null
 
 # 빌드 도구 감지
-ls front/package.json && head -20 front/package.json
-ls front/bun.lockb 2>/dev/null && echo "BUILD_TOOL=bun"
+ls package.json && head -20 package.json
+ls bun.lockb 2>/dev/null && echo "BUILD_TOOL=bun"
 ```
 
 - **test-data 있음** → 가이드 코드 기반으로 생성
@@ -324,7 +324,7 @@ ls front/bun.lockb 2>/dev/null && echo "BUILD_TOOL=bun"
 
 | 파일 존재 | 빌드 도구 | 검증 명령어 |
 |-----------|----------|------------|
-| `bun.lockb` | bun | `cd front && bunx vue-tsc --noEmit && bun run lint:fix && bun run build` |
+| `bun.lockb` | bun | `bunx vue-tsc --noEmit && bun run lint:fix && bun run build` |
 
 #### _common 래퍼 우선 사용 (조건부)
 
@@ -403,10 +403,10 @@ store/[모듈명].store.ts 생성:
 ### 4단계: 검증 & 완료
 
 ```bash
-# bun 프로젝트 기준
-cd front && bunx vue-tsc --noEmit  # 타입 체크
-cd front && bun run lint:fix      # 린트
-cd front && bun run build         # 빌드
+# ui-proto 저장소 루트 기준
+bunx vue-tsc --noEmit  # 타입 체크
+bun run lint:fix       # 린트
+bun run build          # 빌드
 ```
 
 > 에러 발생 시: 원인 분석 → 코드 수정 → 다시 검증 → 통과할 때까지 반복
@@ -415,7 +415,7 @@ cd front && bun run build         # 빌드
 
 ## 생성 파일 구조
 
-`front/src/modules/[모듈명]/` 아래에 `mock/`, `type/`, `store/`, `pages/`, `modals/`, 라우트/validator 파일을 생성한다. 패턴별 상세 구조는 선택된 reference를 따른다.
+`src/modules-task/{년월}/{태스크폴더}/` 아래에 `_task-meta.ts`, `_spec.md`, `_routes.ts`, `layout/`, `overview/`, `{서브모듈}/pages`, `{서브모듈}/store`, `{서브모듈}/type`, `{서브모듈}/modals`를 생성한다. `peach-team-dev proto=<경로>`에는 이 태스크 폴더 경로를 넘긴다.
 
 ---
 
@@ -515,8 +515,8 @@ Suggest 시: 이유를 사용자에게 제시하고 확인 후 적용. Must Foll
 
 ## 참조
 
-- **가이드 코드 (필수)**: `front/src/modules/test-data/`
-- **Mock 데이터**: `front/src/modules/[모듈명]/mock/`
-- **Store**: `front/src/modules/[모듈명]/store/`
+- **가이드 코드 (우선)**: `src/modules/test-data/` 또는 기존 `src/modules-task/{년월}/{태스크폴더}/`
+- **Mock 데이터**: `src/modules-task/{년월}/{태스크폴더}/{서브모듈}/mock/`
+- **Store**: `src/modules-task/{년월}/{태스크폴더}/{서브모듈}/store/`
 
 > test-data 가이드 코드를 기준 골격으로 참조하되, Mock 특화 + 도메인 특성에 맞게 Bounded Autonomy 범위 내에서 적응
