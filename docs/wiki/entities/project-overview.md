@@ -1,7 +1,7 @@
 ---
 tags: [wiki, entities]
 created: 2026-04-12
-updated: 2026-04-29
+updated: 2026-05-03
 sources: [readme.md, agents.md, .claude-plugin/plugin.json, .claude-plugin/marketplace.json]
 related_files: [readme.md, agents.md, .claude-plugin/plugin.json, .claude-plugin/marketplace.json]
 ---
@@ -12,7 +12,7 @@ related_files: [readme.md, agents.md, .claude-plugin/plugin.json, .claude-plugin
 ## 역할
 
 - SKILL.md 오픈 스탠다드 기반 14+ AI 코딩 도구 지원
-- 배포 스킬 32개 + 로컬 전용 릴리스 스킬 1개 운영
+- 배포 스킬 35개 + 로컬 전용 릴리스 스킬 1개 운영
 - 스킬, 서브에이전트, QA 파이프라인, wiki 지식 레이어 통합
 - Claude Code, Cursor, Windsurf 등에서 동작
 
@@ -20,7 +20,7 @@ related_files: [readme.md, agents.md, .claude-plugin/plugin.json, .claude-plugin
 
 ```
 peach-harness/
-├── skills/             ← 배포 스킬 (32개, `peach-wiki` 포함)
+├── skills/             ← 배포 스킬 (35개, `peach-wiki` 포함)
 ├── .claude/skills/     ← 로컬 전용 스킬 (`release`)
 ├── .claude-plugin/     ← 버전·마켓플레이스 메타
 ├── docs/               ← 아키텍처·워크플로우 문서
@@ -28,18 +28,19 @@ peach-harness/
 └── agents.md           ← AI 에이전트 가이드
 ```
 
-## 배포 스킬 분류 (32개)
+## 배포 스킬 분류 (35개)
 
 | 카테고리 | 스킬 |
 |---------|------|
-| 생성 | peach-gen-backend, peach-gen-ui, peach-gen-db, peach-gen-store, peach-gen-design, peach-gen-spec, peach-gen-diagram |
+| 진입 | peach-intake |
+| 생성 | peach-gen-backend, peach-gen-ui, peach-gen-ui-proto, peach-gen-db, peach-gen-store, peach-gen-design, peach-gen-spec, peach-gen-diagram |
 | 문서화 | peach-doc-feature |
 | 팀 | peach-team-ui-proto, peach-team-dev, peach-team-e2e, peach-team-3a, peach-team-analyze |
-| DB | peach-db-migrate, peach-db-query, peach-db-extract-schema |
+| DB | peach-db-migrate, peach-db-query, peach-db-extract-schema, peach-erd |
 | E2E | peach-e2e-setup, peach-e2e-scenario, peach-e2e-browse, peach-e2e-suite |
-| 추가 | peach-add-api, peach-add-cron, peach-add-print |
+| 추가 | peach-add-api, peach-add-cron, peach-add-print, peach-review-ux |
 | 설정 | peach-setup-harness, peach-setup-project, peach-setup-ui-proto |
-| 지식·운영 | peach-help, peach-markitdown, peach-qa-gate, peach-skill-feedback, peach-wiki, peach-erd |
+| 지식·운영 | peach-help, peach-markitdown, peach-qa-gate, peach-skill-feedback, peach-wiki |
 
 ## 로컬 전용 스킬 (.claude/skills/)
 

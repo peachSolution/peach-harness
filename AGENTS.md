@@ -55,10 +55,20 @@ description: |
 ---
 ```
 
+### Claude 플러그인 확장 frontmatter
+
+peach-harness는 Claude Code 플러그인 운영을 위해 `model`, `context`, `disable-model-invocation`, `allowed-tools`, `user-invocable`, `metadata.internal` 같은 확장 필드를 유지할 수 있다.
+
+- `skill-creator` 기본 quick_validate 실패만으로 배포 실패로 판단하지 않는다.
+- `name`, `description`은 모든 스킬에서 필수다.
+- 확장 필드는 Claude 전용 의미를 가지며 Codex/skills.sh generic mode에서는 무시 가능해야 한다.
+- 확장 필드를 추가하거나 유지하는 이유는 해당 스킬 또는 배포 문서에 설명한다.
+
 ### 스킬 네이밍 규칙
 - 접두어: `peach-` 필수
 - 형식: `peach-[동사]-[대상]` (예: `peach-gen-backend`, `peach-add-api`)
 - 팀 스킬: `peach-team-[대상]` (예: `peach-team-dev`, `peach-team-e2e`, `peach-team-3a`)
+- 진입 게이트: `peach-intake`
 
 ### references 정책
 - 스킬 내부 `references/` 폴더: 스킬별 상세 가이드
@@ -181,6 +191,13 @@ AI가 기존과 다르게 변경하려면 다음 4가지를 모두 만족해야 
 - 에이전트 정의: `skills/*/references/*-agent.md` (단일 Source of Truth)
 - 변경 시 해당 파일만 업데이트. 확인: `ls skills/peach-team*/references/`
 
+### 런타임 어댑터 정책
+
+- Claude Code 팀 도구가 있으면 team mode로 실행한다 (`TeamCreate`, `TaskCreate`, `SendMessage`, worktree isolation).
+- Codex 또는 일반 skills.sh 환경에서는 generic mode로 실행한다. 이때 Claude 전용 팀 도구를 강제하지 않고, 오케스트레이터가 역할 큐를 순차 또는 제한 병렬로 수행한다.
+- 팀 스킬은 스킬별 독립 실행성을 위해 `references/runtime-adapter.md`를 로컬 사본으로 포함한다.
+- 중복은 허용한다. 단, 정책 변경 시 관련 팀 스킬의 로컬 사본을 함께 갱신한다.
+
 ### 신규 통합 스킬 구조 (2026-04-27)
 
 `peach-team-dev`, `peach-team-e2e`는 **진입점 + references/ 분리** 구조를 따른다.
@@ -190,14 +207,18 @@ skills/peach-team-dev/
 ├── SKILL.md              # 진입점 (개요, 인자, 호출 절차)
 └── references/
     ├── connect-workflow.md
+    ├── contract-gate.md
     ├── fullstack-workflow.md
     ├── prompt-mode.md
     ├── proto-sync.md     # Spec 자동 복사 절차
+    ├── runtime-adapter.md
     ├── qa-policy.md      # QA 판정/완료 정책
     └── *-agent.md
 ```
 
 이유: SKILL.md 비대화 방지, 조건부 참조로 토큰 절약, 기존 팀 스킬 패턴 일관성.
+
+`peach-team-e2e`도 같은 방식으로 `runtime-adapter.md`, `delegation-policy.md`, `qa-policy.md`, 역할별 agent reference를 둔다.
 
 ---
 

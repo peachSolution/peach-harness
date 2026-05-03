@@ -4,6 +4,11 @@
 
 ---
 
+## 2026-05-03 | DRIFT | peach-harness
+
+- `entities/project-overview.md` 갱신 — 배포 스킬 수 35개로 반영, `peach-intake` 진입 게이트와 최신 스킬 분류 반영
+- `concepts/skill-architecture.md` 갱신 — Runtime Adapter와 intake 역할 반영
+
 ## 2026-04-29 | LINT+DRIFT | peach-harness
 
 - LINT: 깨진 링크 없음, 고아 페이지 없음, 모든 related_files 경로 실존 확인
