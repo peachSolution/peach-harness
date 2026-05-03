@@ -32,6 +32,7 @@
 - 컬렉션명: `{컬렉션명}`
 - URI 접두사: `qmd://{컬렉션명}/`
 - 검색: `qmd --index {컬렉션명} query "키워드" -c {컬렉션명}`
+- fallback: `qmd --index {컬렉션명} query "키워드" -c {컬렉션명} --no-rerank` → `qmd --index {컬렉션명} search "키워드" -c {컬렉션명}` → `rg "키워드"`
 
 ## 오퍼레이션
 
@@ -47,6 +48,7 @@
 - Raw Source 절대 수정 금지
 - `docs/wiki/` 하위에만 쓰기
 - qmd query 1순위 (토큰 절약)
+- 모든 qmd 명령에 `--index {컬렉션명}` 필수
 - 언어: 한국어 (기술 용어는 영어 유지)
 ```
 

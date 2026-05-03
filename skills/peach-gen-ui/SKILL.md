@@ -4,7 +4,7 @@ description: |
   Store 기반 프로덕션 UI를 생성하는 스킬. Vue 3 + TypeScript + NuxtUI v4.
   "UI 만들어줘", "화면 생성", "CRUD 화면", "목록 화면" 키워드로 트리거.
   Store가 존재해야 하며 실제 API와 연동된 프로덕션 코드를 생성한다.
-  Mock 데이터 기반 프로토타입이 필요하면 peach-gen-ui-proto를 사용한다.
+  Mock 데이터 기반 프로토타입이 필요하면 peach-team-ui-proto를 사용한다.
 ---
 
 # Frontend UI 생성 스킬
@@ -103,6 +103,22 @@ description: |
 ---
 
 ## 워크플로우
+
+### Step 0. 디자인 시스템 확인
+
+```bash
+cat DESIGN.md 2>/dev/null | head -200
+```
+
+- **있으면**: 컴포넌트 규칙·색상·타이포그래피를 컨텍스트에 주입하여 이후 단계에 반영
+- **없으면**: 아래 경고 출력 후 계속 진행
+
+```
+⚠️ DESIGN.md 없음 — 디자인 시스템 문서가 없습니다. 작성을 권장합니다.
+   참고: peach-harness/templates/DESIGN-template.md (또는 /peach-gen-design)
+```
+
+---
 
 ### 1단계: UI 패턴 필수 선택
 
@@ -278,15 +294,16 @@ Suggest 시: 이유를 사용자에게 제시하고 확인 후 적용. Must Foll
 ## 완료 조건
 
 ```
-┌─────────────────────────────────┐
-│ 완료 체크리스트                 │
-│ □ UI 패턴 선택 완료             │
-│ □ Store 연결 확인               │
-│ □ 페이지/모달 컴포넌트 생성     │
-│ □ bunx vue-tsc --noEmit 통과     │
-│ □ bun run lint:fix 통과         │
-│ □ bun run build 성공            │
-└─────────────────────────────────┘
+┌─────────────────────────────────────────────────┐
+│ 완료 체크리스트                                 │
+│ □ DESIGN.md 확인 (있으면 규칙 반영, 없으면 경고) │
+│ □ UI 패턴 선택 완료                             │
+│ □ Store 연결 확인                               │
+│ □ 페이지/모달 컴포넌트 생성                     │
+│ □ bunx vue-tsc --noEmit 통과                     │
+│ □ bun run lint:fix 통과                         │
+│ □ bun run build 성공                            │
+└─────────────────────────────────────────────────┘
 ```
 
 > 빌드 성공 없이 완료 선언 금지!

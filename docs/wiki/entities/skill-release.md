@@ -1,7 +1,7 @@
 ---
 tags: [wiki, entities]
 created: 2026-04-12
-updated: 2026-04-12
+updated: 2026-04-29
 sources: [.claude/skills/release/SKILL.md]
 related_files: [.claude/skills/release/SKILL.md, .claude-plugin/plugin.json, .claude-plugin/marketplace.json]
 ---

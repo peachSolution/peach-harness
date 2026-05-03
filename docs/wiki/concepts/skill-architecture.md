@@ -1,7 +1,7 @@
 ---
 tags: [wiki, concepts]
 created: 2026-04-12
-updated: 2026-04-12
+updated: 2026-05-03
 sources: [agents.md, docs/01-아키텍처.md]
 related_files: [agents.md, docs/01-아키텍처.md]
 ---
@@ -15,6 +15,8 @@ related_files: [agents.md, docs/01-아키텍처.md]
 |------|------|-----------|
 | 스킬 (SKILL.md) | 오케스트레이터 — 실행 절차 정의, 팀 조율 | `skills/*/skill.md` |
 | 서브에이전트 | 역할 실행자 — 독립 컨텍스트에서 작업 수행 | `skills/*/references/*-agent.md` |
+
+`peach-intake`는 구현 오케스트레이터가 아니라 진입 게이트다. 요청을 받아 작업 규모와 후속 스킬 경로를 판정하고, 코드/DB/proto/E2E 산출물은 만들지 않는다.
 
 ## 배포 스킬 vs 로컬 스킬
 
@@ -38,6 +40,17 @@ skills/           ← 배포 스킬 (마켓플레이스 배포, 타 프로젝트
 | 팀 스킬 (peach-team, peach-team-3a 등) | opus |
 | 서브에이전트 기본 | sonnet |
 | architect/reviewer (peach-team-3a) | opus |
+
+## Runtime Adapter
+
+팀 스킬은 런타임에 따라 실행 방식을 나눈다.
+
+| 런타임 | 방식 |
+|--------|------|
+| Claude Code 플러그인 | team mode — TeamCreate/TaskCreate/SendMessage/worktree isolation 사용 |
+| Codex 또는 일반 skills.sh | generic mode — 같은 역할 큐를 순차 또는 제한 병렬로 수행 |
+
+팀 스킬은 독립 실행성을 위해 `references/runtime-adapter.md`를 스킬 내부에 둔다. 중복은 허용하되 정책 변경 시 관련 로컬 사본을 함께 갱신한다.
 
 ## Ralph Loop 패턴
 

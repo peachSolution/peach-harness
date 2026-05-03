@@ -4,7 +4,7 @@ model: opus
 description: |
   3-에이전트(Architect→Builder→Reviewer) 루프로 단일 기능을 설계·구현·검증하는 팀 스킬.
   "3a로 만들어줘", "3에이전트", "설계-구현-검토", "team-3a" 키워드로 트리거.
-  peach-team보다 가벼운 단일 기능·소규모 수정에 적합.
+  peach-team-dev보다 가벼운 단일 기능·소규모 수정에 적합.
 ---
 
 # Peach Team 3A
@@ -19,9 +19,9 @@ description: |
 | **Builder** | BRIEF 기반 코드 구현 | 범위 밖 터치 금지, 완료 후 파일 수정 금지, 자기 검토 + 검증 증거 제출 |
 | **Reviewer** | 독립 검증 + 3단계 판정 | qa-gate + 코드 리뷰 통합, 읽기전용, worktree 격리, CONDITIONAL 남용 금지 |
 
-### peach-team과의 차이
+### peach-team-dev와의 차이
 
-| | peach-team | peach-team-3a |
+| | peach-team-dev | peach-team-3a |
 |--|-----------|--------------|
 | 에이전트 수 | 최대 5개 | 3개 고정 |
 | 적합 케이스 | 대규모 fullstack | 단일 기능, 소규모 수정 |
@@ -61,7 +61,7 @@ cat ~/.claude/settings.json | grep -i "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"
   }
 }
 
-설정 가이드: https://github.com/peachSolution/peach-harness/blob/main/docs/06-에이전트팀-설정.md
+설정 가이드: 하네스 프로젝트의 에이전트 팀 설정 문서
 ```
 
 ---
@@ -101,7 +101,8 @@ ls api/src/modules/_common/ 2>/dev/null
 ls api/src/modules/_common/constants/ 2>/dev/null
 
 # 스킬 references 경로 감지
-SKILL_BASE=$(dirname "$(find ~/.claude ~/.agents -path "*/peach-gen-backend/references" -type d 2>/dev/null | head -1)" 2>/dev/null)
+BACKEND_REFS=$(find ~/.claude ~/.agents -path "*/peach-gen-backend/references" -type d 2>/dev/null | head -1)
+UI_REFS=$(find ~/.claude ~/.agents -path "*/peach-gen-ui/references" -type d 2>/dev/null | head -1)
 ```
 
 ### 2. 팀 구성 다이어그램
@@ -152,7 +153,7 @@ TaskCreate:
 - 작업 설명: `[사용자 입력 그대로]`
 - 환경 정보: DAO 라이브러리, Controller 프레임워크, modules 경로, _common 상수 목록
 - 가이드코드 위치: `api/src/modules/test-data/`, `front/src/modules/test-data/`
-- references 경로: `${SKILL_BASE}/peach-gen-backend/references/`, `${SKILL_BASE}/peach-gen-ui/references/`
+- references 경로: `${BACKEND_REFS}`, `${UI_REFS}`
 - 상세: `references/architect-agent.md` 참조
 
 #### Builder 지시 포인트
@@ -245,7 +246,7 @@ REJECTED 시 단순 재시도가 아닌 **구조화된 피드백 주입**으로 
 
 ## 에이전트 간 통신 구조
 
-peach-team 계열과 동일하게 **SendMessage + TaskUpdate**로 통신합니다.
+peach-team-dev 계열과 동일하게 **SendMessage + TaskUpdate**로 통신합니다.
 
 ```
 Architect → 오케스트레이터 (SendMessage): BRIEF 내용

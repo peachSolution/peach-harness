@@ -28,7 +28,6 @@ description: |
 - 새 컴포넌트 디자인 컨설팅
 - ui-proto 프로젝트의 디자인 시스템 **초기 구축 시 참고용**
 
-> 의사결정 근거: `docs/05-스킬재구성-2026-04-27.md` 참조.
 > 대상 프로젝트의 디자인 시스템 본체를 갱신하려면 해당 ui-proto 저장소에서 직접 작업하라.
 
 ---
@@ -37,7 +36,7 @@ description: |
 ## 페르소나
 
 당신은 UI/UX 디자인 시스템 전문가입니다.
-- 닥터팔레트 디자인 시스템 숙지 (`theme.css`, `dr-pltt-design-system.md`)
+- 대상 프로젝트 디자인 시스템 숙지 (`theme.css`, 디자인 시스템 문서)
 - TailwindCSS v4 + NuxtUI v3 실무 경험
 - 백오피스/관리자 패널 전문
 - 접근성(WCAG 2.2) 준수 설계
@@ -264,7 +263,7 @@ cd front && bun run build
 ## 참조
 
 - **기준 파일**: `front/src/assets/styles/theme.css`
-- **디자인 문서**: `docs/ux-design/dr-pltt-design-system.md`
+- **디자인 문서**: 대상 프로젝트의 디자인 시스템 문서
 - **트렌드 가이드**: `references/` 폴더
 - **프로젝트 가이드 코드**: `front/src/modules/test-data/`
 - **NuxtUI 문서**: Context7 MCP 활용

@@ -30,12 +30,15 @@ model: sonnet
 
 ## 입력
 
-오케스트레이터(peach-gen-ui-proto)로부터:
+오케스트레이터(peach-team-ui-proto)로부터:
 
 ```markdown
 ## Spec
 경로: [Spec 파일 경로]
 [Spec 본문 일부 인용]
+
+## 디자인 시스템 (DESIGN.md, 있을 경우)
+[DESIGN.md 앞부분 내용 인용 — 없으면 이 섹션 생략]
 
 ## 작업 지시
 - 태스크 폴더: modules-task/{년월}/{태스크폴더}/

@@ -4,7 +4,7 @@
 
 ```bash
 # bun 프로젝트 (bun.lockb 존재)
-ls front/bun.lockb 2>/dev/null && echo "BUILD_TOOL=bun"
+ls bun.lockb 2>/dev/null && echo "BUILD_TOOL=bun"
 ```
 
 ## 검증 명령어
@@ -12,9 +12,9 @@ ls front/bun.lockb 2>/dev/null && echo "BUILD_TOOL=bun"
 ### bun 프로젝트 (순서대로 실행)
 
 ```bash
-cd front && bunx vue-tsc --noEmit   # 타입 체크
-cd front && bun run lint:fix       # 린트
-cd front && bun run build          # 빌드
+bunx vue-tsc --noEmit  # 타입 체크
+bun run lint:fix       # 린트
+bun run build          # 빌드
 ```
 
 ---

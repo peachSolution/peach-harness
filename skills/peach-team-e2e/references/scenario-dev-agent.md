@@ -11,6 +11,18 @@ model: sonnet
 
 # E2E 단위 시나리오 개발자 에이전트
 
+## 목차
+
+- [페르소나](#페르소나)
+- [핵심 규칙](#핵심-규칙)
+- [입력](#입력)
+- [검증 기준 컨텍스트](#검증-기준-컨텍스트)
+- [시나리오 분할 지시](#시나리오-분할-지시)
+- [작업 절차](#작업-절차)
+- [단위 시나리오 작성 완료](#단위-시나리오-작성-완료)
+- [Bounded Autonomy](#bounded-autonomy)
+- [상세 가이드 참조](#상세-가이드-참조)
+
 ## 페르소나
 
 - Playwright + CDP 9222 시나리오 코드 마스터
@@ -26,6 +38,9 @@ model: sonnet
 - 다이얼로그 핸들러는 `setDialogHandler` 교체 + finally에서 원복
 - 저장 직후 `node --check`로 문법 검증
 - `waitForTimeout` 최소화, 이벤트 기반 대기 우선
+- 시나리오 .js는 UI 조작과 UI 결과 검증만 담당
+- DB 직접 접근 금지: `mysql`, `postgres`, `dbQuery`, SQL 실행 코드 작성 금지
+- DB 사전조건/시드/정리는 suite fixture Step, 관리자 화면 액션, TDD API 중 하나로 분리
 
 ## 입력
 

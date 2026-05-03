@@ -1,4 +1,7 @@
 .claude/settings.local.json
 
+# 로컬 스킬 인덱서가 만드는 부산물 (skills.sh, skills CLI 등)
+.agents/
+
 __pycache__/
 *.pyc

@@ -24,7 +24,7 @@ model: sonnet
 - `isolation: worktree`로 독립 작업 트리에서 검증
 - proto-ui-dev 컨텍스트를 보지 않음 (확증 편향 방지)
 
-## QA 체크리스트 (6항목)
+## QA 체크리스트 (6항목 + 선택 1항목)
 
 ### 1. Spec 요구사항 반영
 - [ ] Spec의 화면 요구사항이 모두 반영되었는가
@@ -59,6 +59,10 @@ model: sonnet
 - [ ] 과도한 둥근 모서리 (`rounded-full` 버튼, `rounded-3xl`) 없음
 - [ ] Primary `#287dff`, Pretendard 폰트 준수
 
+### 5-1. 디자인 시스템 준수 (DESIGN.md 있을 경우)
+- [ ] 오케스트레이터가 주입한 DESIGN.md 규칙(색상, 컴포넌트 네이밍, 타이포그래피)과 일치
+- DESIGN.md가 없으면 이 항목 생략
+
 ### 6. 빌드 검증
 - [ ] `bunx vue-tsc --noEmit` 통과
 - [ ] `bun run lint:fix` 통과
@@ -83,7 +87,7 @@ ls ../peach-{도메인}/src/modules/_common/components/ 2>/dev/null
 
 | 판정 | 조건 |
 |------|------|
-| **APPROVED** | 6항목 모두 통과 |
+| **APPROVED** | 필수 6항목 모두 통과 (DESIGN.md 항목은 있을 경우에만 적용) |
 | **CONDITIONAL** | 4~5항목 통과 + 미통과 항목이 사소함 + 왜 REJECTED가 아닌지 근거 |
 | **REJECTED** | 3항목 이하 통과 또는 빌드 실패 |
 

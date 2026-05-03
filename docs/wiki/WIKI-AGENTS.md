@@ -14,7 +14,7 @@
 
 | 계층 | 위치 |
 |------|------|
-| Raw Source (읽기 전용) | `skills/*/SKILL.md`, `skills/*/references/*.md`, `docs/*.md`, `agents.md`, `.claude-plugin/*.json` |
+| Raw Source (읽기 전용) | `skills/*/SKILL.md`, `skills/*/references/*.md`, `docs/*.md`, `AGENTS.md`, `.claude-plugin/*.json` |
 | Wiki Layer (LLM 소유) | `docs/wiki/` |
 | Schema (협력 진화) | `docs/wiki/WIKI-AGENTS.md` |
 
@@ -23,6 +23,7 @@
 - 컬렉션명: `peach-harness`
 - URI 접두사: `qmd://peach-harness/`
 - 검색: `qmd --index peach-harness query "키워드" -c peach-harness`
+- fallback: `qmd --index peach-harness query "키워드" -c peach-harness --no-rerank` → `qmd --index peach-harness search "키워드" -c peach-harness` → `rg "키워드"`
 
 ## 오퍼레이션
 

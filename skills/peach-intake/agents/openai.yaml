@@ -1,0 +1,4 @@
+interface:
+  display_name: "Peach Intake"
+  short_description: "Route Peach development requests"
+  default_prompt: "요청이나 PRD를 분석해 필요한 Spec, DB, ui-proto, 개발, 검증 경로를 판정해줘."
