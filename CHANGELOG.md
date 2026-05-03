@@ -5,14 +5,24 @@
 
 ---
 
-## [Unreleased]
+## [v1.18.3] - 2026-05-03
 
 ### Added
-- peach-review-ux 스킬 추가 — Laws of UX와 GeekNews 요약을 피치 백오피스 관점으로 재구성한 읽기전용 UX 리뷰 스킬
-- docs/분석/2026-05-02-peach-review-ux-보강분석.md 추가 — UX 스킬 보강 근거와 향후 통합 기준 정리
+- peach-team-ui-proto 스킬 추가 — Mock 기반 UI 프로토타입 생성·검증을 팀 오케스트레이터로 분리
+- peach-intake 스킬 추가 — 개발 요청 접수, 규모 판정, 후속 스킬 경로 결정을 담당하는 진입 게이트 제공
+- peach-review-ux 스킬 추가 — Laws of UX 기준의 읽기전용 UX 리뷰 절차와 백오피스 체크리스트 제공
+- Claude Code 커밋 게이트 헬퍼와 Windows 설치 스크립트 추가
 
 ### Changed
-- 워크플로우/도움말/README에 `peach-review-ux`를 선택적 UX 리뷰 스킬로 안내
+- peach-gen-ui-proto를 peach-team-ui-proto 호환 alias로 정리
+- peach-team-dev에 Contract Gate, QA 정책, 런타임 어댑터, PRD-first 기준을 보강
+- peach-team-e2e에 런타임 어댑터, 위임 정책, QA 정책과 TDD/E2E 책임 경계를 보강
+- peach-gen-spec과 peach-gen-db에 PRD-first 입력 기준과 결정 보류 정책을 보강
+- README, 워크플로우, wiki 문서를 최신 스킬 구조와 qmd Metal 오류 대응 기준에 맞게 갱신
+- 시크릿 차단 훅과 공개 URL 화이트리스트, 개인경로 플레이스홀더 정책을 보강
+
+### Removed
+- 이전 peach-release 스킬 경로와 관련 wiki 엔티티를 제거
 
 ---
 
