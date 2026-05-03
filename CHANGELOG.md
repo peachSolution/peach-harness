@@ -52,7 +52,7 @@
 ### Added
 - peach-team-dev 통합 스킬 신설 — 풀스택 개발 통합. 표준(proto+Spec)/Spec만/prompt 3가지 입력 모드 지원, proto 자동 복사, prompt 모드 자동 분기(소/중/대 규모)
 - peach-team-e2e 통합 스킬 신설 — E2E 검증 통합. ui-proto 화면 흐름 + Spec 비즈니스 규칙으로 검증 기준 외부화, 미스매치 3가지 분류(Spec 위반/proto 불일치/시나리오 오류)
-- docs/05-스킬재구성-2026-04-27.md 신설 — 검증 기준 외부화 의사결정, gen-* 흡수 vs 호출 결정, skill-creator 4대 원칙 차용
+- docs/분석/2026-04-27-스킬재구성-분석.md 신설 — 검증 기준 외부화 의사결정, gen-* 흡수 vs 호출 결정, skill-creator 4대 원칙 차용
 - peach-gen-ui-proto 팀 모드 신설 — Spec 입력 시 proto-ui-dev + proto-ui-qa 자동 진입, 랄프루프 5/10회
 
 ### Changed

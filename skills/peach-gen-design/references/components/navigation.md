@@ -1,6 +1,6 @@
 # 네비게이션 디자인 가이드
 
-> 기준 파일: `front/src/assets/styles/theme.css`, `docs/ux-design/dr-pltt-design-system.md`
+> 기준 파일: 대상 프로젝트의 `theme.css`와 디자인 시스템 문서
 
 ---
 

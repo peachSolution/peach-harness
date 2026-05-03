@@ -29,8 +29,7 @@ PeachSolution 개발을 조율하는 통합 오케스트레이터.
 
 DB 마이그레이션 생성/적용은 이 스킬의 책임이 아니다. `mode=backend|fullstack`은 `peach-gen-db`로 생성된 `api/db/schema/...`가 준비된 뒤 실행한다.
 
-> 의사결정 근거: `docs/05-스킬재구성-2026-04-27.md` 참조.
-> 표준 워크플로우: `docs/03-워크플로우.md` 참조.
+> 최신 실행 기준은 하네스 프로젝트의 워크플로우 문서를 따른다.
 
 ## TDD/E2E 역할 분리 (필수 인지)
 
@@ -305,7 +304,7 @@ cat ~/.claude/settings.json | grep -i "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"
   }
 }
 
-설정 가이드: https://github.com/peachSolution/peach-harness/blob/main/docs/06-에이전트팀-설정.md
+설정 가이드: 하네스 프로젝트의 에이전트 팀 설정 문서
 ```
 
 #### 입력 모드 분기

@@ -61,7 +61,7 @@ cat ~/.claude/settings.json | grep -i "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"
   }
 }
 
-설정 가이드: https://github.com/peachSolution/peach-harness/blob/main/docs/06-에이전트팀-설정.md
+설정 가이드: 하네스 프로젝트의 에이전트 팀 설정 문서
 ```
 
 ---
