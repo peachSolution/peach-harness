@@ -83,6 +83,7 @@ ER_RELATIONS
 - UI 패턴: UI_PATTERN
 - 파일 업로드: FILE_UPLOAD_YN
 - 저장 방식: STORAGE_TYPE
+- PRD 원천: SOURCE_PRD
 - 설계 메모: DESIGN_MEMO
 
 ---
@@ -107,11 +108,69 @@ ER_RELATIONS
 | 이미지 | FILE_IMAGE_YN |
 | 저장 방식 | STORAGE_TYPE |
 
+### PRD 반영 추적
+
+| PRD 요구 | 관련 TEST_ID | Spec 반영 위치 | 비고 |
+|----------|--------------|----------------|------|
+PRD_TO_SPEC_TRACE
+
+### PRD_TO_SPEC_REQUIRED
+
+PRD에는 있으나 구현 기준으로 정제되지 않은 항목이다. 이 항목은 바로 구현하지 않고 Spec 보강 후 진행한다.
+
+| PRD 항목 | 필요한 결정/정제 | 영향 범위 | 후속 처리 |
+|----------|------------------|-----------|-----------|
+PRD_TO_SPEC_REQUIRED
+
 ---
 
-## 2. UI 구성
+## 2. 1차 완성도 기준
+
+이 섹션은 `peach-team-dev`와 `peach-team-e2e`가 처음 실행에서 누락을 줄이기 위한 검증 기준이다.
+
+### TEST_ID 매트릭스
+
+| TEST_ID | 요구사항 | 구현 레이어 | 검증 방식 | 완료 기준 |
+|---------|----------|-------------|-----------|-----------|
+FIRST_PASS_TEST_MATRIX
+
+### 권한 경계
+
+| TEST_ID | 역할/권한 그룹 | 데이터 접근 범위 | 필수 조건 | 차단 조건 | 검증 방식 |
+|---------|----------------|------------------|-----------|-----------|-----------|
+PERMISSION_MATRIX
+
+### 상태 전이
+
+| TEST_ID | 현재 상태 | 액션 | 다음 상태 | 허용 조건 | 금지 조건 | 검증 방식 |
+|---------|-----------|------|-----------|-----------|-----------|-----------|
+STATE_TRANSITIONS
+
+### 오류 케이스
+
+| TEST_ID | 상황 | 입력/조건 | 기대 메시지 | 처리 방식 | 검증 방식 |
+|---------|------|-----------|-------------|-----------|-----------|
+ERROR_CASES
+
+### 외부 의존성
+
+| TEST_ID | 의존성 | 성공 응답 | 실패 응답 | 대체/재시도 정책 | 검증 방식 |
+|---------|--------|-----------|-----------|------------------|-----------|
+EXTERNAL_DEPENDENCIES
+
+### TEST_ID별 검증 매핑
+
+| TEST_ID | Backend TDD | Store/Contract | UI 구현 | E2E | 검증 불가 사유 |
+|---------|-------------|----------------|---------|-----|----------------|
+TEST_COVERAGE_MAPPING
+
+---
+
+## 3. UI/화면 흐름 기준
 
 ### 패턴: UI_PATTERN_FULL_NAME
+
+UI Proto가 없는 경우 `peach-team-dev`와 `peach-team-e2e`는 이 섹션을 화면 흐름의 1차 기준으로 사용한다. UI Proto가 있으면 화면 흐름은 ui-proto를 우선하고, 비즈니스 규칙은 이 Spec을 우선한다.
 
 ### 검색 조건
 SEARCH_CONDITIONS
@@ -125,6 +184,12 @@ FIELD_MAPPING
 ### 화면 구성
 UI_SCREEN_COMPOSITION
 
+### 화면 흐름 요약
+
+| 화면/상태 | 주요 액션 | 성공 결과 | 오류 결과 | 관련 TEST_ID |
+|-----------|-----------|-----------|-----------|--------------|
+SCREEN_FLOW_SUMMARY
+
 ### 검증
 UI_VALIDATION_RULES
 
@@ -133,7 +198,7 @@ TEST_SCENARIOS
 
 ---
 
-## 3. DB 스키마
+## 4. DB 스키마
 
 ### DB 종류: DB_TYPE
 
@@ -168,9 +233,17 @@ SCHEMA_INDEXES
 ### 참조 관계 (FK 생성 안함)
 REFERENCE_RELATIONS
 
+### 개발 중 DB 변경 후보
+
+개발 중 컬럼/인덱스/상태값 부족이 발견되면 `peach-team-dev`가 직접 DB를 수정하지 않고 `DB_CHANGE_REQUIRED`로 보고한 뒤 `peach-gen-db` 또는 `peach-db-migrate` 단계로 넘긴다.
+
+| 후보 | 변경 유형 | 필요한 이유 | 관련 TEST_ID | 확정 조건 |
+|------|-----------|-------------|--------------|-----------|
+DB_CHANGE_CANDIDATES
+
 ---
 
-## 4. 파일 목록
+## 5. 파일 목록
 
 ### Backend
 ```
@@ -208,7 +281,7 @@ FRONTEND_MODAL_FILES
 
 ---
 
-## 5. 참조
+## 6. 참조
 - 가이드 코드:
   - Backend: `api/src/modules/test-data/`
   - Frontend: `front/src/modules/test-data/FRONTEND_GUIDE_PATH`

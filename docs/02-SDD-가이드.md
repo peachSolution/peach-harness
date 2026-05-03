@@ -12,9 +12,10 @@ flowchart TD
 
     START(("시작"))
 
-    START -->|"A. 신규 기능"| A_IN
-    START -->|"B. 기존 개선"| B_IN
-    START -->|"C. UI Proto 선행"| C_IN
+    START --> INTAKE["peach-intake<br/>(필요시)"]:::skill
+    INTAKE -->|"A. 신규 기능"| A_IN
+    INTAKE -->|"B. 기존 개선"| B_IN
+    INTAKE -->|"C. UI Proto 선행"| C_IN
 
     A_IN(["기획서/요구사항"]):::artifact
     B_IN(["기존 코드"]):::artifact
@@ -279,6 +280,7 @@ describe("상태 전이")
 
 | SDD 단계 | 피치 하네스 스킬 | 설명 |
 |----------|-----------------|------|
+| **접수/판정** | `peach-intake` | 요청/PRD를 분석해 Spec, DB, ui-proto, dev, e2e 필요 여부 판정 |
 | **명세 작성** | `peach-gen-spec` | To-Be 요구사항 수집 → Spec 문서 생성 |
 | **As-Is 분석** | `peach-doc-feature` | 기존 기능의 현재 상태를 구조화 |
 | **DB 설계** | `peach-gen-db` | Spec 기반 DDL/마이그레이션 생성 |
@@ -292,7 +294,7 @@ describe("상태 전이")
 버그 수정, 단일 파일 변경, 간단한 기능 추가.
 
 ```
-AI Plan 모드 → 구현 → (선택) /peach-qa-gate
+/peach-intake (선택) → AI Plan 모드 → 구현 → (선택) /peach-qa-gate
 ```
 
 - Spec 문서 불필요
@@ -304,7 +306,7 @@ AI Plan 모드 → 구현 → (선택) /peach-qa-gate
 새 모듈, 여러 파일 수정, CRUD 기능 추가.
 
 ```
-AI Plan 모드 → (선택) /peach-gen-spec → /peach-gen-db → /peach-team-dev
+/peach-intake → (선택) /peach-gen-spec → /peach-gen-db → /peach-team-dev
 ```
 
 - AI Plan 모드에서 계획 수립
@@ -316,6 +318,7 @@ AI Plan 모드 → (선택) /peach-gen-spec → /peach-gen-db → /peach-team-de
 복잡한 비즈니스 로직, 다수 모듈 연동, 세션 분리 필요.
 
 ```
+세션 0: /peach-intake → Spec/DB/ui-proto 필요 여부 판정
 세션 1: /peach-gen-spec → Spec 문서 생성
 세션 2: Spec 로드 → AI Plan 모드 → /peach-gen-db → /peach-team-dev
 세션 N: docs/spec/ + git log로 이어서 작업
