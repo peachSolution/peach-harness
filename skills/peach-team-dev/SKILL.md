@@ -42,7 +42,7 @@ peach-team-dev
   → TDD
   → lint/build
   → API-Store Contract Gate
-  → TEST_ID 구현 매핑
+  → TEST_ID 구현 상태 갱신
   → E2E 잔여 리스크 정리
 
 peach-team-e2e
@@ -68,7 +68,7 @@ team-dev는 **본 개발 + TDD까지** 책임지고, **사용자 경험 검증(E
 - team-dev는 **TDD 통과 + lint + build 통과**를 완료 기준으로 삼는다. UI 흐름 검증을 자체 보완 루프로 끌고 가지 않는다.
 - prompt 모드(자연어 즉흥 작업)에서도 동일하다. 사용자 흐름 검증이 필요한 변경이면 완료 후 `peach-team-e2e` 호출을 안내한다.
 - E2E 단계에서 발견되는 **로직 버그**는 team-e2e가 직접 수정하지 않고 team-dev로 다시 넘어온다. 반대로 team-dev는 **시나리오 검증/UI 흐름 부합**을 자체 책임으로 떠안지 않는다.
-- 완료 보고에는 `peach-team-e2e`로 넘길 잔여 리스크, Contract Gate 결과, TEST_ID 구현 매핑을 남긴다.
+- 완료 보고에는 `peach-team-e2e`로 넘길 잔여 리스크, Contract Gate 결과, TEST_ID 구현 상태를 남긴다.
 
 ## 입력 모드 3가지
 
@@ -114,6 +114,8 @@ PRD가 함께 주입된 경우에도 구현 기준은 `Spec + api/db/schema/...`
 - 기능별 상태를 `pending / running / qa_failed / blocked / done`으로 기록한다.
 - 실패한 기능만 재시도하고, 기준이 모호한 기능은 `blocked`로 분리한다.
 - Backend, Store, UI 연결은 `API-Store Contract Gate`로 team-dev 단계에서 먼저 잡는다.
+- 기능 큐 상태는 team-dev 내부 운영 상태다. Spec의 `TEST_ID별 상태` 표에는 구현 상태 축만 `I01/I02/I03/I90`으로 갱신하고, UI Proto 상태(`Uxx`)와 E2E 검증 상태(`Vxx`)는 변경하지 않는다.
+- `TEST_ID별 상태` 표의 구현 상태를 갱신하면 `상태 요약`의 전체 Spec 상태, 전체 구현 상태, 구현 완료 수, Blocked 수, 마지막 확인일, 잔여 리스크도 함께 재계산한다.
 
 권장 상태 파일:
 
@@ -132,6 +134,18 @@ docs/qa/{년}/{월}/[작업명]-team-dev-status.md
 | failed_reason | 실패 원인 |
 | retry_count | Ralph Loop 또는 재시도 횟수 |
 | evidence | TDD/lint/build/Contract Gate 결과 |
+
+Spec `TEST_ID별 상태` 갱신 규칙:
+
+| team-dev 내부 상태 | Spec 구현 상태 | 기준 |
+|--------------------|----------------|------|
+| pending | I01 구현전(TODO) | 아직 구현 시작 전 |
+| running | I02 일부구현(PARTIAL) | 구현 진행 중이거나 일부 레이어만 완료 |
+| qa_failed | I02 일부구현(PARTIAL) | 코드가 있으나 TDD/lint/build/Contract Gate 실패 |
+| blocked | I90 차단(BLOCKED) | Spec/schema/권한/DB 변경 결정이 필요해 구현 불가 |
+| done | I03 구현완료(DONE) | 코드 구현과 team-dev 책임 검증(TDD/lint/build/Contract Gate)이 통과 |
+
+`I03 구현완료(DONE)`은 E2E 최종 검증 완료를 의미하지 않는다. E2E 통과 여부는 `peach-team-e2e`가 검증 상태 축(`Vxx`)으로 남긴다.
 
 ## Preconditions
 

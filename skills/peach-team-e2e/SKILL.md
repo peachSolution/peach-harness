@@ -39,7 +39,7 @@ peach-team-dev 완료 산출
   - 구현 코드
   - TDD/lint/build 결과
   - API-Store Contract Gate 결과
-  - TEST_ID 구현 매핑
+  - TEST_ID 구현 상태 매핑
   - E2E 잔여 리스크
 
 peach-team-e2e 검증
@@ -47,6 +47,7 @@ peach-team-e2e 검증
   - ui-proto/Spec 부합 판정
   - 미스매치 분류
   - 시나리오 오류 자동 보완
+  - TEST_ID 검증 상태 갱신
   - 명확한 코드 문제는 peach-team-dev로 위임
 ```
 
@@ -66,6 +67,19 @@ team-e2e는 **사용자 경험 검증**만 담당한다. 로직 분기 검증은
 - 단위 시나리오 안에서 DB 직접 접근(읽기/쓰기 모두), 마이그레이션, 서버/앱 재시작을 발견하면 fixture/suite Step 또는 `peach-db-query`로 분리시킨 뒤 진행한다.
 - ui-proto/Spec 모호 영역에서 "이건 TDD에서 검증해야 한다" 판단이 서면 보완 루프로 끌고 가지 말고, backend/store 측 TDD 추가를 권고한다.
 - 미스매치 분류 시 "로직 버그"는 team-e2e가 직접 고치지 않고 `peach-team-dev`로 위임한다. Spec/proto 근거가 명확하고 안전 조건을 만족하면 사용자 확인 없이 자동 위임한다.
+- Spec에 `TEST_ID별 상태` 표가 있으면 검증 상태 축만 `V01/V02/V03/V80/V90`으로 갱신하고, UI Proto 상태(`Uxx`)와 구현 상태(`Ixx`)는 변경하지 않는다.
+- `TEST_ID별 상태` 표의 검증 상태를 갱신하면 `상태 요약`의 전체 Spec 상태, 전체 검증 상태, 검증 완료 수, Blocked 수, 마지막 확인일, 잔여 리스크도 함께 재계산한다.
+- QA 판정 `APPROVED / CONDITIONAL / REJECTED`는 리뷰 판정이다. TEST_ID 검증 상태는 별도로 `Vxx`로 남긴다.
+
+Spec `TEST_ID별 상태` 갱신 규칙:
+
+| E2E 결과 | Spec 검증 상태 | 기준 |
+|----------|----------------|------|
+| 미실행 | V01 검증전(UNVERIFIED) | 아직 E2E 또는 동등 검증 전 |
+| 일부 통과 | V02 일부검증(PARTIAL) | 일부 시나리오만 통과하거나 범위 일부만 검증 |
+| 전체 통과 | V03 검증완료(VERIFIED) | 관련 TEST_ID의 E2E/QA 근거 확인 |
+| 검증 불가 | V80 검증불가(UNTESTABLE) | 환경/권한/데이터/Mock 한계로 검증 불가 |
+| 차단 | V90 차단(BLOCKED) | 기준 충돌, 실행 조건 부재, 반복 실패로 진행 차단 |
 
 ## 핵심 차별점 — 검증 기준의 외부화
 

@@ -81,6 +81,7 @@ May Adapt 변경 시:
 ✅ 코드 구조: 7/7
 ✅ TDD: X개 통과
 ✅ lint/build: 통과
+✅ TEST_ID 구현 상태: I03 구현완료(DONE) / I02 일부구현(PARTIAL) / I90 차단(BLOCKED) 중 해당 항목 보고
 
 [CONDITIONAL 시 추가]
 ⚠️ 조건: [구체적 내용]

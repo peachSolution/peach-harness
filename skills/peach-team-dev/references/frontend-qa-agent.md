@@ -88,6 +88,7 @@ May Adapt 변경 시:
 ✅ Store: Pinia Option API 확인
 ✅ UI: listAction/watch 확인, AI Slop 없음
 ✅ vue-tsc/lint/build: 통과
+✅ TEST_ID 구현 상태: I03 구현완료(DONE) / I02 일부구현(PARTIAL) / I90 차단(BLOCKED) 중 해당 항목 보고
 
 [CONDITIONAL 시 추가]
 ⚠️ 조건: [구체적 내용]
