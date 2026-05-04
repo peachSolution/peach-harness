@@ -5,3 +5,6 @@
 
 __pycache__/
 *.pyc
+
+# YouTube 트랜스크립트 캐시
+youtube-transcript/
