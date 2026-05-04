@@ -34,8 +34,6 @@ cat ~/.claude/settings.json | grep -i "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   }
 }
-
-참고: 하네스 프로젝트의 에이전트 팀 설정 문서
 ```
 
 ### 0-2. tmux 환경 감지
@@ -428,9 +426,7 @@ with open(path, 'w') as f: json.dump(data, f, indent=2)
 
 ## 참조 문서
 
-- 하네스 프로젝트의 에이전트 팀 운영 경험 문서 — 팀 운영 실전 패턴, 팀원 프롬프트 템플릿
-- 하네스 프로젝트의 에이전트 팀 설정 문서 — tmux/settings.json 설정 가이드
-- `references/team-patterns.md` — 팀 유형별 상세 프롬프트 예시
+- `references/team-patterns.md` — 팀 유형별 상세 프롬프트 예시, 팀 운영 실전 패턴, tmux pane 관리 참고
 
 ---
 

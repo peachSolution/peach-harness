@@ -103,10 +103,11 @@ npx skills add peachSolution/peach-harness `
 
 ## 문서
 
-- **[docs/03-워크플로우.md](docs/03-워크플로우.md)** - 작업 유형별 스킬 선택 플로우 (시작점)
-- **[docs/02-SDD-가이드.md](docs/02-SDD-가이드.md)** - SDD 개념, 3가지 시나리오, TDD 전략
-- **[docs/01-아키텍처.md](docs/01-아키텍처.md)** - 4계층 구조, Bounded Autonomy, Ralph Loop
-- **[docs/04-배포구조.md](docs/04-배포구조.md)** - 배포 구조 (멀티 AI 도구 지원 근거)
+- **[docs/01-하네스-방향과-전략.md](docs/01-하네스-방향과-전략.md)** - 하네스 상위 방향, 오래 자율 개발, 1차 완성도 전략
+- **[docs/04-워크플로우.md](docs/04-워크플로우.md)** - 작업 유형별 스킬 선택 플로우 (시작점)
+- **[docs/03-SDD-가이드.md](docs/03-SDD-가이드.md)** - SDD 개념, 3가지 시나리오, TDD 전략
+- **[docs/02-아키텍처.md](docs/02-아키텍처.md)** - 4계층 구조, Bounded Autonomy, Ralph Loop
+- **[docs/05-배포구조.md](docs/05-배포구조.md)** - 배포 구조 (멀티 AI 도구 지원 근거)
 - **[AGENTS.md](AGENTS.md)** - 아키텍처 가이드 (공통 원칙, 백엔드/프론트엔드 패턴)
 - **[CLAUDE.md](CLAUDE.md)** - Claude Code 진입점
 

@@ -60,8 +60,6 @@ cat ~/.claude/settings.json | grep -i "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   }
 }
-
-설정 가이드: 하네스 프로젝트의 에이전트 팀 설정 문서
 ```
 
 ---

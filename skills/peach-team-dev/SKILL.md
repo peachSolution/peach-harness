@@ -10,6 +10,7 @@ description: |
   mode=backend(API+Store) | ui(UI만) | fullstack(전체) 지원하며,
   mode/proto 없이 자연어 입력만으로도 즉흥적 버그 수정·기능 추가 가능.
   대규모 작업은 기능 큐와 Contract Gate로 1차 완성도를 높이는 방향을 따른다.
+  peach-team-e2e와 함께 하나의 개발-검증 납품 흐름을 이루되, E2E 검증 독립성은 유지한다.
   Claude Code 팀 기능이 있으면 team mode로, Codex/skills.sh 일반 환경에서는 generic mode로 실행한다.
   기존 팀 개발 스킬의 개발 조율 역할을 대체하며, DB 생성은 peach-gen-db 선행 단계로 분리한다.
 ---
@@ -31,7 +32,27 @@ PeachSolution 개발을 조율하는 통합 오케스트레이터.
 
 DB 마이그레이션 생성/적용은 이 스킬의 책임이 아니다. `mode=backend|fullstack`은 `peach-gen-db`로 생성된 `api/db/schema/...`가 준비된 뒤 실행한다.
 
-> 최신 실행 기준은 하네스 프로젝트의 워크플로우 문서를 따른다.
+## 개발-검증 납품 흐름
+
+`peach-team-dev`와 `peach-team-e2e`는 사용자 입장에서는 하나의 납품 흐름이다. `team-dev`가 구현과 코드 수준 검증을 끝낸 뒤, `team-e2e`가 실제 사용자 흐름과 기획 부합을 검증한다.
+
+```text
+peach-team-dev
+  → 구현
+  → TDD
+  → lint/build
+  → API-Store Contract Gate
+  → TEST_ID 구현 매핑
+  → E2E 잔여 리스크 정리
+
+peach-team-e2e
+  → 사용자 흐름 검증
+  → ui-proto/Spec 부합 검증
+  → 미스매치 분류
+  → 명확한 코드 문제는 team-dev로 위임
+```
+
+두 스킬은 흐름으로 연결하지만 역할과 컨텍스트는 분리한다. `team-dev`는 E2E 판정을 자체 책임으로 끌고 오지 않고, `team-e2e`는 본 프로젝트 코드 수정을 직접 수행하지 않는다.
 
 ## TDD/E2E 역할 분리 (필수 인지)
 
@@ -47,6 +68,7 @@ team-dev는 **본 개발 + TDD까지** 책임지고, **사용자 경험 검증(E
 - team-dev는 **TDD 통과 + lint + build 통과**를 완료 기준으로 삼는다. UI 흐름 검증을 자체 보완 루프로 끌고 가지 않는다.
 - prompt 모드(자연어 즉흥 작업)에서도 동일하다. 사용자 흐름 검증이 필요한 변경이면 완료 후 `peach-team-e2e` 호출을 안내한다.
 - E2E 단계에서 발견되는 **로직 버그**는 team-e2e가 직접 수정하지 않고 team-dev로 다시 넘어온다. 반대로 team-dev는 **시나리오 검증/UI 흐름 부합**을 자체 책임으로 떠안지 않는다.
+- 완료 보고에는 `peach-team-e2e`로 넘길 잔여 리스크, Contract Gate 결과, TEST_ID 구현 매핑을 남긴다.
 
 ## 입력 모드 3가지
 
