@@ -7,11 +7,13 @@
 
 ## [Unreleased]
 
+- 팀 스킬 개선 방향: 새 게이트 추가보다 진입점 축소, 큐/상태 인계 표준화, 사용자-facing 상태 표현 단순화를 우선한다.
+
 ## [v1.18.4] - 2026-05-04
 
 ### Added
 - `docs/01-하네스-방향과-전략.md` 추가 — 오래 자율 개발, 대규모 작업 1차 완성도, 기획 구체화와 개발/검증 자율화의 역할 분리를 문서화
-- `peach-gen-spec`에 TEST_ID별 UI Proto 반영, 구현, 검증 상태 추적 기준 추가
+- `peach-gen-spec`의 기존 Spec 작성 기준에 TEST_ID별 UI Proto 반영, 구현, 검증 상태 추적 항목을 보강
 
 ### Changed
 - 문서 번호 체계 재정렬 — 방향/전략을 01번으로 승격하고 기존 아키텍처/SDD/워크플로우/배포/기본지침/에이전트팀 문서를 02~07번으로 이동
@@ -25,7 +27,7 @@
 ## [v1.18.3] - 2026-05-03
 
 ### Added
-- peach-team-ui-proto 스킬 추가 — Mock 기반 UI 프로토타입 생성·검증을 팀 오케스트레이터로 분리
+- peach-team-ui-proto 공식 경로 전환 — 기존 `peach-gen-ui-proto`의 Mock 기반 UI 프로토타입 생성·검증 역할을 팀 오케스트레이터 기준으로 재정리하고 alias 유지
 - peach-intake 스킬 추가 — 개발 요청 접수, 규모 판정, 후속 스킬 경로 결정을 담당하는 진입 게이트 제공
 - peach-review-ux 스킬 추가 — Laws of UX 기준의 읽기전용 UX 리뷰 절차와 백오피스 체크리스트 제공
 - Claude Code 커밋 게이트 헬퍼와 Windows 설치 스크립트 추가
@@ -54,7 +56,7 @@
 - peach-e2e-scenario: 테스트 데이터 식별자, localStorage setItem 순서 패턴 추가
 
 ### Changed
-- `release` 스킬 이름 변경 (`peach-release` → `release`) — internal 스킬 전용이므로 네임스페이스 접두어 불필요
+- 내부 전용 릴리스 스킬을 `.claude/skills/release` 경로로 정리 — internal 스킬 전용이므로 공개 `peach-` 네임스페이스와 분리
 - peach-e2e-browse: Chrome Beta 고정 프로필 규칙 강화
 - peach-e2e-scenario: 자율 보완 루프 강화
 - peach-e2e-setup, peach-e2e-suite, peach-team-e2e: 워크플로우 보완
@@ -90,10 +92,10 @@
 - README.md 스킬 인벤토리 갱신 — 통합 스킬 반영, 서브에이전트 6개 추가(proto-ui-dev/qa, e2e-scenario-dev/qa, e2e-suite-dev/qa)
 
 ### Removed
-- peach-team 스킬 폐기 — peach-team-dev로 흡수 통합
-- peach-team-refactor 스킬 폐기 — AI Plan 모드 + Edit으로 처리
-- peach-refactor-backend 스킬 폐기 — 동일
-- peach-refactor-frontend 스킬 폐기 — 동일
+- peach-team 사용 경로를 peach-team-dev로 전환 — 기존 통합 개발 역할은 peach-team-dev가 대체
+- 리팩토링 전용 스킬 경로 종료 — 리팩토링은 AI Plan 모드 + Edit 가이드로 이관
+- peach-refactor-backend 전용 경로 종료 — 동일
+- peach-refactor-frontend 전용 경로 종료 — 동일
 
 ---
 

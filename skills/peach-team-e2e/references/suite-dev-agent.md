@@ -36,6 +36,7 @@ model: sonnet
 - 실행은 반드시 `e2e.sh run`을 통해 — 직접 `node` 호출 금지
 - 검증 포인트는 자연어로 기술 — AI가 해석해 agent-browser eval로 확인
 - Step 실패 시 후속 Step 실행 금지 (데이터 의존성)
+- suite 구성 오류로 되돌아온 경우에는 suite md만 수정한다. 단위 시나리오나 본 프로젝트 코드는 수정하지 않는다.
 
 ## 입력
 
@@ -181,12 +182,44 @@ mkdir -p docs/e2e-suite
 - 데이터 정확성: Spec에서 X개 (DB 검증 X개 포함)
 ```
 
+## suite 구성 오류 재작업
+
+`suite-qa`가 (d) suite 구성 오류로 되돌려 보낸 경우 다음만 수정한다.
+
+| 오류 유형 | 수정 위치 |
+|----------|-----------|
+| Step 순서 오류 | suite md의 시나리오 흐름 |
+| 데이터 전달 누락 | 전달 데이터 / 사전 주입 필드 |
+| fixture 누락 | 사전조건 또는 fixture Step |
+| 검증 포인트 위치 오류 | 해당 Step의 검증 항목 |
+| 파일 경로 불일치 | Step 실행 경로 |
+
+재작업 보고에는 아래를 반드시 남긴다.
+
+```markdown
+## suite 구성 오류 수정 완료
+
+수정 대상: docs/e2e-suite/[기능명]-[핵심동작].md
+
+수정 내역:
+- [Step N]: [수정 전] → [수정 후]
+
+수정하지 않은 범위:
+- 단위 시나리오 .js
+- 본 프로젝트 코드
+
+재실행 권장:
+- 실패 지점: Step N
+- 재실행 범위: Step N부터 끝까지
+```
+
 ## Bounded Autonomy
 
 ### Must Follow
 - 단위 시나리오 .js 수정 금지
 - `peach-e2e-suite/references/suite-템플릿.md` 구조 준수
 - Step 실패 시 후속 Step 실행 금지 명시
+- suite 구성 오류 재작업 시 suite md만 수정
 
 ### May Adapt
 - Step 그룹화 (소규모 액션 2개를 1개 Step으로 묶기)

@@ -146,6 +146,8 @@ peach-harness/
 
 ## 스킬 목록
 
+기본 진입점은 Tier 0/1만 본다. Tier 2 이후는 실패 디버깅, 단독 생성, DB 조회처럼 목적이 분명할 때 사용하는 전문가용 색인이다.
+
 ### 진입 판정 (Tier 0)
 
 | 스킬 | 용도 | 파라미터 |
@@ -157,14 +159,14 @@ peach-harness/
 | 스킬 | 용도 | 파라미터 |
 |------|------|---------|
 | `peach-team-ui-proto` | Mock 기반 UI Proto 생성·검증 | spec=경로, team=Y/N, file=Y, excel=Y |
-| `peach-team-dev` | 신규 기능 풀스택 개발 (peach-team 흡수 통합) | mode=backend/ui/fullstack, proto=경로, prompt=자연어, force=Y |
-| `peach-team-e2e` | E2E 검증 (ui-proto + Spec 부합 자동 검증) | proto=경로 |
+| `peach-team-dev` | 신규 기능 풀스택 개발 (peach-team 사용 경로 전환) | mode=backend/ui/fullstack, proto=경로, prompt=자연어, force=Y |
+| `peach-team-e2e` | 일반 E2E 검증 진입점 (ui-proto + Spec 부합 자동 검증) | proto=경로 |
 | `peach-team-3a` | 단일 기능 설계·구현·검토 (3-에이전트 루프) | layer=backend/frontend/fullstack |
 | `peach-team-analyze` | 범용 분석 팀 (동적 구성) | - |
 
-> 2026-04-27 v1.18.0: `peach-team`은 `peach-team-dev`로 흡수 통합, 리팩토링 스킬 3개(`peach-team-refactor`, `peach-refactor-backend`, `peach-refactor-frontend`)는 폐기됨. 리팩토링은 AI Plan 모드 + Edit으로 처리한다.
+> 2026-04-27 v1.18.0: `peach-team` 사용 경로는 `peach-team-dev`로 전환됨. 리팩토링 전용 스킬 경로 3개(`peach-team-refactor`, `peach-refactor-backend`, `peach-refactor-frontend`)는 종료하고, 리팩토링은 AI Plan 모드 + Edit으로 처리한다.
 
-### 생성 / 문서화 계열
+### 전문가용 색인: 생성 / 문서화 계열 (Tier 2)
 
 - `peach-gen-backend` — Backend API 생성
 - `peach-gen-db` — DB DDL/마이그레이션
@@ -177,32 +179,34 @@ peach-harness/
 - `peach-gen-ui-proto` — `peach-team-ui-proto` 이전 이름 호환용 alias
 - `peach-review-ux` — 화면/프로토타입 UX 법칙 기반 읽기전용 리뷰
 
-### 추가 계열
+### 전문가용 색인: 추가 계열 (Tier 2)
 
 - `peach-add-api` — 외부 API 호출 코드
 - `peach-add-cron` — Cron 작업
 - `peach-add-print` — 인쇄 페이지
 - `peach-markitdown` — 문서파일을 md로 변환 (`MarkItDown` + `HWPX` 보완, YouTube/음성은 별도 스킬 또는 NotebookLM 사용)
 
-### DB 도구
+### 전문가용 색인: DB 도구 (Tier 2)
 
 - `peach-db-migrate` — dbmate 마이그레이션 관리 (상태/실행/롤백/생성)
 - `peach-db-extract-schema` — DB 현재 상태를 DDL 스키마 파일로 추출
 - `peach-db-query` — 개발 DB에 SQL 직접 실행하여 데이터 조회
 - `peach-erd` — Mermaid ERD 생성/수정/미리보기/PNG·SVG 저장
 
-### E2E 도구
+### 전문가용 색인: E2E 도구 (Tier 2)
+
+일반 검증은 `peach-team-e2e`만 사용한다. 아래 단계별 스킬은 실패 디버깅, 수동 세분화, 환경 점검이 필요할 때만 단독 호출한다.
 
 - `peach-e2e-setup` — E2E 테스트 환경 설정 (글로벌 도구, Chrome Beta 확인)
 - `peach-e2e-browse` — agent-browser CLI로 Chrome Beta 제어, 페이지 탐색/검증
 - `peach-e2e-scenario` — E2E 시나리오 생성/실행/자동수정 (auto/create/run)
 - `peach-e2e-suite` — 통합 테스트 시나리오 md 생성/실행 (단위 시나리오 조합)
 
-### 지식 관리
+### 전문가용 색인: 지식 관리 (Tier 2)
 
 - `peach-wiki` — LLM Wiki 패턴 기반 누적형 지식베이스 구축·유지 (코드 프로젝트 + Obsidian 지원)
 
-### 프로세스 게이트 / 설정
+### 전문가용 색인: 프로세스 게이트 / 설정 (Tier 2)
 
 - `peach-qa-gate` — 작업 완료 전 QA 검증 게이트 (팀 스킬 완료 시 자동 후속 호출 가능)
 - `peach-skill-feedback` — 스킬 사용 중 발견된 문제점/노하우를 구조화하여 문서화

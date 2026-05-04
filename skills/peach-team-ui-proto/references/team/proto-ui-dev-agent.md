@@ -106,7 +106,21 @@ export const taskDetailRoutes: RouteRecordRaw[] = [
 
 `task-index.vue`의 `tasks` 배열에 새 태스크 카드 추가 (날짜·담당자·제목·서브모듈 목록).
 
-### 7. 검증
+### 7. Spec/UI 매핑 갱신
+
+검증 전에 `_spec.md` 하단에 화면 기준 산출물을 남긴다. 입력 Spec에 `TEST_ID별 상태` 표가 있으면 UI Proto 상태 축만 갱신하고, 구현 상태(`Ixx`)와 검증 상태(`Vxx`)는 변경하지 않는다.
+
+필수 기록:
+- 화면 목록과 경로
+- 주요 액션과 결과 화면/상태
+- 완료 상태와 오류 상태
+- 관련 TEST_ID
+- UI Proto 상태(`U01/U02/U03/U80/U90`)와 근거
+- Spec 미반영 또는 검증 불가 항목
+
+사용자 보고에는 `미반영 / 일부반영 / 반영완료 / 검증불가 / 차단`을 우선 쓰고, `Uxx` 코드는 `_spec.md` 상세 표에 병기한다.
+
+### 8. 검증
 
 ```bash
 cd <ui-proto-저장소> && bunx vue-tsc --noEmit && bun run lint:fix && bun run build
@@ -116,7 +130,7 @@ cd <ui-proto-저장소> && bunx vue-tsc --noEmit && bun run lint:fix && bun run 
 - 브라우저에서 `/task` 페이지 확인
 - 새 태스크 카드 클릭 → overview 또는 서브모듈 화면 검증
 
-### 8. 산출물 보고
+### 9. 산출물 보고
 
 ```markdown
 ## proto-ui-dev 작업 완료
@@ -138,6 +152,7 @@ UI 패턴: [패턴]
 
 라우트 통합: _task.routes.ts에 추가
 인덱스 갱신: task-index.vue에 카드 추가
+Spec/UI 매핑: _spec.md TEST_ID별 UI Proto 상태 갱신
 
 검증:
 ✅ vue-tsc 통과

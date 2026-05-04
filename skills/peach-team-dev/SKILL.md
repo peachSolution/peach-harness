@@ -114,8 +114,11 @@ PRD가 함께 주입된 경우에도 구현 기준은 `Spec + api/db/schema/...`
 - 기능별 상태를 `pending / running / qa_failed / blocked / done`으로 기록한다.
 - 실패한 기능만 재시도하고, 기준이 모호한 기능은 `blocked`로 분리한다.
 - Backend, Store, UI 연결은 `API-Store Contract Gate`로 team-dev 단계에서 먼저 잡는다.
+- 기능 큐가 필요한 대규모 작업은 `references/queue-workflow.md`의 템플릿을 기준으로 상태 파일을 만든다.
 - 기능 큐 상태는 team-dev 내부 운영 상태다. Spec의 `TEST_ID별 상태` 표에는 구현 상태 축만 `I01/I02/I03/I90`으로 갱신하고, UI Proto 상태(`Uxx`)와 E2E 검증 상태(`Vxx`)는 변경하지 않는다.
 - `TEST_ID별 상태` 표의 구현 상태를 갱신하면 `상태 요약`의 전체 Spec 상태, 전체 구현 상태, 구현 완료 수, Blocked 수, 마지막 확인일, 잔여 리스크도 함께 재계산한다.
+
+상태 파일은 대규모 queue 모드에서 필수다. 단일 파일 수정, 작은 버그 수정, 단순 CRUD는 큐 파일을 만들지 않고 완료 보고에 요약만 남긴다.
 
 권장 상태 파일:
 
@@ -134,6 +137,8 @@ docs/qa/{년}/{월}/[작업명]-team-dev-status.md
 | failed_reason | 실패 원인 |
 | retry_count | Ralph Loop 또는 재시도 횟수 |
 | evidence | TDD/lint/build/Contract Gate 결과 |
+| blocked_reason | 차단 사유 |
+| next_skill | 후속 스킬 또는 재검증 대상 |
 
 Spec `TEST_ID별 상태` 갱신 규칙:
 
@@ -146,6 +151,8 @@ Spec `TEST_ID별 상태` 갱신 규칙:
 | done | I03 구현완료(DONE) | 코드 구현과 team-dev 책임 검증(TDD/lint/build/Contract Gate)이 통과 |
 
 `I03 구현완료(DONE)`은 E2E 최종 검증 완료를 의미하지 않는다. E2E 통과 여부는 `peach-team-e2e`가 검증 상태 축(`Vxx`)으로 남긴다.
+
+사용자 보고에는 `미구현 / 구현중 / 구현완료 / 차단`을 우선 쓰고, `Ixx/Vxx/Uxx` 코드는 Spec 상세 표나 근거가 필요한 보고에만 병기한다.
 
 ## Preconditions
 

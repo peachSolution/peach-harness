@@ -39,14 +39,18 @@ backend-dev 완료 후 backend-qa와 store-dev를 동시 실행하여 시간을 
 모듈명: [모듈명]
 모델: [model override값 또는 기본값(sonnet)]
 스키마: api/db/schema/[도메인]/[테이블].sql
+관련 TEST_ID: [T-001, T-002]
+기능 큐: docs/qa/{년}/{월}/[작업명]-team-dev-status.md (대규모 queue 모드일 때)
 옵션: file=[Y/N], excel=[Y/N], controllerTdd=[Y/N]
 
 1. 스키마 파일 읽기
-2. gen-backend 스킬 기반으로 API 코드 생성
-3. bun test 실행
-4. bun run lint:fixed 실행
-5. bun run build 실행
-6. 완료 후 SendMessage로 팀 리더에게 보고
+2. Spec과 schema가 충돌하면 구현하지 않고 DB_CHANGE_REQUIRED 또는 PRD_TO_SPEC_REQUIRED로 보고
+3. gen-backend 스킬 기반으로 API 코드 생성
+4. bun test 실행
+5. bun run lint:fixed 실행
+6. bun run build 실행
+7. 기능 큐와 Spec TEST_ID 구현 상태(Ixx)를 근거와 함께 갱신
+8. 완료 후 SendMessage로 팀 리더에게 보고
 
 팀: [모듈명]-fullstack-team
 ```
@@ -61,12 +65,15 @@ backend-dev 완료 후 backend-qa와 store-dev를 동시 실행하여 시간을 
 모듈명: [모듈명]
 모델: [model override값 또는 기본값(sonnet)]
 전제: Backend API가 완료된 상태 (api/src/modules/[모듈명]/ 존재)
+관련 TEST_ID: [T-001, T-002]
 옵션: file=[Y/N], storeTdd=[Y/N]
 
 1. Backend 타입 파일 읽기: api/src/modules/[모듈명]/type/[모듈명].type.ts
-2. gen-store 스킬 기반으로 Pinia Store 생성
-3. vue-tsc 검증
-4. 완료 후 SendMessage로 팀 리더에게 보고
+2. API 응답 타입과 Store 계약이 맞는지 Contract Gate 기준으로 확인
+3. gen-store 스킬 기반으로 Pinia Store 생성
+4. vue-tsc 검증
+5. 기능 큐 evidence에 Store/Contract Gate 근거 보고
+6. 완료 후 SendMessage로 팀 리더에게 보고
 
 팀: [모듈명]-fullstack-team
 ```
@@ -81,13 +88,17 @@ backend-dev 완료 후 backend-qa와 store-dev를 동시 실행하여 시간을 
 모듈명: [모듈명]
 모델: [model override값 또는 기본값(sonnet)]
 UI 패턴: [crud/page/two-depth/...]
+관련 TEST_ID: [T-001, T-002]
+검증 기준: Spec 화면 흐름 요약 또는 proto 화면 경로
 옵션: file=[Y/N], excel=[Y/N]
 전제: Store가 완료된 상태 (front/src/modules/[모듈명]/store/ 존재)
 
 1. Store 파일 읽기
-2. gen-ui 스킬 기반으로 Vue3 UI 컴포넌트 생성
-3. vue-tsc + lint + build 검증
-4. 완료 후 SendMessage로 팀 리더에게 보고
+2. Spec/proto에 없는 요구는 임의 구현하지 않고 PRD_TO_SPEC_REQUIRED로 보고
+3. gen-ui 스킬 기반으로 Vue3 UI 컴포넌트 생성
+4. vue-tsc + lint + build 검증
+5. 기능 큐 evidence에 UI 검증 근거와 E2E 잔여 리스크 보고
+6. 완료 후 SendMessage로 팀 리더에게 보고
 
 팀: [모듈명]-fullstack-team
 ```
