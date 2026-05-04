@@ -1,6 +1,6 @@
 {
   "name": "peach",
-  "version": "1.18.3",
+  "version": "1.18.4",
   "description": "PeachSolution 하네스 시스템 — 스킬, 서브에이전트, QA 파이프라인을 통합한 Claude Code 플러그인",
   "author": {
     "name": "PeachSolution"

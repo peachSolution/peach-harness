@@ -124,7 +124,60 @@ PRD_TO_SPEC_REQUIRED
 
 ---
 
-## 2. 1차 완성도 기준
+## 2. TEST_ID 상태 추적
+
+Spec 전체 상태는 TEST_ID별 UI Proto 반영 상태, 구현 상태, 검증 상태를 집계해 판단한다. `S04 구현완료(IMPLEMENTED)`는 코드 구현 완료, `S05 검증완료(VERIFIED)`는 테스트/빌드/E2E/QA 근거 확인을 의미하므로 둘을 분리한다.
+
+### 상태 요약
+
+| 항목 | 값 |
+|------|----|
+SPEC_STATUS_SUMMARY
+
+### TEST_ID별 상태
+
+| TEST_ID | 요구사항 | UI Proto 상태 | UI 근거 | 구현 상태 | 구현 근거 | 검증 상태 | 검증 근거 | 잔여 이슈 |
+|---------|----------|---------------|---------|-----------|-----------|-----------|-----------|-----------|
+TEST_ID_STATUS_MATRIX
+
+### 상태값 기준
+
+| 상태 축 | 코드 | 한글 | 키 | 의미 |
+|---------|------|------|----|------|
+| Spec 상태 | S01 | 초안 | DRAFT | 요구사항 정리 중 |
+| Spec 상태 | S02 | 확정 | APPROVED | 구현 기준으로 확정됨 |
+| Spec 상태 | S03 | 구현중 | IMPLEMENTING | 하나 이상의 TEST_ID가 구현 중 |
+| Spec 상태 | S04 | 구현완료 | IMPLEMENTED | 모든 TEST_ID 코드 구현 완료 |
+| Spec 상태 | S05 | 검증완료 | VERIFIED | 모든 TEST_ID 검증 근거 확인 |
+| Spec 상태 | S90 | 차단 | BLOCKED | 핵심 TEST_ID 진행 차단 |
+| Spec 상태 | S99 | 대체됨 | SUPERSEDED | 다른 Spec으로 대체됨 |
+| UI Proto 반영 상태 | U01 | 미반영 | NOT_MAPPED | 화면/액션/상태 매핑 전 |
+| UI Proto 반영 상태 | U02 | 일부반영 | PARTIAL | 일부 TEST_ID만 화면 기준에 반영 |
+| UI Proto 반영 상태 | U03 | 반영완료 | MAPPED | TEST_ID가 화면/액션/완료/오류 상태에 반영 |
+| UI Proto 반영 상태 | U80 | 검증불가 | UNTESTABLE | Mock 또는 화면 범위 한계로 검증 불가 |
+| UI Proto 반영 상태 | U90 | 차단 | BLOCKED | 화면 기준 확정 불가 |
+| 구현 상태 | I01 | 구현전 | TODO | 구현 전 |
+| 구현 상태 | I02 | 일부구현 | PARTIAL | 일부 구현 |
+| 구현 상태 | I03 | 구현완료 | DONE | 코드 구현 완료 |
+| 구현 상태 | I90 | 차단 | BLOCKED | 구현 차단 |
+| 검증 상태 | V01 | 검증전 | UNVERIFIED | 검증 전 |
+| 검증 상태 | V02 | 일부검증 | PARTIAL | 일부 검증 |
+| 검증 상태 | V03 | 검증완료 | VERIFIED | 테스트/빌드/E2E/QA 근거 확인 |
+| 검증 상태 | V80 | 검증불가 | UNTESTABLE | 환경/데이터/권한 한계로 검증 불가 |
+| 검증 상태 | V90 | 차단 | BLOCKED | 검증 차단 |
+
+### 집계 규칙
+
+- 모든 TEST_ID 구현 상태가 `I01 구현전(TODO)`이면 전체 Spec 상태는 `S02 확정(APPROVED)`
+- 하나라도 `I02 일부구현(PARTIAL)` 또는 `I03 구현완료(DONE)`이고 미완료 TEST_ID가 남아 있으면 `S03 구현중(IMPLEMENTING)`
+- 모든 TEST_ID 구현 상태가 `I03 구현완료(DONE)`이면 `S04 구현완료(IMPLEMENTED)`
+- 모든 TEST_ID 검증 상태가 `V03 검증완료(VERIFIED)`이면 `S05 검증완료(VERIFIED)`
+- 핵심 TEST_ID 중 하나라도 `U90`, `I90`, `V90`이면 `S90 차단(BLOCKED)`을 우선 보고
+- `TEST_ID별 상태` 표를 수정하면 `상태 요약`도 같은 집계 규칙으로 즉시 재계산한다.
+
+---
+
+## 3. 1차 완성도 기준
 
 이 섹션은 `peach-team-dev`와 `peach-team-e2e`가 처음 실행에서 누락을 줄이기 위한 검증 기준이다.
 
@@ -166,7 +219,7 @@ TEST_COVERAGE_MAPPING
 
 ---
 
-## 3. UI/화면 흐름 기준
+## 4. UI/화면 흐름 기준
 
 ### 패턴: UI_PATTERN_FULL_NAME
 
@@ -198,7 +251,7 @@ TEST_SCENARIOS
 
 ---
 
-## 4. DB 스키마
+## 5. DB 스키마
 
 ### DB 종류: DB_TYPE
 
@@ -243,7 +296,7 @@ DB_CHANGE_CANDIDATES
 
 ---
 
-## 5. 파일 목록
+## 6. 파일 목록
 
 ### Backend
 ```
@@ -281,7 +334,7 @@ FRONTEND_MODAL_FILES
 
 ---
 
-## 6. 참조
+## 7. 참조
 - 가이드 코드:
   - Backend: `api/src/modules/test-data/`
   - Frontend: `front/src/modules/test-data/FRONTEND_GUIDE_PATH`

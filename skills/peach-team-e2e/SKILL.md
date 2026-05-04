@@ -7,6 +7,7 @@ description: |
   "ui-proto와 다른지 확인", "최종 검증", "릴리스 전 검증" 키워드로 트리거.
   peach-e2e-setup + peach-e2e-scenario + peach-e2e-suite 3개 스킬의 패턴을 공유하고,
   검증 기준을 ui-proto 화면 + Spec 비즈니스 규칙으로 외부화한다.
+  peach-team-dev와 함께 하나의 개발-검증 납품 흐름을 이루되, 구현 컨텍스트와 검증 컨텍스트는 분리한다.
   Claude Code 팀 기능이 있으면 team mode로, Codex/skills.sh 일반 환경에서는 generic mode로 실행한다.
   단순 코드 동작 검증을 넘어, 기획 의도와 부합하는지 자동 검증하는 게 핵심 차별점.
 ---
@@ -29,7 +30,28 @@ ui-proto 화면 흐름 + Spec 비즈니스 규칙을 검증 기준으로 삼아,
 기존 `peach-e2e-setup`, `peach-e2e-scenario`, `peach-e2e-suite`는 단계별 단독 호출용 Tier 2로 그대로 유지된다. 이 스킬은 그 3단계를 통합하면서 **검증 기준을 ui-proto + Spec으로 외부화**하는 게 핵심 차별점.
 Claude Code 팀 도구가 있으면 역할별 team mode로 실행하고, Codex/skills.sh 일반 환경에서는 같은 절차를 generic mode로 순차 실행한다.
 
-> 최신 실행 기준은 하네스 프로젝트의 워크플로우 문서를 따른다.
+## 개발-검증 납품 흐름
+
+`peach-team-e2e`는 `peach-team-dev` 이후 이어지는 납품 검증 단계다. 사용 경험상 두 스킬은 하나의 개발-검증 흐름이지만, 검증 독립성을 위해 역할과 컨텍스트를 분리한다.
+
+```text
+peach-team-dev 완료 산출
+  - 구현 코드
+  - TDD/lint/build 결과
+  - API-Store Contract Gate 결과
+  - TEST_ID 구현 상태 매핑
+  - E2E 잔여 리스크
+
+peach-team-e2e 검증
+  - 사용자 흐름 실행
+  - ui-proto/Spec 부합 판정
+  - 미스매치 분류
+  - 시나리오 오류 자동 보완
+  - TEST_ID 검증 상태 갱신
+  - 명확한 코드 문제는 peach-team-dev로 위임
+```
+
+이 스킬은 본 프로젝트 코드를 직접 수정하지 않는다. Spec 또는 ui-proto 근거가 명확한 코드 문제만 `references/delegation-policy.md` 기준으로 `peach-team-dev`에 위임한다.
 
 ## TDD와 E2E의 책임 경계
 
@@ -45,6 +67,19 @@ team-e2e는 **사용자 경험 검증**만 담당한다. 로직 분기 검증은
 - 단위 시나리오 안에서 DB 직접 접근(읽기/쓰기 모두), 마이그레이션, 서버/앱 재시작을 발견하면 fixture/suite Step 또는 `peach-db-query`로 분리시킨 뒤 진행한다.
 - ui-proto/Spec 모호 영역에서 "이건 TDD에서 검증해야 한다" 판단이 서면 보완 루프로 끌고 가지 말고, backend/store 측 TDD 추가를 권고한다.
 - 미스매치 분류 시 "로직 버그"는 team-e2e가 직접 고치지 않고 `peach-team-dev`로 위임한다. Spec/proto 근거가 명확하고 안전 조건을 만족하면 사용자 확인 없이 자동 위임한다.
+- Spec에 `TEST_ID별 상태` 표가 있으면 검증 상태 축만 `V01/V02/V03/V80/V90`으로 갱신하고, UI Proto 상태(`Uxx`)와 구현 상태(`Ixx`)는 변경하지 않는다.
+- `TEST_ID별 상태` 표의 검증 상태를 갱신하면 `상태 요약`의 전체 Spec 상태, 전체 검증 상태, 검증 완료 수, Blocked 수, 마지막 확인일, 잔여 리스크도 함께 재계산한다.
+- QA 판정 `APPROVED / CONDITIONAL / REJECTED`는 리뷰 판정이다. TEST_ID 검증 상태는 별도로 `Vxx`로 남긴다.
+
+Spec `TEST_ID별 상태` 갱신 규칙:
+
+| E2E 결과 | Spec 검증 상태 | 기준 |
+|----------|----------------|------|
+| 미실행 | V01 검증전(UNVERIFIED) | 아직 E2E 또는 동등 검증 전 |
+| 일부 통과 | V02 일부검증(PARTIAL) | 일부 시나리오만 통과하거나 범위 일부만 검증 |
+| 전체 통과 | V03 검증완료(VERIFIED) | 관련 TEST_ID의 E2E/QA 근거 확인 |
+| 검증 불가 | V80 검증불가(UNTESTABLE) | 환경/권한/데이터/Mock 한계로 검증 불가 |
+| 차단 | V90 차단(BLOCKED) | 기준 충돌, 실행 조건 부재, 반복 실패로 진행 차단 |
 
 ## 핵심 차별점 — 검증 기준의 외부화
 

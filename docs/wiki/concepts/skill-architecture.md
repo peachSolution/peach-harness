@@ -2,8 +2,8 @@
 tags: [wiki, concepts]
 created: 2026-04-12
 updated: 2026-05-03
-sources: [agents.md, docs/01-아키텍처.md]
-related_files: [agents.md, docs/01-아키텍처.md]
+sources: [agents.md, docs/02-아키텍처.md]
+related_files: [agents.md, docs/02-아키텍처.md]
 ---
 
 # 스킬 아키텍처 패턴

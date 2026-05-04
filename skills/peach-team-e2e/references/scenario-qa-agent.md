@@ -110,6 +110,7 @@ cd e2e && ./e2e.sh run --tab N 시나리오/[경로]
 ✅ 단독 실행 (X개 모두 exitCode 0)
 ✅ 데이터 전달 명시
 ✅ DB-free 경계
+✅ TEST_ID 검증 상태: V03 검증완료(VERIFIED) / V02 일부검증(PARTIAL) / V80 검증불가(UNTESTABLE) / V90 차단(BLOCKED) 중 해당 항목 보고
 
 검증 통과.
 ```

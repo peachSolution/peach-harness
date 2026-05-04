@@ -53,6 +53,6 @@ Generic mode에서는 `SendMessage` 대신 현재 세션의 작업 기록에 역
 
 - TDD/lint/build를 실제 명령으로 확인한다.
 - `mode=backend|fullstack`은 Contract Gate 결과를 남긴다.
-- Spec TEST_ID 구현 매핑을 남긴다.
+- Spec TEST_ID 구현 상태(`I01/I02/I03/I90`) 매핑을 남긴다.
 - blocked 항목은 `PRD_TO_SPEC_REQUIRED`, `DB_CHANGE_REQUIRED`, `DECISION_REQUIRED` 등으로 분리한다.
 - E2E가 필요한 잔여 리스크를 `peach-team-e2e`로 넘긴다.
